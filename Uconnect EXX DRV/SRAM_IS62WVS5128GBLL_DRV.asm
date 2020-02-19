@@ -1,0 +1,320 @@
+
+_Init_SRAM:
+
+;SRAM_IS62WVS5128GBLL_DRV.c,8 :: 		void Init_SRAM(void)
+;SRAM_IS62WVS5128GBLL_DRV.c,10 :: 		CS_SRAM_Tris=OUTPUT;
+	PUSH	W10
+	PUSH	W11
+	BCLR	TRISD, #9
+;SRAM_IS62WVS5128GBLL_DRV.c,11 :: 		CS_SRAM_Lat=ON;
+	BSET	LATD, #9
+;SRAM_IS62WVS5128GBLL_DRV.c,12 :: 		Read_Write_MCP23S17_IO(HOLD_SRAM,ON);
+	MOV.B	#1, W11
+	MOV.B	#4, W10
+	CALL	_Read_Write_MCP23S17_IO
+;SRAM_IS62WVS5128GBLL_DRV.c,13 :: 		Set_SRAM_Operation_Mode(SRAM_Operation_Mode_Byte);
+	CLR	W10
+	CALL	_Set_SRAM_Operation_Mode
+;SRAM_IS62WVS5128GBLL_DRV.c,14 :: 		}
+L_end_Init_SRAM:
+	POP	W11
+	POP	W10
+	RETURN
+; end of _Init_SRAM
+
+_Set_SRAM_Operation_Mode:
+
+;SRAM_IS62WVS5128GBLL_DRV.c,16 :: 		void Set_SRAM_Operation_Mode(char mode)
+;SRAM_IS62WVS5128GBLL_DRV.c,18 :: 		CS_SRAM_Lat=OFF;
+	BCLR	LATD, #9
+;SRAM_IS62WVS5128GBLL_DRV.c,19 :: 		SPIPut_SRAM(Instruction_Read_Mode_Register);
+	PUSH	W10
+	MOV.B	#1, W10
+	CALL	_SPIPut_SRAM
+	POP	W10
+;SRAM_IS62WVS5128GBLL_DRV.c,20 :: 		SPIPut_SRAM(mode);
+	CALL	_SPIPut_SRAM
+;SRAM_IS62WVS5128GBLL_DRV.c,21 :: 		CS_SRAM_Lat=ON;
+	BSET	LATD, #9
+;SRAM_IS62WVS5128GBLL_DRV.c,22 :: 		}
+L_end_Set_SRAM_Operation_Mode:
+	RETURN
+; end of _Set_SRAM_Operation_Mode
+
+_Read_Sequential_Bytes_From_SRAM_Memory:
+	LNK	#2
+
+;SRAM_IS62WVS5128GBLL_DRV.c,24 :: 		void Read_Sequential_Bytes_From_SRAM_Memory(unsigned long Register_ADD,char *RxBuffer,unsigned int BufferLength)
+;SRAM_IS62WVS5128GBLL_DRV.c,27 :: 		CS_SRAM_Lat=OFF;
+	PUSH	W10
+	PUSH	W11
+	BCLR	LATD, #9
+;SRAM_IS62WVS5128GBLL_DRV.c,28 :: 		SPIPut_SRAM(Instruction_Write_To_Memory);
+	PUSH.D	W10
+	MOV.B	#2, W10
+	CALL	_SPIPut_SRAM
+	POP.D	W10
+;SRAM_IS62WVS5128GBLL_DRV.c,29 :: 		SPIPut_SRAM((Register_ADD&0x00FF0000)>>16);
+	MOV	#0, W0
+	MOV	#255, W1
+	AND	W10, W0, W0
+	AND	W11, W1, W1
+	MOV	W1, W0
+	CLR	W1
+	PUSH.D	W10
+	MOV.B	W0, W10
+	CALL	_SPIPut_SRAM
+	POP.D	W10
+;SRAM_IS62WVS5128GBLL_DRV.c,30 :: 		SPIPut_SRAM((Register_ADD&0x0000FF00)>>8);
+	MOV	#65280, W0
+	MOV	#0, W1
+	AND	W10, W0, W2
+	AND	W11, W1, W3
+	LSR	W2, #8, W0
+	SL	W3, #8, W1
+	IOR	W0, W1, W0
+	LSR	W3, #8, W1
+	PUSH.D	W10
+	MOV.B	W0, W10
+	CALL	_SPIPut_SRAM
+	POP.D	W10
+;SRAM_IS62WVS5128GBLL_DRV.c,31 :: 		SPIPut_SRAM(Register_ADD&0x000000FF);
+	MOV	#255, W0
+	MOV	#0, W1
+	AND	W10, W0, W0
+	MOV.B	W0, W10
+	CALL	_SPIPut_SRAM
+;SRAM_IS62WVS5128GBLL_DRV.c,32 :: 		for(i=0;i<BufferLength;i++) RxBuffer[i]=SPIGet_SRAM(0x00);
+; i start address is: 4 (W2)
+	CLR	W2
+; i end address is: 4 (W2)
+L_Read_Sequential_Bytes_From_SRAM_Memory0:
+; i start address is: 4 (W2)
+	CP	W2, W13
+	BRA LTU	L__Read_Sequential_Bytes_From_SRAM_Memory9
+	GOTO	L_Read_Sequential_Bytes_From_SRAM_Memory1
+L__Read_Sequential_Bytes_From_SRAM_Memory9:
+	ADD	W12, W2, W0
+	MOV	W0, [W14+0]
+	PUSH.D	W10
+	CLR	W10
+	CALL	_SPIGet_SRAM
+	POP.D	W10
+	MOV	[W14+0], W1
+	MOV.B	W0, [W1]
+	INC	W2
+; i end address is: 4 (W2)
+	GOTO	L_Read_Sequential_Bytes_From_SRAM_Memory0
+L_Read_Sequential_Bytes_From_SRAM_Memory1:
+;SRAM_IS62WVS5128GBLL_DRV.c,33 :: 		CS_SRAM_Lat=ON;
+	BSET	LATD, #9
+;SRAM_IS62WVS5128GBLL_DRV.c,34 :: 		}
+L_end_Read_Sequential_Bytes_From_SRAM_Memory:
+	POP	W11
+	POP	W10
+	ULNK
+	RETURN
+; end of _Read_Sequential_Bytes_From_SRAM_Memory
+
+_Write_Sequential_Bytes_To_SRAM_Memory:
+
+;SRAM_IS62WVS5128GBLL_DRV.c,36 :: 		void Write_Sequential_Bytes_To_SRAM_Memory(unsigned long Register_ADD,char *TxBuffer,unsigned int BufferLength)
+;SRAM_IS62WVS5128GBLL_DRV.c,39 :: 		CS_SRAM_Lat=OFF;
+	PUSH	W10
+	PUSH	W11
+	BCLR	LATD, #9
+;SRAM_IS62WVS5128GBLL_DRV.c,40 :: 		SPIPut_SRAM(Instruction_Write_To_Memory);
+	PUSH.D	W10
+	MOV.B	#2, W10
+	CALL	_SPIPut_SRAM
+	POP.D	W10
+;SRAM_IS62WVS5128GBLL_DRV.c,41 :: 		SPIPut_SRAM((Register_ADD&0x00FF0000)>>16);
+	MOV	#0, W0
+	MOV	#255, W1
+	AND	W10, W0, W0
+	AND	W11, W1, W1
+	MOV	W1, W0
+	CLR	W1
+	PUSH.D	W10
+	MOV.B	W0, W10
+	CALL	_SPIPut_SRAM
+	POP.D	W10
+;SRAM_IS62WVS5128GBLL_DRV.c,42 :: 		SPIPut_SRAM((Register_ADD&0x0000FF00)>>8);
+	MOV	#65280, W0
+	MOV	#0, W1
+	AND	W10, W0, W2
+	AND	W11, W1, W3
+	LSR	W2, #8, W0
+	SL	W3, #8, W1
+	IOR	W0, W1, W0
+	LSR	W3, #8, W1
+	PUSH.D	W10
+	MOV.B	W0, W10
+	CALL	_SPIPut_SRAM
+	POP.D	W10
+;SRAM_IS62WVS5128GBLL_DRV.c,43 :: 		SPIPut_SRAM(Register_ADD&0x000000FF);
+	MOV	#255, W0
+	MOV	#0, W1
+	AND	W10, W0, W0
+	MOV.B	W0, W10
+	CALL	_SPIPut_SRAM
+;SRAM_IS62WVS5128GBLL_DRV.c,44 :: 		for(i=0;i<BufferLength;i++) SPIPut_SRAM(TxBuffer[i]);
+; i start address is: 2 (W1)
+	CLR	W1
+; i end address is: 2 (W1)
+L_Write_Sequential_Bytes_To_SRAM_Memory3:
+; i start address is: 2 (W1)
+	CP	W1, W13
+	BRA LTU	L__Write_Sequential_Bytes_To_SRAM_Memory11
+	GOTO	L_Write_Sequential_Bytes_To_SRAM_Memory4
+L__Write_Sequential_Bytes_To_SRAM_Memory11:
+	ADD	W12, W1, W0
+	PUSH.D	W10
+	MOV.B	[W0], W10
+	CALL	_SPIPut_SRAM
+	POP.D	W10
+	INC	W1
+; i end address is: 2 (W1)
+	GOTO	L_Write_Sequential_Bytes_To_SRAM_Memory3
+L_Write_Sequential_Bytes_To_SRAM_Memory4:
+;SRAM_IS62WVS5128GBLL_DRV.c,45 :: 		CS_SRAM_Lat=ON;
+	BSET	LATD, #9
+;SRAM_IS62WVS5128GBLL_DRV.c,46 :: 		}
+L_end_Write_Sequential_Bytes_To_SRAM_Memory:
+	POP	W11
+	POP	W10
+	RETURN
+; end of _Write_Sequential_Bytes_To_SRAM_Memory
+
+_Write_Byte_To_SRAM_Memory:
+
+;SRAM_IS62WVS5128GBLL_DRV.c,48 :: 		void Write_Byte_To_SRAM_Memory(unsigned long Register_ADD,char Register_Data)
+;SRAM_IS62WVS5128GBLL_DRV.c,50 :: 		CS_SRAM_Lat=OFF;
+	PUSH	W10
+	PUSH	W11
+	BCLR	LATD, #9
+;SRAM_IS62WVS5128GBLL_DRV.c,51 :: 		SPIPut_SRAM(Instruction_Write_To_Memory);
+	PUSH.D	W10
+	MOV.B	#2, W10
+	CALL	_SPIPut_SRAM
+	POP.D	W10
+;SRAM_IS62WVS5128GBLL_DRV.c,52 :: 		SPIPut_SRAM((Register_ADD&0x00FF0000)>>16);
+	MOV	#0, W0
+	MOV	#255, W1
+	AND	W10, W0, W0
+	AND	W11, W1, W1
+	MOV	W1, W0
+	CLR	W1
+	PUSH.D	W10
+	MOV.B	W0, W10
+	CALL	_SPIPut_SRAM
+	POP.D	W10
+;SRAM_IS62WVS5128GBLL_DRV.c,53 :: 		SPIPut_SRAM((Register_ADD&0x0000FF00)>>8);
+	MOV	#65280, W0
+	MOV	#0, W1
+	AND	W10, W0, W2
+	AND	W11, W1, W3
+	LSR	W2, #8, W0
+	SL	W3, #8, W1
+	IOR	W0, W1, W0
+	LSR	W3, #8, W1
+	PUSH.D	W10
+	MOV.B	W0, W10
+	CALL	_SPIPut_SRAM
+	POP.D	W10
+;SRAM_IS62WVS5128GBLL_DRV.c,54 :: 		SPIPut_SRAM(Register_ADD&0x000000FF);
+	MOV	#255, W0
+	MOV	#0, W1
+	AND	W10, W0, W0
+	MOV.B	W0, W10
+	CALL	_SPIPut_SRAM
+;SRAM_IS62WVS5128GBLL_DRV.c,55 :: 		SPIPut_SRAM(Register_Data);
+	MOV.B	W12, W10
+	CALL	_SPIPut_SRAM
+;SRAM_IS62WVS5128GBLL_DRV.c,56 :: 		CS_SRAM_Lat=ON;
+	BSET	LATD, #9
+;SRAM_IS62WVS5128GBLL_DRV.c,57 :: 		}
+L_end_Write_Byte_To_SRAM_Memory:
+	POP	W11
+	POP	W10
+	RETURN
+; end of _Write_Byte_To_SRAM_Memory
+
+_Read_Byte_From_SRAM_Memory:
+
+;SRAM_IS62WVS5128GBLL_DRV.c,59 :: 		char Read_Byte_From_SRAM_Memory(unsigned long Register_ADD)
+;SRAM_IS62WVS5128GBLL_DRV.c,62 :: 		CS_SRAM_Lat=OFF;
+	PUSH	W10
+	PUSH	W11
+	BCLR	LATD, #9
+;SRAM_IS62WVS5128GBLL_DRV.c,63 :: 		SPIPut_SRAM(Instruction_Read_From_Memory);
+	PUSH.D	W10
+	MOV.B	#3, W10
+	CALL	_SPIPut_SRAM
+	POP.D	W10
+;SRAM_IS62WVS5128GBLL_DRV.c,64 :: 		SPIPut_SRAM((Register_ADD&0x00FF0000)>>16);
+	MOV	#0, W0
+	MOV	#255, W1
+	AND	W10, W0, W0
+	AND	W11, W1, W1
+	MOV	W1, W0
+	CLR	W1
+	PUSH.D	W10
+	MOV.B	W0, W10
+	CALL	_SPIPut_SRAM
+	POP.D	W10
+;SRAM_IS62WVS5128GBLL_DRV.c,65 :: 		SPIPut_SRAM((Register_ADD&0x0000FF00)>>8);
+	MOV	#65280, W0
+	MOV	#0, W1
+	AND	W10, W0, W2
+	AND	W11, W1, W3
+	LSR	W2, #8, W0
+	SL	W3, #8, W1
+	IOR	W0, W1, W0
+	LSR	W3, #8, W1
+	PUSH.D	W10
+	MOV.B	W0, W10
+	CALL	_SPIPut_SRAM
+	POP.D	W10
+;SRAM_IS62WVS5128GBLL_DRV.c,66 :: 		SPIPut_SRAM(Register_ADD&0x000000FF);
+	MOV	#255, W0
+	MOV	#0, W1
+	AND	W10, W0, W0
+	MOV.B	W0, W10
+	CALL	_SPIPut_SRAM
+;SRAM_IS62WVS5128GBLL_DRV.c,67 :: 		Din=SPIGet_SRAM(0x00);
+	CLR	W10
+	CALL	_SPIGet_SRAM
+;SRAM_IS62WVS5128GBLL_DRV.c,68 :: 		CS_SRAM_Lat=ON;
+	BSET	LATD, #9
+;SRAM_IS62WVS5128GBLL_DRV.c,69 :: 		return Din;
+;SRAM_IS62WVS5128GBLL_DRV.c,70 :: 		}
+;SRAM_IS62WVS5128GBLL_DRV.c,69 :: 		return Din;
+;SRAM_IS62WVS5128GBLL_DRV.c,70 :: 		}
+L_end_Read_Byte_From_SRAM_Memory:
+	POP	W11
+	POP	W10
+	RETURN
+; end of _Read_Byte_From_SRAM_Memory
+
+_SPIPut_SRAM:
+
+;SRAM_IS62WVS5128GBLL_DRV.c,72 :: 		void SPIPut_SRAM(char din)
+;SRAM_IS62WVS5128GBLL_DRV.c,74 :: 		SPI1_Write(din);
+	ZE	W10, W10
+	CALL	_SPI1_Write
+;SRAM_IS62WVS5128GBLL_DRV.c,75 :: 		}
+L_end_SPIPut_SRAM:
+	RETURN
+; end of _SPIPut_SRAM
+
+_SPIGet_SRAM:
+
+;SRAM_IS62WVS5128GBLL_DRV.c,77 :: 		char SPIGet_SRAM(char din)
+;SRAM_IS62WVS5128GBLL_DRV.c,79 :: 		return SPI1_Read(din);
+	ZE	W10, W10
+	CALL	_SPI1_Read
+;SRAM_IS62WVS5128GBLL_DRV.c,80 :: 		}
+L_end_SPIGet_SRAM:
+	RETURN
+; end of _SPIGet_SRAM

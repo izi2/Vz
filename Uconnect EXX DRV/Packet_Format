@@ -1,0 +1,8 @@
+              j=0;
+              Wifi_Buffer[j++]=0;//ID              
+              Wifi_Buffer[j++]=0;//Length MSB
+              Wifi_Buffer[j++]=120;//Length LSB   DATA Length
+              Wifi_Buffer[j++]=0x01;// 0=Velocity ; 1=Distance ; 2=algo 2 ; 3=algo 3_4 ;4 algo 5
+                        
+
+              

@@ -1,0 +1,125 @@
+0	1	mikroCdsPIC.exe -MSF -DBG -pP24FJ1024GA606 -DL -SSA -O11111114 -fo32 -N"C:\Users\itziks\Documents\Uconnect EXX DRV (3)\Uconnect EXX DRV\VZ drivers.mcpds" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\Defs\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\Uses\" -SP"C:\Users\itziks\Documents\Uconnect EXX DRV (3)\Uconnect EXX DRV\" -IP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\Uses\" -IP"C:\Users\itziks\Documents\Uconnect EXX DRV (3)\Uconnect EXX DRV\" "Main.c" "PIC_DRV_Uconnect.c" "VZ_Sensor.c" "Debug_Drv.c" "Vz_Algorithm.c" "SC16IS740_DRV.c" "MCP23S17_DRV.c" "SRAM_IS62WVS5128GBLL_DRV.c" "ESP_12F_DRV.c" "Bitset.c" "Config_File.c" "config_sensor.c" "Process_data.c" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl" "__Lib_CType.mcl" "__Lib_CString.mcl" "__Lib_CStdlib.mcl" "__Lib_CMath.mcl" "__Lib_Conversions.mcl" "__Lib_Sprintf.mcl" "__Lib_PrintOut.mcl" "__Lib_Sprinti.mcl" "__Lib_Sprintl.mcl" "__Lib_Time.mcl" "__Lib_ADC_1_GAGB_16ch.mcl" "__Lib_I2C_123_p24_FJ.mcl" "__Lib_SPI_123_p24fj_gx.mcl" "__Lib_UART_123456_p24_p33.mcl"	 
+diagnostics: 0	121	Loading...	 
+diagnostics: 0	122	Compilation Started	timelib.h
+hint: 31	1163	Variable 'k' has been declared, but not used	Main.c
+hint: 32	1163	Variable 'j' has been declared, but not used	Main.c
+hint: 34	1163	Variable 'f' has been declared, but not used	Main.c
+hint: 35	1163	Variable 'hrt' has been declared, but not used	Main.c
+hint: 36	1163	Variable 'defultParams' has been declared, but not used	Main.c
+hint: 37	1163	Variable 'gty' has been declared, but not used	Main.c
+hint: 0	1004	interrupt handler (UART2_Interrupt at 0x0050)	Main.c
+hint: 0	1004	interrupt handler (UART1_Interrupt at 0x002A)	Main.c
+hint: 0	1004	interrupt handler (RTCC_Alarm at 0x0090)	Main.c
+diagnostics: 205	123	Compiled Successfully	Main.c
+hint: 31	1164	Variable 'SamplingCounter' has been eliminated by optimizer	Main.c
+hint: 33	1164	Variable 'firstProgramming' has been eliminated by optimizer	Main.c
+hint: 38	1164	Variable 'loopi' has been eliminated by optimizer	Main.c
+diagnostics: 0	122	Compilation Started	timelib.h
+diagnostics: 858	123	Compiled Successfully	PIC_DRV_Uconnect.c
+hint: 313	1164	Variable 'ADC_Sampling' has been eliminated by optimizer	PIC_DRV_Uconnect.c
+hint: 313	1164	Variable 'VIN' has been eliminated by optimizer	PIC_DRV_Uconnect.c
+hint: 312	1164	Variable 'cTemp' has been eliminated by optimizer	PIC_DRV_Uconnect.c
+hint: 353	1164	Variable 'ADC_Sampling' has been eliminated by optimizer	PIC_DRV_Uconnect.c
+hint: 353	1164	Variable 'VIN' has been eliminated by optimizer	PIC_DRV_Uconnect.c
+hint: 377	1164	Variable 'ADC_Sampling' has been eliminated by optimizer	PIC_DRV_Uconnect.c
+hint: 377	1164	Variable 'VIN' has been eliminated by optimizer	PIC_DRV_Uconnect.c
+hint: 405	1164	Variable 'VIN' has been eliminated by optimizer	PIC_DRV_Uconnect.c
+hint: 604	1164	Variable 'lTemp' has been eliminated by optimizer	PIC_DRV_Uconnect.c
+hint: 635	1164	Variable 'cTemp' has been eliminated by optimizer	PIC_DRV_Uconnect.c
+hint: 662	1164	Variable 'cTemp' has been eliminated by optimizer	PIC_DRV_Uconnect.c
+hint: 789	1164	Variable 'ADC_Sampling' has been eliminated by optimizer	PIC_DRV_Uconnect.c
+hint: 850	1164	Variable 'i' has been eliminated by optimizer	PIC_DRV_Uconnect.c
+diagnostics: 0	122	Compilation Started	vz_sensor.h
+hint: 13	1163	Variable 'RxBuffer' has been declared, but not used	VZ_Sensor.c
+hint: 39	1163	Variable 'RxBuffer' has been declared, but not used	VZ_Sensor.c
+hint: 68	1163	Variable 'RxBuffer' has been declared, but not used	VZ_Sensor.c
+hint: 96	1163	Variable 'RxBuffer' has been declared, but not used	VZ_Sensor.c
+hint: 121	1163	Variable 'i' has been declared, but not used	VZ_Sensor.c
+diagnostics: 215	123	Compiled Successfully	VZ_Sensor.c
+hint: 95	1164	Variable 'BufferIndex' has been eliminated by optimizer	VZ_Sensor.c
+diagnostics: 0	122	Compilation Started	timelib.h
+hint: 124	1163	Variable 'LoopIndex' has been declared, but not used	Debug_Drv.c
+diagnostics: 140	123	Compiled Successfully	Debug_Drv.c
+hint: 124	1164	Variable 'BufferIndex' has been eliminated by optimizer	Debug_Drv.c
+diagnostics: 0	122	Compilation Started	timelib.h
+warning: 112	1505	Suspicious pointer conversion	Vz_Algorithm.c
+warning: 117	1505	Suspicious pointer conversion	Vz_Algorithm.c
+warning: 132	1505	Suspicious pointer conversion	Vz_Algorithm.c
+warning: 141	1505	Suspicious pointer conversion	Vz_Algorithm.c
+warning: 177	1505	Suspicious pointer conversion	Vz_Algorithm.c
+warning: 182	1505	Suspicious pointer conversion	Vz_Algorithm.c
+hint: 241	1163	Variable 'AveU1Ipoint' has been declared, but not used	Vz_Algorithm.c
+hint: 242	1163	Variable 'AveU2Ipoint' has been declared, but not used	Vz_Algorithm.c
+hint: 243	1163	Variable 'AveDIpoint' has been declared, but not used	Vz_Algorithm.c
+hint: 258	1163	Variable 'j' has been declared, but not used	Vz_Algorithm.c
+diagnostics: 551	123	Compiled Successfully	Vz_Algorithm.c
+hint: 71	1164	Variable 'UXpoint' has been eliminated by optimizer	Vz_Algorithm.c
+hint: 247	1164	Variable 'MaxNBeforeStop' has been eliminated by optimizer	Vz_Algorithm.c
+hint: 253	1164	Variable 'U1Xpoint' has been eliminated by optimizer	Vz_Algorithm.c
+hint: 496	1164	Variable 'Result' has been eliminated by optimizer	Vz_Algorithm.c
+diagnostics: 0	122	Compilation Started	timelib.h
+hint: 48	1163	Variable 'cTemp' has been declared, but not used	SC16IS740_DRV.c
+diagnostics: 113	123	Compiled Successfully	SC16IS740_DRV.c
+hint: 35	1164	Variable 'cTemp' has been eliminated by optimizer	SC16IS740_DRV.c
+diagnostics: 0	122	Compilation Started	timelib.h
+diagnostics: 122	123	Compiled Successfully	MCP23S17_DRV.c
+hint: 105	1164	Variable 'DataOut' has been eliminated by optimizer	MCP23S17_DRV.c
+diagnostics: 0	122	Compilation Started	timelib.h
+diagnostics: 80	123	Compiled Successfully	SRAM_IS62WVS5128GBLL_DRV.c
+hint: 61	1164	Variable 'Din' has been eliminated by optimizer	SRAM_IS62WVS5128GBLL_DRV.c
+diagnostics: 0	122	Compilation Started	string.h
+hint: 104	1163	Variable 'cTemp' has been declared, but not used	ESP_12F_DRV.c
+hint: 211	1163	Variable 'cTemp' has been declared, but not used	ESP_12F_DRV.c
+warning: 314	1505	Suspicious pointer conversion	ESP_12F_DRV.c
+diagnostics: 364	123	Compiled Successfully	ESP_12F_DRV.c
+warning: 279	1512	variable 'uiTemp' might not have been initialized	ESP_12F_DRV.c
+warning: 219	1512	variable 'LedCount' might not have been initialized	ESP_12F_DRV.c
+warning: 237	1512	variable 'j' might not have been initialized	ESP_12F_DRV.c
+hint: 103	1164	Variable 'i' has been eliminated by optimizer	ESP_12F_DRV.c
+diagnostics: 0	122	Compilation Started	types.h
+warning: 104	1505	Suspicious pointer conversion	Bitset.c
+diagnostics: 240	123	Compiled Successfully	Bitset.c
+warning: 27	1512	variable 'aLong' might not have been initialized	Bitset.c
+warning: 50	1512	variable 'aInt' might not have been initialized	Bitset.c
+hint: 36	1164	Variable 'float_Long' has been eliminated by optimizer	Bitset.c
+hint: 42	1164	Variable 'float_int' has been eliminated by optimizer	Bitset.c
+hint: 207	1164	Variable 't' has been eliminated by optimizer	Bitset.c
+diagnostics: 0	122	Compilation Started	types.h
+diagnostics: 342	123	Compiled Successfully	Config_File.c
+hint: 97	1164	Variable 'high' has been eliminated by optimizer	Config_File.c
+hint: 115	1164	Variable 'max_high' has been eliminated by optimizer	Config_File.c
+hint: 136	1164	Variable 'high' has been eliminated by optimizer	Config_File.c
+hint: 159	1164	Variable 'low' has been eliminated by optimizer	Config_File.c
+hint: 161	1164	Variable 'value' has been eliminated by optimizer	Config_File.c
+hint: 176	1164	Variable 'high' has been eliminated by optimizer	Config_File.c
+hint: 195	1164	Variable 'low' has been eliminated by optimizer	Config_File.c
+hint: 213	1164	Variable 'low' has been eliminated by optimizer	Config_File.c
+hint: 224	1164	Variable 'low' has been eliminated by optimizer	Config_File.c
+hint: 292	1164	Variable 'value' has been eliminated by optimizer	Config_File.c
+hint: 306	1164	Variable 'property' has been eliminated by optimizer	Config_File.c
+hint: 313	1164	Variable 'max_high' has been eliminated by optimizer	Config_File.c
+diagnostics: 0	122	Compilation Started	types.h
+hint: 22	1354	argument may be out of range [sizePerItem]	config_sensor.c
+warning: 70	1508	Implicit conversion of int to ptr	config_sensor.c
+warning: 71	1508	Implicit conversion of int to ptr	config_sensor.c
+warning: 88	1503	Result is not defined in function: 'setFirstProgmmanigToFalse'	config_sensor.c
+diagnostics: 154	123	Compiled Successfully	config_sensor.c
+hint: 20	1164	Variable 'endAddress' has been eliminated by optimizer	config_sensor.c
+hint: 32	1164	Variable 'i' has been eliminated by optimizer	config_sensor.c
+diagnostics: 0	122	Compilation Started	process_data.h
+warning: 70	1508	Implicit conversion of int to ptr	Process_data.c
+warning: 74	1508	Implicit conversion of int to ptr	Process_data.c
+warning: 77	1508	Implicit conversion of int to ptr	Process_data.c
+warning: 80	1508	Implicit conversion of int to ptr	Process_data.c
+warning: 83	1508	Implicit conversion of int to ptr	Process_data.c
+warning: 86	1508	Implicit conversion of int to ptr	Process_data.c
+diagnostics: 96	123	Compiled Successfully	Process_data.c
+hint: 58	1164	Variable 't' has been eliminated by optimizer	Process_data.c
+diagnostics: 0	127	All files Compiled in 1719 ms	 
+hint: 0	1144	Used RX (bytes): 32 (100%)   Free RX (bytes): 0 (0%)	Used RX (bytes): 32 (100%)   Free RX (bytes): 0 (0%)
+hint: 0	1144	Static RAM (bytes): 2005   Dynamic RAM (bytes): 28714	Static RAM (bytes): 2005   Dynamic RAM (bytes): 28714
+hint: 0	1144	Used ROM (bytes): 14615 (2%)  Free ROM (bytes): 689641 (98%)	Used ROM (bytes): 14615 (2%)  Free ROM (bytes): 689641 (98%)
+diagnostics: 0	125	Project Linked Successfully	VZ drivers.mcpds
+diagnostics: 0	128	Linked in 1047 ms	 
+diagnostics: 0	129	Project 'VZ drivers.mcpds' completed: 3594 ms	 
+diagnostics: 0	103	Finished successfully: 18 Feb 2020, 18:00:05	VZ drivers.mcpds
