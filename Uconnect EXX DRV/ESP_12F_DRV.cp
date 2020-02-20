@@ -1,4 +1,4 @@
-#line 1 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/ESP_12F_DRV.c"
+#line 1 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/ESP_12F_DRV.c"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/string.h"
 
 
@@ -25,9 +25,9 @@ char * strrchr(char *ptr, char chr);
 char * strstr(char * s1, char * s2);
 char * strtok(char * s1, char * s2);
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/stdio.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/pic_drv_uconnect.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
-#line 27 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/pic_drv_uconnect.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
+#line 27 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
 typedef struct
  {
  unsigned char ss ;
@@ -38,16 +38,16 @@ typedef struct
  unsigned char mo ;
  unsigned int yy ;
  } TimeStruct ;
-#line 41 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
+#line 41 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
 extern long Time_jd1970 ;
-#line 46 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
+#line 46 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
 long Time_dateToEpoch(TimeStruct *ts) ;
 void Time_epochToDate(long e, TimeStruct *ts) ;
 void TurnOnRTC_Timer0(void);
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/limits.h"
-#line 71 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
+#line 71 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 typedef unsigned char uint_8;
 
 
@@ -63,7 +63,7 @@ typedef signed char int_8;
 typedef signed int int_16;
 
 typedef signed long int_32;
-#line 106 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
+#line 106 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 typedef uint_16 Mem_AddressType;
 
 typedef uint_32 TimestampType;
@@ -272,7 +272,7 @@ typedef struct Sampling
 
 typedef Sampling *(*GetGeneralInput)(void);
 typedef void (*ActiveMethod)(Switch);
-#line 8 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
+#line 8 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
 typedef unsigned char (*Reader)(unsigned int Address);
 
 typedef void (*Writer)(unsigned int Address ,char DataByte);
@@ -317,9 +317,9 @@ Mem_AddressType SetLongProperty(Mem_AddressType address, uint_32 value);
 void SetLong3Property(Mem_AddressType address, uint_32 value);
 
 void SetSignedLongProperty(Mem_AddressType start_address, int_32 value);
-#line 68 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
+#line 68 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
 Mem_AddressType SetFloatProperty(Mem_AddressType address,float property);
-#line 3 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/pic_drv_uconnect.h"
+#line 3 "c:/users/itziks/documents/vz/uconnect exx drv/pic_drv_uconnect.h"
 void Pseudo_Uart1_Write_Byte(char din);
 void Pseudo_Uart1_Write_Text(unsigned char *p);
 void Pseudo_Uart1_Enable(char mode);
@@ -360,7 +360,7 @@ void CheckRxDataFromInterruptUart2(void);
 
 enum LED_MODE {LED_ON= 0,LED_OFF,LED_NOT,LED_RED,LED_GREEN};
 enum SPI1_TRANSFER_MODE {SPI1_TRANSFER_MODE_8BIT= 0,SPI1_TRANSFER_MODE_16BIT,SPI1_TRANSFER_MODE_32BIT};
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/sc16is740_drv.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/sc16is740_drv.h"
 void Init_SC16IS740(void);
 void Write_To_SC16IS740_Internal_Register(char Register_ADD,char Register_Data);
 char Read_From_SC16IS740_Internal_Register(char Register_ADD);
@@ -369,9 +369,10 @@ char SC16IS740_ReadBufferFromUart(char *buff);
 char CheckSC16IS740UartDataReady(unsigned int TimeOut,char *buff);
 void SPIPut_SC16IS740(char din);
 char SPIGet_SC16IS740(char din);
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/esp_12f_drv.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
-#line 4 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/esp_12f_drv.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/esp_12f_drv.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
+#line 3 "c:/users/itziks/documents/vz/uconnect exx drv/esp_12f_drv.h"
+int GetWifiRssi(void);
 void ESP_Testing_Func(void);
 char Init_ESP(void);
 char CheckWifiConnection(void);
@@ -386,7 +387,9 @@ char *PullDataFromIDP(int *length,char *Buff);
 char GetEspData(unsigned long TimeOut_uSec_Start);
 char CheckDataFromGateway(void);
 char ReConnectToServer(void);
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/mcp23s17_drv.h"
+void RunAlgorithmAndBuiledTxParametersPacket(void);
+void AddRawDataToWifiBuffer(void);
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/mcp23s17_drv.h"
 void SPIPut_MCP23S17(char din);
 char SPIGet_MCP23S17(char din);
 void Write_To_MCP23S17_Internal_Register(char Register_ADD,char Register_Data);
@@ -396,10 +399,10 @@ char Read_Write_MCP23S17_IO(char PinName,char mode);
 
 
 enum MCP23S17_IO_Names {EN_1_8V=0,CS_FLASH,RESET_ADP,USER_LED,HOLD_SRAM,WP_FLASH,RESET_VZ,EN_LASER,ESP_RTS,ESP_CTS,ESP_EN_PIN,ESP_RESET,ESP_FLASH};
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/bitset.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
-#line 39 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/bitset.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/bitset.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
+#line 39 "c:/users/itziks/documents/vz/uconnect exx drv/bitset.h"
 typedef struct IntToByte
 {
 
@@ -475,7 +478,7 @@ uint_32 CombineLong3HighLow(uint_8 high, uint_8 middle, uint_8 low);
 int_32 CombineSignedLongHighLow(int_8 max_high, int_8 middle_high, int_8 min_high, int_8 low);
 
 int_8 GetOnBitPosition(uint_32 bits, uint_8 size_bits);
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/vz_sensor.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/vz_sensor.h"
 char Init_VZ_Sensor(void);
 void VzSensor_ReadFWVer(void);
 char OpticDataOnSPI_ON(void);
@@ -491,11 +494,42 @@ void OpticDataGetCleanBuffer(void);
 
 
 enum VZ_Sensor_Names {Normal=0,Saw,Sinus};
-#line 18 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/ESP_12F_DRV.c"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/vz_algorithm.h"
+
+
+
+
+
+
+
+
+
+
+void Vz_Algorithm_2(void);
+void Vz_Algorithm_3_4(void);
+void Vz_Algorithm_5(void);
+void uError_Algo_3_4(char *ST,char *a,int *tC,int *dC,int *C0,int *C1,int *C2,int *U1Ipoint,int *U2Ipoint,int *DIpoint);
+void uError_Algo5(char *ST,int *dC,int *C0,int *C1,char ErorCode);
+void void Vz_Algoritem_by_algo_select();
+void ResetAlgoParametrsOutBuffer(void);
+
+
+enum Algo_Types_Names {Algo_2=2,Algo_3_4,Algo_5,No_Algo};
+#line 18 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/ESP_12F_DRV.c"
+char volatile Wifi_TX_Buffer[1000];
 char volatile ESP_RX_Buffer[ 600 ];
 char volatile ESP_GateWay_Buffer[ 600 ];
 unsigned int Gateway_Buffer_Length;
 char volatile Data_From_Gateway_Flag= 0 ;
+unsigned int volatile WifiBufferLength=0;
+char CWJAP_String[150];
+char CIPSTART_String[150];
+char EndUnitID=0;
+extern char volatile AlgorithmTypeParametr;
+extern char volatile Algo_Parametrs_Out_Buffer[];
+extern int volatile Vz_Sensor_Velocity_Buffer_int[];
+extern int volatile Vz_Sensor_Distance_Buffer_int[];
+
 
 
 char Init_ESP(void)
@@ -542,14 +576,14 @@ char Init_ESP(void)
 
 char ConnectToServer(void)
 {
- SendAtCommandToEsp( "AT+CIPSTART=\"TCP\",\"192.168.16.118\",9875\r\n" );
+ SendAtCommandToEsp(CIPSTART_String);
  GetEspData(5000000);
  if(strstr(ESP_RX_Buffer,"CONNECT")) return 1;
-#line 74 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/ESP_12F_DRV.c"
- SendAtCommandToEsp( "AT+CIPSTART=\"TCP\",\"192.168.16.118\",9875\r\n" );
+#line 84 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/ESP_12F_DRV.c"
+ SendAtCommandToEsp(CIPSTART_String);
  GetEspData(5000000);
  if(strstr(ESP_RX_Buffer,"CONNECT")) return 1;
-#line 80 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/ESP_12F_DRV.c"
+#line 90 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/ESP_12F_DRV.c"
  return 0;
 }
 
@@ -584,7 +618,7 @@ char ConnectingToWifiNet(void)
  SendAtCommandToEsp("AT+CIPMUX=0\r\n");
  GetEspData(1000);
  PrintOut(PrintHandler, "\rWaiting For IP...");
- SendAtCommandToEsp( "AT+CWJAP=\"Ravtech-Public\",\"@ravTech!\"\r\n" );
+ SendAtCommandToEsp(CWJAP_String);
  while(ulTemp++<8000)
  {
  GetEspData(1000);
@@ -593,24 +627,40 @@ char ConnectingToWifiNet(void)
  if(ulTemp>=8000) {PrintOut(PrintHandler, "\rFailed To Get IP"); return 0;}
  PrintOut(PrintHandler, "\rGeting IP Address Successfully");
  delay_ms(2000);
-
- SendAtCommandToEsp("AT+CWJAP?\r\n");
- GetEspData(1000);
- PrintOut(PrintHandler,"\rRSSI:%s",ESP_RX_Buffer);
+ if(i=GetWifiRssi()) PrintOut(PrintHandler, "\rRSSI: %ddbm",i);
+ else PrintOut(PrintHandler, "\rFailed To Get RSSI");
  PrintOut(PrintHandler, "\rConnecting To Server...");
  if(!ConnectToServer())
  {
- if(!ConnectToServer()) return 0;
+ if(!ConnectToServer())
+ {
+ PrintOut(PrintHandler, "\rFailed To Connect To Server!!!");
+ return 0;
+ }
  }
  PrintOut(PrintHandler, "\rConnected To Server Successfully");
  LED_Activation(LED_RED,LED_ON);
  return 1;
 }
 
+int GetWifiRssi(void)
+{
+
+
+ char *p,i=0,str[10];
+ SendAtCommandToEsp("AT+CWJAP?\r\n");
+ GetEspData(1000);
+ if(!(p=strstr(ESP_RX_Buffer,"-"))) return 0;
+ while((p[i]!='\r')&&(i<5)) str[i]=p[i++];
+ if(i>=5) return 0;
+ str[i]=0;
+ return atoi(str);
+}
+
 void SendAtCommandToEsp(char *buff)
 {
  unsigned int i=0;
-#line 143 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/ESP_12F_DRV.c"
+#line 169 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/ESP_12F_DRV.c"
  while(buff[i]!=0)
  {
  Uart1_Write(buff[i]);
@@ -785,7 +835,7 @@ char CheckDataFromGateway(void)
  if(!(p=PullDataFromIDP(&Gateway_Buffer_Length,ESP_RX_Buffer))) {Data_From_Gateway_Flag= 0 ;return 0;}
  Data_From_Gateway_Flag= 1 ;
  for(i=0;i<Gateway_Buffer_Length;i++) ESP_GateWay_Buffer[i]=p[i];
-#line 321 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/ESP_12F_DRV.c"
+#line 347 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/ESP_12F_DRV.c"
  U1STAbits.OERR=0;
   IFS0bits.U1RXIF =0; IEC0bits.U1RXIE =1;
  return 1;
@@ -804,7 +854,7 @@ char GetEspData(unsigned long TimeOut_uSec_Start)
  if( IFS0bits.U1RXIF )
  {
  if(CheckDataFromGateway()) return 2;
-#line 342 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/ESP_12F_DRV.c"
+#line 368 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/ESP_12F_DRV.c"
   IFS0bits.U1RXIF =0; IEC0bits.U1RXIE =1;
  return 1;
  }
@@ -814,6 +864,7 @@ char GetEspData(unsigned long TimeOut_uSec_Start)
 
 char ReConnectToServer(void)
 {
+ {
  LED_Activation(LED_GREEN,LED_OFF);LED_Activation(LED_RED,LED_ON);
  SendAtCommandToEsp("+++");
  if(!ConnectToServer())
@@ -823,8 +874,94 @@ char ReConnectToServer(void)
  if(!CheckWifiConnection())
  if(!CheckWifiConnection())
  {
- if(!Init_ESP()) return ConnectingToWifiNet();
+ return ConnectingToWifiNet();
  }
  LED_Activation(LED_RED,LED_ON);LED_Activation(LED_GREEN,LED_ON);
  return 1;
+ }
+}
+
+void RunAlgorithmAndBuiledTxParametersPacket(void)
+{
+ unsigned int i;
+ switch (AlgorithmTypeParametr)
+ {
+ case No_Algo:
+ OpticDataGetCleanBuffer();
+ return;
+ break;
+ case Algo_2:
+ Vz_Algorithm_2();
+ if(Algo_Parametrs_Out_Buffer[0])
+ {
+ WifiBufferLength++;
+ Wifi_TX_Buffer[WifiBufferLength++]=EndUnitID;
+ Wifi_TX_Buffer[WifiBufferLength++]=0;
+ Wifi_TX_Buffer[WifiBufferLength++]= 2 ;
+ Wifi_TX_Buffer[WifiBufferLength++]=Algo_2;
+ Wifi_TX_Buffer[WifiBufferLength++]=Algo_Parametrs_Out_Buffer[1];
+ Wifi_TX_Buffer[WifiBufferLength]=Algo_Parametrs_Out_Buffer[2];
+ }
+ break;
+ case Algo_3_4:
+ Vz_Algorithm_3_4();
+ if(Algo_Parametrs_Out_Buffer[0])
+ {
+ Wifi_TX_Buffer[WifiBufferLength++]=EndUnitID;
+ Wifi_TX_Buffer[WifiBufferLength++]=0;
+ Wifi_TX_Buffer[WifiBufferLength++]= 22 ;
+ Wifi_TX_Buffer[WifiBufferLength++]=Algo_3_4;
+ for(i=1;i<= 22 ;i++) Wifi_TX_Buffer[WifiBufferLength++]=Algo_Parametrs_Out_Buffer[i];
+ }
+ break;
+ case Algo_5:
+ Vz_Algorithm_5();
+ if(Algo_Parametrs_Out_Buffer[0])
+ {
+ Wifi_TX_Buffer[WifiBufferLength++]=EndUnitID;
+ Wifi_TX_Buffer[WifiBufferLength++]=0;
+ Wifi_TX_Buffer[WifiBufferLength++]= 10 ;
+ Wifi_TX_Buffer[WifiBufferLength++]=Algo_5;
+ for(i=1;i<= 10 ;i++) Wifi_TX_Buffer[WifiBufferLength++]=Algo_Parametrs_Out_Buffer[i];
+ }
+ break;
+ }
+}
+
+void AddRawDataToWifiBuffer(void)
+{
+ char i;
+ if(AlgorithmTypeParametr==No_Algo)
+ {
+ OpticDataGetFrame_AllData(void);
+ Wifi_TX_Buffer[WifiBufferLength++]=EndUnitID;
+ Wifi_TX_Buffer[WifiBufferLength++]=0;
+ Wifi_TX_Buffer[WifiBufferLength++]=120;
+ Wifi_TX_Buffer[WifiBufferLength++]=0;
+ for (i=0; i < 60; i++) WifiBufferLength=SInt2Array(Vz_Sensor_Velocity_Buffer_int[i],Wifi_TX_Buffer,WifiBufferLength);
+ Wifi_TX_Buffer[WifiBufferLength++]=EndUnitID;
+ Wifi_TX_Buffer[WifiBufferLength++]=0;
+ Wifi_TX_Buffer[WifiBufferLength++]=120;
+ Wifi_TX_Buffer[WifiBufferLength++]=1;
+ for (i=0; i < 60; i++) WifiBufferLength=SInt2Array(Vz_Sensor_Distance_Buffer_int[i],Wifi_TX_Buffer,WifiBufferLength);
+ return;
+
+ }
+ else if(AlgorithmTypeParametr==Algo_5)
+ {
+ Wifi_TX_Buffer[WifiBufferLength++]=EndUnitID;
+ Wifi_TX_Buffer[WifiBufferLength++]=0;
+ Wifi_TX_Buffer[WifiBufferLength++]=120;
+ Wifi_TX_Buffer[WifiBufferLength++]=1;
+ for (i=0; i < 60; i++) WifiBufferLength=SInt2Array(Vz_Sensor_Distance_Buffer_int[i],Wifi_TX_Buffer,WifiBufferLength);
+ return;
+ }
+ else
+ { Wifi_TX_Buffer[WifiBufferLength++]=EndUnitID;
+ Wifi_TX_Buffer[WifiBufferLength++]=0;
+ Wifi_TX_Buffer[WifiBufferLength++]=120;
+ Wifi_TX_Buffer[WifiBufferLength++]=0;
+ for (i=0; i < 60; i++) WifiBufferLength=SInt2Array(Vz_Sensor_Velocity_Buffer_int[i],Wifi_TX_Buffer,WifiBufferLength);
+ return;
+ }
 }

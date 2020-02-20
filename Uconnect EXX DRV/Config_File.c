@@ -23,7 +23,7 @@ void GetEepromControl(Mem_AddressType address, EepromControl *control)
 
 void MemWrt(Mem_AddressType address,char m_data)
 {
-
+//    PrintOut(PrintHandler,"save %d ",(uint_8) m_data);
     m_writer(address, m_data);//MEM[address] = _data;//
 
 }

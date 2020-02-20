@@ -5,17 +5,21 @@
 #include "config_sensor.h"
 #include "config_file.h"
 #include "PIC_DRV_Uconnect.h"
+#include "MCP23S17_DRV.h"
+#include "ESP_12F_DRV.h"
 
-int_16 paramsDefult[LENGTH_PARAMS_IN] = {4000,2000,10,10,200};
+int_16 paramsDefult[LENGTH_PARAMS_IN] = {4000, 2000, 10, 10, 200};
 int_16 ParamsIn[LENGTH_PARAMS_IN];
-int_16 ParamsOut[LENGTH_PARAMS_IN];
-uint_8 ID_SENSOR;
-uint_8 ALGO_SELECTED;
-uint_8 POINTER_LEASER;
+extern char CWJAP_String[];
+extern char CIPSTART_String[];
+extern char volatile EndUnitID;
+extern char volatile AlgorithmTypeParametr;
+extern char volatile PointerLeaser_Enable;
+extern char volatile RawDataTX_Enable;
 
-//char networkNameAnd_password[LENGTH_NAME_AND_PASSWORD] = "ryrtytytg fduftgugtutgf\0";
 
-Mem_AddressType setAddressPropertyC(propertySensor* propertySens,Mem_AddressType address,uint_8 sizePerItem,uint_8 endPropertyAddress)
+Mem_AddressType setAddressPropertyC(propertySensor *propertySens, Mem_AddressType address, uint_8 sizePerItem,
+                                    uint_8 endPropertyAddress)
 {
     uint_8 endAddress;
     propertySens->address = address;
@@ -26,130 +30,218 @@ Mem_AddressType setAddressPropertyC(propertySensor* propertySens,Mem_AddressType
 }
 
 
-void initConfigSensor(ConfigSensor * confSensor)
+void initConfigSensor(ConfigSensor *confSensor)
 {
 
     Mem_AddressType i;
-    i = setAddressPropertyC(&confSensor->idS,START_MEM,C_UCHAR,0);
+    i = setAddressPropertyC(&confSensor->idS, START_MEM, C_UCHAR, 0);
 
-    i = setAddressPropertyC(&confSensor->algoSelected,i,C_UCHAR,0);
+    i = setAddressPropertyC(&confSensor->algoSelected, i, C_UCHAR, 0);
 
-    i = setAddressPropertyC(&confSensor->pointerLeaser,i,C_UCHAR,0);
+    i = setAddressPropertyC(&confSensor->pointerLeaser, i, C_UCHAR, 0);
 
-    i = setAddressPropertyC(&confSensor->sensorBist,i,C_UCHAR,0);
+    i = setAddressPropertyC(&confSensor->transmitedToGatway, i, C_UCHAR, 0);
 
-    i = setAddressPropertyC(&confSensor->paramsIn,i,C_16INT,LENGTH_PARAMS_IN*2);
+    i = setAddressPropertyC(&confSensor->transmitRowData, i, C_UCHAR, 0);
 
-    i = setAddressPropertyC(&confSensor->networkName,i,C_UCHAR,LENGTH_NAME_NET);
+    i = setAddressPropertyC(&confSensor->sensorBist, i, C_UCHAR, 0);
 
-    i = setAddressPropertyC(&confSensor->networkPassword,i,C_UCHAR,LENGTH_PASSWORD_NET);
+    i = setAddressPropertyC(&confSensor->paramsIn, i, C_16INT, LENGTH_PARAMS_IN * 2);
 
-    i = setAddressPropertyC(&confSensor->networkPort,i,C_UCHAR,LENGTH_PORT_NET);
+    i = setAddressPropertyC(&confSensor->networkName, i, C_UCHAR, LENGTH_NAME_NET);
 
-    i = setAddressPropertyC(&confSensor->networkServerIp,i,C_UCHAR,LENGTH_SERVER_IP);
+    i = setAddressPropertyC(&confSensor->networkPassword, i, C_UCHAR, LENGTH_PASSWORD_NET);
+
+    i = setAddressPropertyC(&confSensor->networkPort, i, C_UCHAR, LENGTH_PORT_NET);
+
+    i = setAddressPropertyC(&confSensor->networkServerIp, i, C_UCHAR, LENGTH_SERVER_IP);
+
+}
+
+void readEEpromRawData(propertySensor *propertySens, char *dest,uint_8 index)
+{
+    uint_8 i =0;
+
+    for (i = propertySens->address; i < propertySens->endAddress;)
+    {
+        dest[index] = GetProperty(i);
+        ++index;
+    }
 
 }
 
 
-void saveInEEpromPropertyConfig(propertySensor* propertySens, void* value)
+void saveInEEpromPropertyConfig(propertySensor *propertySens, void *value)
 {
     Mem_AddressType i;
-    char * tmp = (char *) value;
-    for(i=propertySens->address; i < propertySens->endAddress; i++)
+
+    uint_8 *tmp = (uint_8 *) value;
+    for (i = propertySens->address; i < propertySens->endAddress; i++)
     {
-        MemWrt(i,*tmp);
+        MemWrt(i, *tmp);
         ++tmp;
     }
 
 }
 
-void saveDefultConfig(ConfigSensor * confSensor)
+void saveDefultConfig(ConfigSensor *confSensor)
 {
-    saveInEEpromPropertyConfig(&confSensor->idS,0);
-    saveInEEpromPropertyConfig(&confSensor->algoSelected,Algorithm_2);
-    saveInEEpromPropertyConfig(&confSensor->pointerLeaser,1);
-    saveInEEpromPropertyConfig(&confSensor->sensorBist,1);
-    saveInEEpromPropertyConfig(&confSensor->paramsIn,paramsDefult);
-    saveInEEpromPropertyConfig(&confSensor->networkName,"Ravtech-Public\0");
-    saveInEEpromPropertyConfig(&confSensor->networkPassword,"@ravTech!\0");
-    saveInEEpromPropertyConfig(&confSensor->networkPort,"9875\0");
-    saveInEEpromPropertyConfig(&confSensor->networkServerIp,"192.168.1.25\0");
+    uint_8 id = 0;
+    uint_8 algo = 0;
+    uint_8 pointerLeaser = 1;
+    uint_8 transmitRowData = 1;
+    uint_8 transmitData = 1;
+
+    saveInEEpromPropertyConfig(&confSensor->idS, &id);
+    saveInEEpromPropertyConfig(&confSensor->algoSelected, &algo);
+    saveInEEpromPropertyConfig(&confSensor->pointerLeaser, &pointerLeaser);
+    saveInEEpromPropertyConfig(&confSensor->transmitRowData, &transmitRowData);
+    saveInEEpromPropertyConfig(&confSensor->transmitedToGatway, &transmitData);
+    saveInEEpromPropertyConfig(&confSensor->paramsIn, paramsDefult);
+    saveInEEpromPropertyConfig(&confSensor->networkName, "Ravtech-Public\0");
+    saveInEEpromPropertyConfig(&confSensor->networkPassword, "@ravTech!\0");
+    saveInEEpromPropertyConfig(&confSensor->networkPort, "9875\0");
+    saveInEEpromPropertyConfig(&confSensor->networkServerIp, "192.168.16.118\0");
 
 }
 
+
+
 char isFirstProgrammin()
 {
-    return  GetProperty(0);
+    return GetProperty(0);
 }
 
 char setFirstProgmmanigToFalse()
 {
-    MemWrt(0,0);
+    MemWrt(0, 0);
+}
+
+void Enable_VZ_Pointer(char mode)
+{
+    Read_Write_MCP23S17_IO(EN_LASER, mode);
 }
 
 
-void readFromMemProperty(propertySensor* propertySens,void* dest)
+void readFromMemProperty(propertySensor *propertySens, void *dest)
 {
     Mem_AddressType i;
 
-    uint_8 * tmp = (uint_8 *) dest;
-    int_16 * tmpI = (int_16 *) dest;
+    uint_8 *tmp = (uint_8 *) dest;
+    int_16 *tmpI = (int_16 *) dest;
 
-    for(i=propertySens->address; i< propertySens->endAddress;)
+    for (i = propertySens->address; i < propertySens->endAddress;)
     {
-        if(propertySens->typeMem == C_16INT)
+        if (propertySens->typeMem == C_16INT)
         {
             *tmpI = GetSignedIntProperty(i);
             i += 2;
             ++tmpI;
         }
-        if(propertySens->typeMem == C_UCHAR)
+        if (propertySens->typeMem == C_UCHAR)
         {
             *tmp = GetProperty(i);
             ++tmp;
             ++i;
-
         }
-
     }
+
+
 }
 
-void conectionToServer(char* name, char* pass, char* ip, char* port)
+void BildStringWifi(char *name, char *pass, char *ip, char *port)
 {
-    PrintOut(PrintHandler,"\rname %s, pass %s, ip %s, port %s;\n",name,pass,ip,port);
+
+    PrintOut(PrintHandler, "\rname %s, pass %s, ip %s, port %s;\n", name, pass, ip, port);
+    strcpy(CWJAP_String, "AT+CWJAP=\"");
+    strcat(CWJAP_String, name);
+    strcat(CWJAP_String, "\",\"");
+    strcat(CWJAP_String, pass);
+    strcat(CWJAP_String, "\"\r\n");
+    strcpy(CIPSTART_String, "AT+CIPSTART=\"TCP\",\"");
+    strcat(CIPSTART_String, ip);
+    strcat(CIPSTART_String, "\",");
+    strcat(CIPSTART_String, port);
+    strcat(CIPSTART_String, "\r\n");
+    PrintOut(PrintHandler, "NET %s %s ", CWJAP_String, CIPSTART_String);
+}
+
+void LoadALLSchem(ConfigSensor *cS)
+{
+    LoadUnitId(cs);
+    LoadAlgoSelected(cs);
+    LoadPointerLeaser(cs);
+    LoadParamsIn(cs);
+    LoadWifi(cs);
+    LoadTransmitedToGatway(cs);
+
 }
 
 void initConfig()
 {
     uint_8 firstProgramm = 0;
     ConfigSensor cS;
-    char name_net[LENGTH_NAME_NET];
-    char password_net[LENGTH_PASSWORD_NET];
-    char port_net[LENGTH_PORT_NET];
-    char server_ip_net[LENGTH_SERVER_IP];
-    
+
+
     initConfigSensor(&cS);
 
-    
-    firstProgramm = isFirstProgrammin();
 
-    if(firstProgramm)
+    firstProgramm = isFirstProgrammin();
+    firstProgramm = 1;
+
+    if (firstProgramm)
     {
         saveDefultConfig(&cS);
         setFirstProgmmanigToFalse();
     }
-    readFromMemProperty(&cS.idS,&ID_SENSOR);
-    readFromMemProperty(&cS.algoSelected,&ALGO_SELECTED);
-    readFromMemProperty(&cS.pointerLeaser,&POINTER_LEASER);
-    readFromMemProperty(&cS.paramsIn,&ParamsIn);
-    readFromMemProperty(&cS.networkName,&name_net);
-    readFromMemProperty(&cS.networkPassword,&password_net);
-    readFromMemProperty(&cS.networkPort,&port_net);
-    readFromMemProperty(&cS.networkServerIp,&server_ip_net);
-    for(;firstProgramm < 8;firstProgramm++){
-        PrintOut(PrintHandler,"\rParamsIn %d;\n",ParamsIn[firstProgramm]);
-    }
-    conectionToServer(name_net,password_net,server_ip_net,port_net);
+    LoadALLSchem(&cS);
+
 
 }
 
+void LoadUnitId(ConfigSensor *cS)
+{
+    readFromMemProperty(&cS->idS, &EndUnitID);
+}
+
+void LoadAlgoSelected(ConfigSensor *cS)
+{
+    readFromMemProperty(&cS->algoSelected, &AlgorithmTypeParametr);
+
+}
+
+void LoadPointerLeaser(ConfigSensor *cS)
+{
+    readFromMemProperty(&cS->pointerLeaser, &PointerLeaser_Enable);
+    Enable_VZ_Pointer(PointerLeaser_Enable);
+}
+
+void LoadParamsIn(ConfigSensor *cS)
+{
+    uint_8 i = 0;
+    readFromMemProperty(&cS->paramsIn, &ParamsIn);
+}
+
+void LoadWifi(ConfigSensor *cS)
+{
+    char name_net[LENGTH_NAME_NET];
+    char password_net[LENGTH_PASSWORD_NET];
+    char port_net[LENGTH_PORT_NET];
+    char server_ip_net[LENGTH_SERVER_IP];
+
+    readFromMemProperty(&cS->networkName, &name_net);
+    readFromMemProperty(&cS->networkPassword, &password_net);
+    readFromMemProperty(&cS->networkPort, &port_net);
+    readFromMemProperty(&cS->networkServerIp, &server_ip_net);
+    BildStringWifi(name_net, password_net, server_ip_net, port_net);
+    ConnectingToWifiNet();
+
+
+}
+
+
+
+void LoadTransmitedToGatway(ConfigSensor *cS)
+{
+    readFromMemProperty(&cS->transmitedToGatway, &RawDataTX_Enable);
+}

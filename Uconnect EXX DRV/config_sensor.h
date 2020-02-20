@@ -14,6 +14,7 @@
 
 
 #include "Types.h"
+
 //#include "config_file.h"
 
 
@@ -51,6 +52,7 @@ typedef struct
     propertySensor networkPassword;
     propertySensor networkPort;
     propertySensor networkServerIp;
+    propertySensor transmitRowData;
 
 }ConfigSensor;
 
@@ -79,6 +81,13 @@ void readFromMemProperty(propertySensor* propertySens,void* dest);
 char isFirstProgrammin();
 char setFirstProgmmanigToFalse();
 void initConfig();
+void LoadUnitId(ConfigSensor* cS);
+void LoadAlgoSelected(ConfigSensor* cS);
+void LoadPointerLeaser(ConfigSensor* cS);
+void LoadParamsIn(ConfigSensor* cS);
+void LoadWifi(ConfigSensor* cS);
+void LoadTransmitedToGatway(ConfigSensor* cS);
+void readEEpromRawData(propertySensor *propertySens, char *dest,uint_8 index);
 
 
 #endif  /*CONFIG_SENSOR_H*/

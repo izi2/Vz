@@ -243,6 +243,8 @@ adden
 adden
 adden
 adden_bit
+addheaders
+addrawdatatowifibuffer
 addrerr
 addrerr
 addrerr_bit
@@ -541,7 +543,8 @@ aivt_addr_altusb1interrupt
 aivten
 aivten
 aivten_bit
-algo_selected
+algo_parametrs_out_buffer
+algorithmtypeparametr
 almdateh
 almdatehbits
 almdatel
@@ -962,6 +965,7 @@ bgreq_bit
 bgvst
 bgvst
 bgvst_bit
+bildstringwifi
 boardinit
 boen
 boen
@@ -1842,6 +1846,7 @@ chsel6
 chsel6
 chsel6
 chsel6_bit
+cipstart_string
 cke
 cke
 cke
@@ -2538,7 +2543,6 @@ con
 con
 con
 con_bit
-conectiontoserver
 configfileinit
 connectingtowifinet
 connecttoserver
@@ -2893,6 +2897,7 @@ cvroe_bit
 cvrss
 cvrss
 cvrss_bit
+cwjap_string
 d_a
 d_a
 d_a
@@ -3673,6 +3678,7 @@ edgseqen
 edgseqen
 edgseqen_bit
 enable_vz_pointer
+endunitid
 enflt
 enflt
 enflt
@@ -4168,6 +4174,7 @@ getproperty
 getsamplefromuart
 getsignedintproperty
 getsignedlongproperty
+getwifirssi
 gie
 gie
 gie_bit
@@ -4946,7 +4953,6 @@ ictsel2
 ictsel2
 ictsel2
 ictsel2_bit
-id_sensor
 idissen
 idissen
 idissen_bit
@@ -6785,6 +6791,13 @@ led_activation
 lendian
 lendian
 lendian_bit
+loadalgoselected
+loadallschem
+loadparamsin
+loadpointerleaser
+loadtransmitedtogatway
+loadunitid
+loadwifi
 lock
 lock_
 lock_bit
@@ -7881,7 +7894,6 @@ padcon
 padconbits
 paramsdefult
 paramsin
-paramsout
 parssdata
 pch
 pcie
@@ -8026,7 +8038,7 @@ pmslp
 pmslp_bit
 pmstat
 pmstatbits
-pointer_leaser
+pointerleaser_enable
 polace
 polace
 polace
@@ -8265,6 +8277,7 @@ raddr23
 raddr23
 raddr23_bit
 rand
+rawdatatx_enable
 rawip
 rawip
 rawip
@@ -8439,6 +8452,7 @@ read_from_sc16is740_internal_register
 read_sequential_bytes_from_sram_memory
 read_shd_pin
 read_write_mcp23s17_io
+readeepromrawdata
 readfrommemproperty
 reconnecttoserver
 refocon1
@@ -8464,6 +8478,7 @@ reload
 reload
 reload
 reload_bit
+resetalgoparametrsoutbuffer
 reten
 reten
 reten_bit
@@ -8840,6 +8855,7 @@ rtsmd
 rtsmd
 rtsmd
 rtsmd_bit
+runalgorithmandbuiledtxparameterspacket
 rw
 rw
 rw
@@ -9077,6 +9093,7 @@ sen
 sen_bit
 sendatcommand
 sendatcommandtoesp
+sendstatus
 set_rtcc_alarm_in_second
 set_rtcc_alarm_time
 set_rtcc_time
@@ -11347,7 +11364,6 @@ vword3_bit
 vword4
 vword4
 vword4_bit
-vz_algoritem_by_algo_select
 vz_algorithm_2
 vz_algorithm_3_4
 vz_algorithm_5
@@ -11393,6 +11409,8 @@ wifi_buffer
 wifi_send_one_array
 wifi_send_one_array_not_wait_to_ok
 wifi_state
+wifi_tx_buffer
+wifibufferlength
 wlength
 wlength
 wlength

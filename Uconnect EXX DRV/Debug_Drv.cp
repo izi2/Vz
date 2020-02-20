@@ -1,7 +1,7 @@
-#line 1 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Debug_Drv.c"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/pic_drv_uconnect.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
-#line 27 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
+#line 1 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Debug_Drv.c"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/pic_drv_uconnect.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
+#line 27 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
 typedef struct
  {
  unsigned char ss ;
@@ -12,16 +12,16 @@ typedef struct
  unsigned char mo ;
  unsigned int yy ;
  } TimeStruct ;
-#line 41 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
+#line 41 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
 extern long Time_jd1970 ;
-#line 46 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
+#line 46 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
 long Time_dateToEpoch(TimeStruct *ts) ;
 void Time_epochToDate(long e, TimeStruct *ts) ;
 void TurnOnRTC_Timer0(void);
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/limits.h"
-#line 71 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
+#line 71 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 typedef unsigned char uint_8;
 
 
@@ -37,7 +37,7 @@ typedef signed char int_8;
 typedef signed int int_16;
 
 typedef signed long int_32;
-#line 106 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
+#line 106 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 typedef uint_16 Mem_AddressType;
 
 typedef uint_32 TimestampType;
@@ -246,7 +246,7 @@ typedef struct Sampling
 
 typedef Sampling *(*GetGeneralInput)(void);
 typedef void (*ActiveMethod)(Switch);
-#line 8 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
+#line 8 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
 typedef unsigned char (*Reader)(unsigned int Address);
 
 typedef void (*Writer)(unsigned int Address ,char DataByte);
@@ -291,9 +291,9 @@ Mem_AddressType SetLongProperty(Mem_AddressType address, uint_32 value);
 void SetLong3Property(Mem_AddressType address, uint_32 value);
 
 void SetSignedLongProperty(Mem_AddressType start_address, int_32 value);
-#line 68 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
+#line 68 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
 Mem_AddressType SetFloatProperty(Mem_AddressType address,float property);
-#line 3 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/pic_drv_uconnect.h"
+#line 3 "c:/users/itziks/documents/vz/uconnect exx drv/pic_drv_uconnect.h"
 void Pseudo_Uart1_Write_Byte(char din);
 void Pseudo_Uart1_Write_Text(unsigned char *p);
 void Pseudo_Uart1_Enable(char mode);
@@ -334,7 +334,7 @@ void CheckRxDataFromInterruptUart2(void);
 
 enum LED_MODE {LED_ON= 0,LED_OFF,LED_NOT,LED_RED,LED_GREEN};
 enum SPI1_TRANSFER_MODE {SPI1_TRANSFER_MODE_8BIT= 0,SPI1_TRANSFER_MODE_16BIT,SPI1_TRANSFER_MODE_32BIT};
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/vz_sensor.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/vz_sensor.h"
 char Init_VZ_Sensor(void);
 void VzSensor_ReadFWVer(void);
 char OpticDataOnSPI_ON(void);
@@ -350,7 +350,7 @@ void OpticDataGetCleanBuffer(void);
 
 
 enum VZ_Sensor_Names {Normal=0,Saw,Sinus};
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/debug_drv.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/debug_drv.h"
 void PrintRealTime(unsigned int TimeInSec);
 void Pseudo_Uart2_Write_Byte(char din);
 void Pseudo_Uart2_Write_Text(unsigned char *p);
@@ -359,7 +359,7 @@ int GetSampleFromUart(void);
 void InitUartForRxData(void);
 void Get60SamplesFromUart(void);
 void PrintOpticDataToUart(char mode);
-#line 8 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Debug_Drv.c"
+#line 8 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Debug_Drv.c"
 extern int volatile Vz_Sensor_Velocity_Buffer_int[];
 extern int volatile Vz_Sensor_Distance_Buffer_int[];
 
@@ -371,7 +371,7 @@ extern int volatile Vz_Sensor_Distance_Buffer_int[];
 void Get60SamplesFromUart(void)
 {
  char i;
-#line 23 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Debug_Drv.c"
+#line 23 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Debug_Drv.c"
  for(i=0;i<60;i++) Vz_Sensor_Distance_Buffer_int[i]=GetSampleFromUart();
 
 }
@@ -406,12 +406,12 @@ void PrintRealTime(unsigned int TimeInSec)
  {
   LATG.RG2 ^=1;
  while(!OpticDataCheckIfReady());
-#line 61 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Debug_Drv.c"
+#line 61 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Debug_Drv.c"
  OpticDataGetFrame_DistanceOnly();
 
  for(i=0;i<60;i++)
  {
-#line 69 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Debug_Drv.c"
+#line 69 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Debug_Drv.c"
  IntToStr(Vz_Sensor_Distance_Buffer_int[i], txt);
 
  Pseudo_Uart2_Write_Text(txt);

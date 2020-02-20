@@ -1,8 +1,8 @@
-#line 1 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/config_sensor.c"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_sensor.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
+#line 1 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/config_sensor.c"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/config_sensor.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/limits.h"
-#line 71 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
+#line 71 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 typedef unsigned char uint_8;
 
 
@@ -18,7 +18,7 @@ typedef signed char int_8;
 typedef signed int int_16;
 
 typedef signed long int_32;
-#line 106 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
+#line 106 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 typedef uint_16 Mem_AddressType;
 
 typedef uint_32 TimestampType;
@@ -227,7 +227,7 @@ typedef struct Sampling
 
 typedef Sampling *(*GetGeneralInput)(void);
 typedef void (*ActiveMethod)(Switch);
-#line 21 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_sensor.h"
+#line 22 "c:/users/itziks/documents/vz/uconnect exx drv/config_sensor.h"
 typedef enum
 {
  C_CHAR,
@@ -261,9 +261,10 @@ typedef struct
  propertySensor networkPassword;
  propertySensor networkPort;
  propertySensor networkServerIp;
+ propertySensor transmitRowData;
 
 }ConfigSensor;
-#line 74 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_sensor.h"
+#line 76 "c:/users/itziks/documents/vz/uconnect exx drv/config_sensor.h"
 void initConfigSensor(ConfigSensor * confSensor);
 void saveDefultConfig(ConfigSensor * confSensor);
 void saveInEEpromPropertyConfig(propertySensor* propertySens, void* value);
@@ -272,9 +273,16 @@ void readFromMemProperty(propertySensor* propertySens,void* dest);
 char isFirstProgrammin();
 char setFirstProgmmanigToFalse();
 void initConfig();
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
-#line 8 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
+void LoadUnitId(ConfigSensor* cS);
+void LoadAlgoSelected(ConfigSensor* cS);
+void LoadPointerLeaser(ConfigSensor* cS);
+void LoadParamsIn(ConfigSensor* cS);
+void LoadWifi(ConfigSensor* cS);
+void LoadTransmitedToGatway(ConfigSensor* cS);
+void readEEpromRawData(propertySensor *propertySens, char *dest,uint_8 index);
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
+#line 8 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
 typedef unsigned char (*Reader)(unsigned int Address);
 
 typedef void (*Writer)(unsigned int Address ,char DataByte);
@@ -319,11 +327,11 @@ Mem_AddressType SetLongProperty(Mem_AddressType address, uint_32 value);
 void SetLong3Property(Mem_AddressType address, uint_32 value);
 
 void SetSignedLongProperty(Mem_AddressType start_address, int_32 value);
-#line 68 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
+#line 68 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
 Mem_AddressType SetFloatProperty(Mem_AddressType address,float property);
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/pic_drv_uconnect.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
-#line 27 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/pic_drv_uconnect.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
+#line 27 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
 typedef struct
  {
  unsigned char ss ;
@@ -334,14 +342,14 @@ typedef struct
  unsigned char mo ;
  unsigned int yy ;
  } TimeStruct ;
-#line 41 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
+#line 41 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
 extern long Time_jd1970 ;
-#line 46 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
+#line 46 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
 long Time_dateToEpoch(TimeStruct *ts) ;
 void Time_epochToDate(long e, TimeStruct *ts) ;
 void TurnOnRTC_Timer0(void);
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
-#line 3 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/pic_drv_uconnect.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
+#line 3 "c:/users/itziks/documents/vz/uconnect exx drv/pic_drv_uconnect.h"
 void Pseudo_Uart1_Write_Byte(char din);
 void Pseudo_Uart1_Write_Text(unsigned char *p);
 void Pseudo_Uart1_Enable(char mode);
@@ -382,17 +390,49 @@ void CheckRxDataFromInterruptUart2(void);
 
 enum LED_MODE {LED_ON= 0,LED_OFF,LED_NOT,LED_RED,LED_GREEN};
 enum SPI1_TRANSFER_MODE {SPI1_TRANSFER_MODE_8BIT= 0,SPI1_TRANSFER_MODE_16BIT,SPI1_TRANSFER_MODE_32BIT};
-#line 9 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/config_sensor.c"
-int_16 paramsDefult[ 15 ] = {4000,2000,10,10,200};
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/mcp23s17_drv.h"
+void SPIPut_MCP23S17(char din);
+char SPIGet_MCP23S17(char din);
+void Write_To_MCP23S17_Internal_Register(char Register_ADD,char Register_Data);
+char Read_From_MCP23S17_Internal_Register(char Register_ADD);
+void Init_MCP23S17(void);
+char Read_Write_MCP23S17_IO(char PinName,char mode);
+
+
+enum MCP23S17_IO_Names {EN_1_8V=0,CS_FLASH,RESET_ADP,USER_LED,HOLD_SRAM,WP_FLASH,RESET_VZ,EN_LASER,ESP_RTS,ESP_CTS,ESP_EN_PIN,ESP_RESET,ESP_FLASH};
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/esp_12f_drv.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
+#line 3 "c:/users/itziks/documents/vz/uconnect exx drv/esp_12f_drv.h"
+int GetWifiRssi(void);
+void ESP_Testing_Func(void);
+char Init_ESP(void);
+char CheckWifiConnection(void);
+char ConnectingToWifiNet(void);
+void SendAtCommandToEsp(char *buff);
+char WIFI_Send_One_Array(char *m_data, unsigned int len);
+char WIFI_Send_One_Array_Not_Wait_To_OK(char *m_data, unsigned int len);
+char ConnectToServer(void);
+char CheckGettingIP(void);
+void ESP_Testing_Vz_Demo(void);
+char *PullDataFromIDP(int *length,char *Buff);
+char GetEspData(unsigned long TimeOut_uSec_Start);
+char CheckDataFromGateway(void);
+char ReConnectToServer(void);
+void RunAlgorithmAndBuiledTxParametersPacket(void);
+void AddRawDataToWifiBuffer(void);
+#line 11 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/config_sensor.c"
+int_16 paramsDefult[ 15 ] = {4000, 2000, 10, 10, 200};
 int_16 ParamsIn[ 15 ];
-int_16 ParamsOut[ 15 ];
-uint_8 ID_SENSOR;
-uint_8 ALGO_SELECTED;
-uint_8 POINTER_LEASER;
+extern char CWJAP_String[];
+extern char CIPSTART_String[];
+extern char volatile EndUnitID;
+extern char volatile AlgorithmTypeParametr;
+extern char volatile PointerLeaser_Enable;
+extern char volatile RawDataTX_Enable;
 
 
-
-Mem_AddressType setAddressPropertyC(propertySensor* propertySens,Mem_AddressType address,uint_8 sizePerItem,uint_8 endPropertyAddress)
+Mem_AddressType setAddressPropertyC(propertySensor *propertySens, Mem_AddressType address, uint_8 sizePerItem,
+ uint_8 endPropertyAddress)
 {
  uint_8 endAddress;
  propertySens->address = address;
@@ -403,56 +443,82 @@ Mem_AddressType setAddressPropertyC(propertySensor* propertySens,Mem_AddressType
 }
 
 
-void initConfigSensor(ConfigSensor * confSensor)
+void initConfigSensor(ConfigSensor *confSensor)
 {
 
  Mem_AddressType i;
- i = setAddressPropertyC(&confSensor->idS, 40 ,C_UCHAR,0);
+ i = setAddressPropertyC(&confSensor->idS,  40 , C_UCHAR, 0);
 
- i = setAddressPropertyC(&confSensor->algoSelected,i,C_UCHAR,0);
+ i = setAddressPropertyC(&confSensor->algoSelected, i, C_UCHAR, 0);
 
- i = setAddressPropertyC(&confSensor->pointerLeaser,i,C_UCHAR,0);
+ i = setAddressPropertyC(&confSensor->pointerLeaser, i, C_UCHAR, 0);
 
- i = setAddressPropertyC(&confSensor->sensorBist,i,C_UCHAR,0);
+ i = setAddressPropertyC(&confSensor->transmitedToGatway, i, C_UCHAR, 0);
 
- i = setAddressPropertyC(&confSensor->paramsIn,i,C_16INT, 15 *2);
+ i = setAddressPropertyC(&confSensor->transmitRowData, i, C_UCHAR, 0);
 
- i = setAddressPropertyC(&confSensor->networkName,i,C_UCHAR, 30 );
+ i = setAddressPropertyC(&confSensor->sensorBist, i, C_UCHAR, 0);
 
- i = setAddressPropertyC(&confSensor->networkPassword,i,C_UCHAR, 30 );
+ i = setAddressPropertyC(&confSensor->paramsIn, i, C_16INT,  15  * 2);
 
- i = setAddressPropertyC(&confSensor->networkPort,i,C_UCHAR, 8 );
+ i = setAddressPropertyC(&confSensor->networkName, i, C_UCHAR,  30 );
 
- i = setAddressPropertyC(&confSensor->networkServerIp,i,C_UCHAR, 20 );
+ i = setAddressPropertyC(&confSensor->networkPassword, i, C_UCHAR,  30 );
+
+ i = setAddressPropertyC(&confSensor->networkPort, i, C_UCHAR,  8 );
+
+ i = setAddressPropertyC(&confSensor->networkServerIp, i, C_UCHAR,  20 );
+
+}
+
+void readEEpromRawData(propertySensor *propertySens, char *dest,uint_8 index)
+{
+ uint_8 i =0;
+
+ for (i = propertySens->address; i < propertySens->endAddress;)
+ {
+ dest[index] = GetProperty(i);
+ ++index;
+ }
 
 }
 
 
-void saveInEEpromPropertyConfig(propertySensor* propertySens, void* value)
+void saveInEEpromPropertyConfig(propertySensor *propertySens, void *value)
 {
  Mem_AddressType i;
- char * tmp = (char *) value;
- for(i=propertySens->address; i < propertySens->endAddress; i++)
+
+ uint_8 *tmp = (uint_8 *) value;
+ for (i = propertySens->address; i < propertySens->endAddress; i++)
  {
- MemWrt(i,*tmp);
+ MemWrt(i, *tmp);
  ++tmp;
  }
 
 }
 
-void saveDefultConfig(ConfigSensor * confSensor)
+void saveDefultConfig(ConfigSensor *confSensor)
 {
- saveInEEpromPropertyConfig(&confSensor->idS,0);
- saveInEEpromPropertyConfig(&confSensor->algoSelected,Algorithm_2);
- saveInEEpromPropertyConfig(&confSensor->pointerLeaser,1);
- saveInEEpromPropertyConfig(&confSensor->sensorBist,1);
- saveInEEpromPropertyConfig(&confSensor->paramsIn,paramsDefult);
- saveInEEpromPropertyConfig(&confSensor->networkName,"Ravtech-Public\0");
- saveInEEpromPropertyConfig(&confSensor->networkPassword,"@ravTech!\0");
- saveInEEpromPropertyConfig(&confSensor->networkPort,"9875\0");
- saveInEEpromPropertyConfig(&confSensor->networkServerIp,"192.168.1.25\0");
+ uint_8 id = 0;
+ uint_8 algo = 0;
+ uint_8 pointerLeaser = 1;
+ uint_8 transmitRowData = 1;
+ uint_8 transmitData = 1;
+
+ saveInEEpromPropertyConfig(&confSensor->idS, &id);
+ saveInEEpromPropertyConfig(&confSensor->algoSelected, &algo);
+ saveInEEpromPropertyConfig(&confSensor->pointerLeaser, &pointerLeaser);
+ saveInEEpromPropertyConfig(&confSensor->transmitRowData, &transmitRowData);
+ saveInEEpromPropertyConfig(&confSensor->transmitedToGatway, &transmitData);
+ saveInEEpromPropertyConfig(&confSensor->paramsIn, paramsDefult);
+ saveInEEpromPropertyConfig(&confSensor->networkName, "Ravtech-Public\0");
+ saveInEEpromPropertyConfig(&confSensor->networkPassword, "@ravTech!\0");
+ saveInEEpromPropertyConfig(&confSensor->networkPort, "9875\0");
+ saveInEEpromPropertyConfig(&confSensor->networkServerIp, "192.168.16.118\0");
 
 }
+
+
 
 char isFirstProgrammin()
 {
@@ -461,71 +527,134 @@ char isFirstProgrammin()
 
 char setFirstProgmmanigToFalse()
 {
- MemWrt(0,0);
+ MemWrt(0, 0);
+}
+
+void Enable_VZ_Pointer(char mode)
+{
+ Read_Write_MCP23S17_IO(EN_LASER, mode);
 }
 
 
-void readFromMemProperty(propertySensor* propertySens,void* dest)
+void readFromMemProperty(propertySensor *propertySens, void *dest)
 {
  Mem_AddressType i;
 
- uint_8 * tmp = (uint_8 *) dest;
- int_16 * tmpI = (int_16 *) dest;
+ uint_8 *tmp = (uint_8 *) dest;
+ int_16 *tmpI = (int_16 *) dest;
 
- for(i=propertySens->address; i< propertySens->endAddress;)
+ for (i = propertySens->address; i < propertySens->endAddress;)
  {
- if(propertySens->typeMem == C_16INT)
+ if (propertySens->typeMem == C_16INT)
  {
  *tmpI = GetSignedIntProperty(i);
  i += 2;
  ++tmpI;
  }
- if(propertySens->typeMem == C_UCHAR)
+ if (propertySens->typeMem == C_UCHAR)
  {
  *tmp = GetProperty(i);
  ++tmp;
  ++i;
-
+ }
  }
 
- }
+
 }
 
-void conectionToServer(char* name, char* pass, char* ip, char* port)
+void BildStringWifi(char *name, char *pass, char *ip, char *port)
 {
- PrintOut(PrintHandler,"\rname %s, pass %s, ip %s, port %s;\n",name,pass,ip,port);
+
+ PrintOut(PrintHandler, "\rname %s, pass %s, ip %s, port %s;\n", name, pass, ip, port);
+ strcpy(CWJAP_String, "AT+CWJAP=\"");
+ strcat(CWJAP_String, name);
+ strcat(CWJAP_String, "\",\"");
+ strcat(CWJAP_String, pass);
+ strcat(CWJAP_String, "\"\r\n");
+ strcpy(CIPSTART_String, "AT+CIPSTART=\"TCP\",\"");
+ strcat(CIPSTART_String, ip);
+ strcat(CIPSTART_String, "\",");
+ strcat(CIPSTART_String, port);
+ strcat(CIPSTART_String, "\r\n");
+ PrintOut(PrintHandler, "NET %s %s ", CWJAP_String, CIPSTART_String);
+}
+
+void LoadALLSchem(ConfigSensor *cS)
+{
+ LoadUnitId(cs);
+ LoadAlgoSelected(cs);
+ LoadPointerLeaser(cs);
+ LoadParamsIn(cs);
+ LoadWifi(cs);
+ LoadTransmitedToGatway(cs);
+
 }
 
 void initConfig()
 {
  uint_8 firstProgramm = 0;
  ConfigSensor cS;
- char name_net[ 30 ];
- char password_net[ 30 ];
- char port_net[ 8 ];
- char server_ip_net[ 20 ];
+
 
  initConfigSensor(&cS);
 
 
  firstProgramm = isFirstProgrammin();
+ firstProgramm = 1;
 
- if(firstProgramm)
+ if (firstProgramm)
  {
  saveDefultConfig(&cS);
  setFirstProgmmanigToFalse();
  }
- readFromMemProperty(&cS.idS,&ID_SENSOR);
- readFromMemProperty(&cS.algoSelected,&ALGO_SELECTED);
- readFromMemProperty(&cS.pointerLeaser,&POINTER_LEASER);
- readFromMemProperty(&cS.paramsIn,&ParamsIn);
- readFromMemProperty(&cS.networkName,&name_net);
- readFromMemProperty(&cS.networkPassword,&password_net);
- readFromMemProperty(&cS.networkPort,&port_net);
- readFromMemProperty(&cS.networkServerIp,&server_ip_net);
- for(;firstProgramm < 8;firstProgramm++){
- PrintOut(PrintHandler,"\rParamsIn %d;\n",ParamsIn[firstProgramm]);
- }
- conectionToServer(name_net,password_net,server_ip_net,port_net);
+ LoadALLSchem(&cS);
 
+
+}
+
+void LoadUnitId(ConfigSensor *cS)
+{
+ readFromMemProperty(&cS->idS, &EndUnitID);
+}
+
+void LoadAlgoSelected(ConfigSensor *cS)
+{
+ readFromMemProperty(&cS->algoSelected, &AlgorithmTypeParametr);
+
+}
+
+void LoadPointerLeaser(ConfigSensor *cS)
+{
+ readFromMemProperty(&cS->pointerLeaser, &PointerLeaser_Enable);
+ Enable_VZ_Pointer(PointerLeaser_Enable);
+}
+
+void LoadParamsIn(ConfigSensor *cS)
+{
+ uint_8 i = 0;
+ readFromMemProperty(&cS->paramsIn, &ParamsIn);
+}
+
+void LoadWifi(ConfigSensor *cS)
+{
+ char name_net[ 30 ];
+ char password_net[ 30 ];
+ char port_net[ 8 ];
+ char server_ip_net[ 20 ];
+
+ readFromMemProperty(&cS->networkName, &name_net);
+ readFromMemProperty(&cS->networkPassword, &password_net);
+ readFromMemProperty(&cS->networkPort, &port_net);
+ readFromMemProperty(&cS->networkServerIp, &server_ip_net);
+ BildStringWifi(name_net, password_net, server_ip_net, port_net);
+ ConnectingToWifiNet();
+
+
+}
+
+
+
+void LoadTransmitedToGatway(ConfigSensor *cS)
+{
+ readFromMemProperty(&cS->transmitedToGatway, &RawDataTX_Enable);
 }

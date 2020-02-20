@@ -7,18 +7,28 @@
 #include "Types.h"
 #include "Bitset.h"
 #include "VZ_Sensor.h"
+#include "Vz_Algorithm.h"
 
 //#define debug
 //#define SSID_String "AT+CWJAP=\"UC-timurim\",\"0544916811\"\r\n"
 //#define SSID_String "AT+CWJAP=\"Dror\",\"0544916811\"\r\n"
-#define SSID_String "AT+CWJAP=\"Ravtech-Public\",\"@ravTech!\"\r\n"
-#define Server_IP_String  "AT+CIPSTART=\"TCP\",\"192.168.16.118\",9875\r\n"
+//#define SSID_String "AT+CWJAP=\"Ravtech-Public\",\"@ravTech!\"\r\n"
+//#define Server_IP_String  "AT+CIPSTART=\"TCP\",\"192.168.16.118\",9875\r\n"
 //#define Server_IP_String  "AT+CIPSTART=\"TCP\",\"192.168.43.249\",9875\r\n"
-
+char volatile Wifi_TX_Buffer[1000];
 char volatile ESP_RX_Buffer[ESP_RX_Buffer_Length];
 char volatile ESP_GateWay_Buffer[ESP_RX_Buffer_Length];
 unsigned int  Gateway_Buffer_Length;
 char volatile Data_From_Gateway_Flag=FALSE;
+unsigned int volatile  WifiBufferLength=0;
+char CWJAP_String[150];
+char CIPSTART_String[150];
+char EndUnitID=0;
+extern char volatile AlgorithmTypeParametr;
+extern char volatile Algo_Parametrs_Out_Buffer[];
+extern int volatile Vz_Sensor_Velocity_Buffer_int[];
+extern int volatile Vz_Sensor_Distance_Buffer_int[];
+
 
 //*****************************************************************************************************
 char Init_ESP(void)
@@ -65,13 +75,13 @@ char Init_ESP(void)
 //*****************************************************************************************************
 char ConnectToServer(void)
 {
-   SendAtCommandToEsp(Server_IP_String);
+   SendAtCommandToEsp(CIPSTART_String);
    GetEspData(5000000);
    if(strstr(ESP_RX_Buffer,"CONNECT")) return 1;
    #ifdef debug
    PrintOut(PrintHandler, "\rFailed To Connect To Server ; Trying Again");
    #endif
-   SendAtCommandToEsp(Server_IP_String);
+   SendAtCommandToEsp(CIPSTART_String);
    GetEspData(5000000);
    if(strstr(ESP_RX_Buffer,"CONNECT")) return 1;
    #ifdef debug
@@ -100,38 +110,54 @@ char CheckWifiConnection(void)
 //*****************************************************************************************************
 char ConnectingToWifiNet(void)
 {
-     int i=0;
-     char cTemp;
-     const char LoopLimit=10;
-     unsigned long ulTemp=0;
-     asm clrwdt;
-     PrintOut(PrintHandler, "\rWifi Connection Process...");
-     SendAtCommandToEsp("AT+CWMODE=1\r\n");
-     GetEspData(1000);
-     SendAtCommandToEsp("AT+CIPMUX=0\r\n");
-     GetEspData(1000);
-     PrintOut(PrintHandler, "\rWaiting For IP...");
-     SendAtCommandToEsp(SSID_String);
-     while(ulTemp++<8000)
-     {
-       GetEspData(1000);
-       if(strstr(ESP_RX_Buffer,"GOT IP")) break;
-     }
-     if(ulTemp>=8000) {PrintOut(PrintHandler, "\rFailed To Get IP"); return 0;}
-     PrintOut(PrintHandler, "\rGeting IP Address Successfully");
-     delay_ms(2000);
-     //+CWJAP:"UC-timurim","b4:ee:b4:a8:ff:7d",6,-64
-     SendAtCommandToEsp("AT+CWJAP?\r\n");
-     GetEspData(1000);
-     PrintOut(PrintHandler,"\rRSSI:%s",ESP_RX_Buffer);
-     PrintOut(PrintHandler, "\rConnecting To Server...");
-     if(!ConnectToServer())
-     {
-       if(!ConnectToServer()) return 0;
-     }
-     PrintOut(PrintHandler, "\rConnected To Server Successfully");
-     LED_Activation(LED_RED,LED_ON);
-     return 1;
+    int i=0;
+    char cTemp;
+    const char LoopLimit=10;
+    unsigned long ulTemp=0;
+    asm clrwdt;
+    PrintOut(PrintHandler, "\rWifi Connection Process...");
+    SendAtCommandToEsp("AT+CWMODE=1\r\n");
+    GetEspData(1000);
+    SendAtCommandToEsp("AT+CIPMUX=0\r\n");
+    GetEspData(1000);
+    PrintOut(PrintHandler, "\rWaiting For IP...");
+    SendAtCommandToEsp(CWJAP_String);
+    while(ulTemp++<8000)
+    {
+        GetEspData(1000);
+        if(strstr(ESP_RX_Buffer,"GOT IP")) break;
+    }
+    if(ulTemp>=8000) {PrintOut(PrintHandler, "\rFailed To Get IP"); return 0;}
+    PrintOut(PrintHandler, "\rGeting IP Address Successfully");
+    delay_ms(2000);
+    if(i=GetWifiRssi()) PrintOut(PrintHandler, "\rRSSI: %ddbm",i);
+    else PrintOut(PrintHandler, "\rFailed To Get RSSI");
+    PrintOut(PrintHandler, "\rConnecting To Server...");
+    if(!ConnectToServer())
+    {
+        if(!ConnectToServer())
+        {
+            PrintOut(PrintHandler, "\rFailed To Connect To Server!!!");
+            return 0;
+        }
+    }
+    PrintOut(PrintHandler, "\rConnected To Server Successfully");
+    LED_Activation(LED_RED,LED_ON);
+    return 1;
+}
+//*****************************************************************************************************
+int GetWifiRssi(void)
+{
+    //+CWJAP:"Dror","40:d3:ae:cc:6a:6e",6,-50
+    //OK
+    char *p,i=0,str[10];
+    SendAtCommandToEsp("AT+CWJAP?\r\n");
+    GetEspData(1000);
+    if(!(p=strstr(ESP_RX_Buffer,"-"))) return 0;
+    while((p[i]!='\r')&&(i<5)) str[i]=p[i++];
+    if(i>=5) return 0;
+    str[i]=0;
+    return atoi(str);
 }
 //*****************************************************************************************************
 void SendAtCommandToEsp(char *buff)
@@ -348,17 +374,104 @@ char GetEspData(unsigned long TimeOut_uSec_Start)
 //*****************************************************************************************************
 char ReConnectToServer(void)
 {
-                LED_Activation(LED_GREEN,LED_OFF);LED_Activation(LED_RED,LED_ON);
-                SendAtCommandToEsp("+++");
-                if(!ConnectToServer())
-                   if(!ConnectToServer())
-                     if(!ConnectToServer()) ConnectToServer();
+    {
+        LED_Activation(LED_GREEN,LED_OFF);LED_Activation(LED_RED,LED_ON);
+        SendAtCommandToEsp("+++");
+        if(!ConnectToServer())
+            if(!ConnectToServer())
+                if(!ConnectToServer()) ConnectToServer();
+        if(!CheckWifiConnection())
+            if(!CheckWifiConnection())
                 if(!CheckWifiConnection())
-                    if(!CheckWifiConnection())
-                      if(!CheckWifiConnection())
-                      {
-                         if(!Init_ESP()) return ConnectingToWifiNet();
-                      }
-                LED_Activation(LED_RED,LED_ON);LED_Activation(LED_GREEN,LED_ON);
-                return 1;
+                {
+                    return ConnectingToWifiNet();
+                }
+        LED_Activation(LED_RED,LED_ON);LED_Activation(LED_GREEN,LED_ON);
+        return 1;
+    }
+}
+//*****************************************************************************************************
+void RunAlgorithmAndBuiledTxParametersPacket(void)
+{
+    unsigned int i;
+    switch (AlgorithmTypeParametr)
+    {
+        case No_Algo:
+             OpticDataGetCleanBuffer();
+             return;
+            break;
+        case Algo_2:
+            Vz_Algorithm_2();
+            if(Algo_Parametrs_Out_Buffer[0])
+            {
+                WifiBufferLength++;
+                Wifi_TX_Buffer[WifiBufferLength++]=EndUnitID;
+                Wifi_TX_Buffer[WifiBufferLength++]=0;
+                Wifi_TX_Buffer[WifiBufferLength++]=Algo_2_Buffer_Length;
+                Wifi_TX_Buffer[WifiBufferLength++]=Algo_2;
+                Wifi_TX_Buffer[WifiBufferLength++]=Algo_Parametrs_Out_Buffer[1];
+                Wifi_TX_Buffer[WifiBufferLength]=Algo_Parametrs_Out_Buffer[2];
+            }
+            break;
+        case Algo_3_4:
+            Vz_Algorithm_3_4();
+            if(Algo_Parametrs_Out_Buffer[0])
+            {
+                Wifi_TX_Buffer[WifiBufferLength++]=EndUnitID;
+                Wifi_TX_Buffer[WifiBufferLength++]=0;
+                Wifi_TX_Buffer[WifiBufferLength++]=Algo_3_4_Buffer_Length;
+                Wifi_TX_Buffer[WifiBufferLength++]=Algo_3_4;
+                for(i=1;i<=Algo_3_4_Buffer_Length;i++) Wifi_TX_Buffer[WifiBufferLength++]=Algo_Parametrs_Out_Buffer[i];
+            }
+            break;
+        case Algo_5:
+            Vz_Algorithm_5();
+            if(Algo_Parametrs_Out_Buffer[0])
+            {
+                Wifi_TX_Buffer[WifiBufferLength++]=EndUnitID;
+                Wifi_TX_Buffer[WifiBufferLength++]=0;
+                Wifi_TX_Buffer[WifiBufferLength++]=Algo_5_Buffer_Length;
+                Wifi_TX_Buffer[WifiBufferLength++]=Algo_5;
+                for(i=1;i<=Algo_5_Buffer_Length;i++) Wifi_TX_Buffer[WifiBufferLength++]=Algo_Parametrs_Out_Buffer[i];
+            }
+            break;
+    }
+}
+//*****************************************************************************************************
+void AddRawDataToWifiBuffer(void)
+{
+      char i;
+      if(AlgorithmTypeParametr==No_Algo)
+      {
+                   OpticDataGetFrame_AllData(void);
+                   Wifi_TX_Buffer[WifiBufferLength++]=EndUnitID;//ID
+                   Wifi_TX_Buffer[WifiBufferLength++]=0;//Length MSB
+                   Wifi_TX_Buffer[WifiBufferLength++]=120;//Length LSB
+                   Wifi_TX_Buffer[WifiBufferLength++]=0;// Velocity=0(bit 0)/Distance=1(bit 1)
+                   for (i=0; i < 60; i++) WifiBufferLength=SInt2Array(Vz_Sensor_Velocity_Buffer_int[i],Wifi_TX_Buffer,WifiBufferLength);
+                   Wifi_TX_Buffer[WifiBufferLength++]=EndUnitID;//ID
+                   Wifi_TX_Buffer[WifiBufferLength++]=0;//Length MSB
+                   Wifi_TX_Buffer[WifiBufferLength++]=120;//Length LSB
+                   Wifi_TX_Buffer[WifiBufferLength++]=1;// Velocity=0(bit 0)/Distance=1(bit 1)
+                   for (i=0; i < 60; i++) WifiBufferLength=SInt2Array(Vz_Sensor_Distance_Buffer_int[i],Wifi_TX_Buffer,WifiBufferLength);
+                   return;
+
+      }
+      else if(AlgorithmTypeParametr==Algo_5)
+      {
+                  Wifi_TX_Buffer[WifiBufferLength++]=EndUnitID;//ID
+                  Wifi_TX_Buffer[WifiBufferLength++]=0;//Length MSB
+                  Wifi_TX_Buffer[WifiBufferLength++]=120;//Length LSB
+                  Wifi_TX_Buffer[WifiBufferLength++]=1;// Velocity=0(bit 0)/Distance=1(bit 1)
+                  for (i=0; i < 60; i++) WifiBufferLength=SInt2Array(Vz_Sensor_Distance_Buffer_int[i],Wifi_TX_Buffer,WifiBufferLength);
+                  return;
+      }
+      else
+      {          Wifi_TX_Buffer[WifiBufferLength++]=EndUnitID;//ID
+                 Wifi_TX_Buffer[WifiBufferLength++]=0;//Length MSB
+                 Wifi_TX_Buffer[WifiBufferLength++]=120;//Length LSB
+                 Wifi_TX_Buffer[WifiBufferLength++]=0;// Velocity=0(bit 0)/Distance=1(bit 1)
+                 for (i=0; i < 60; i++) WifiBufferLength=SInt2Array(Vz_Sensor_Velocity_Buffer_int[i],Wifi_TX_Buffer,WifiBufferLength);
+                 return;
+      }
 }

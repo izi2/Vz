@@ -1,8 +1,8 @@
-#line 1 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Config_File.c"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
+#line 1 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Config_File.c"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/limits.h"
-#line 71 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
+#line 71 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 typedef unsigned char uint_8;
 
 
@@ -18,7 +18,7 @@ typedef signed char int_8;
 typedef signed int int_16;
 
 typedef signed long int_32;
-#line 106 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
+#line 106 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 typedef uint_16 Mem_AddressType;
 
 typedef uint_32 TimestampType;
@@ -227,7 +227,7 @@ typedef struct Sampling
 
 typedef Sampling *(*GetGeneralInput)(void);
 typedef void (*ActiveMethod)(Switch);
-#line 8 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
+#line 8 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
 typedef unsigned char (*Reader)(unsigned int Address);
 
 typedef void (*Writer)(unsigned int Address ,char DataByte);
@@ -272,12 +272,12 @@ Mem_AddressType SetLongProperty(Mem_AddressType address, uint_32 value);
 void SetLong3Property(Mem_AddressType address, uint_32 value);
 
 void SetSignedLongProperty(Mem_AddressType start_address, int_32 value);
-#line 68 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
+#line 68 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
 Mem_AddressType SetFloatProperty(Mem_AddressType address,float property);
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/bitset.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
-#line 39 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/bitset.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/bitset.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
+#line 39 "c:/users/itziks/documents/vz/uconnect exx drv/bitset.h"
 typedef struct IntToByte
 {
 
@@ -354,9 +354,9 @@ int_32 CombineSignedLongHighLow(int_8 max_high, int_8 middle_high, int_8 min_hig
 
 int_8 GetOnBitPosition(uint_32 bits, uint_8 size_bits);
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/built_in.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/pic_drv_uconnect.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
-#line 27 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/pic_drv_uconnect.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
+#line 27 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
 typedef struct
  {
  unsigned char ss ;
@@ -367,14 +367,14 @@ typedef struct
  unsigned char mo ;
  unsigned int yy ;
  } TimeStruct ;
-#line 41 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
+#line 41 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
 extern long Time_jd1970 ;
-#line 46 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
+#line 46 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
 long Time_dateToEpoch(TimeStruct *ts) ;
 void Time_epochToDate(long e, TimeStruct *ts) ;
 void TurnOnRTC_Timer0(void);
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
-#line 3 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/pic_drv_uconnect.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
+#line 3 "c:/users/itziks/documents/vz/uconnect exx drv/pic_drv_uconnect.h"
 void Pseudo_Uart1_Write_Byte(char din);
 void Pseudo_Uart1_Write_Text(unsigned char *p);
 void Pseudo_Uart1_Enable(char mode);
@@ -415,7 +415,7 @@ void CheckRxDataFromInterruptUart2(void);
 
 enum LED_MODE {LED_ON= 0,LED_OFF,LED_NOT,LED_RED,LED_GREEN};
 enum SPI1_TRANSFER_MODE {SPI1_TRANSFER_MODE_8BIT= 0,SPI1_TRANSFER_MODE_16BIT,SPI1_TRANSFER_MODE_32BIT};
-#line 8 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Config_File.c"
+#line 8 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Config_File.c"
 Reader m_reader;
 Writer m_writer;
 
@@ -444,7 +444,7 @@ unsigned char MemRd(Mem_AddressType address)
 
  return m_reader(address);
 }
-#line 47 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Config_File.c"
+#line 47 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Config_File.c"
 void SetAddressProperty(Mem_AddressType address, Mem_AddressType value)
 {
  if(sizeof(Mem_AddressType) == 2)
@@ -462,18 +462,18 @@ Mem_AddressType GetAddressProperty(Mem_AddressType address)
 
  return  0 ;
 }
-#line 69 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Config_File.c"
+#line 69 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Config_File.c"
 unsigned char GetProperty(Mem_AddressType address)
 {
  return MemRd(address);;
 }
-#line 79 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Config_File.c"
+#line 79 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Config_File.c"
 Mem_AddressType SetProperty(Mem_AddressType address, uint_8 value)
 {
  MemWrt(address, value);
  return (Mem_AddressType) (address + 1);
 }
-#line 95 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Config_File.c"
+#line 95 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Config_File.c"
 Mem_AddressType SetIntProperty(Mem_AddressType start_address, uint_16 value)
 {
  uint_8 high =  ((char *)&value)[1] ;
@@ -486,7 +486,7 @@ Mem_AddressType SetIntProperty(Mem_AddressType start_address, uint_16 value)
 
  return (Mem_AddressType) (start_address + 2);
 }
-#line 113 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Config_File.c"
+#line 113 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Config_File.c"
 Mem_AddressType SetLongProperty(Mem_AddressType start_address, uint_32 value)
 {
  uint_8 max_high =  ((char *)&value)[3] ;
@@ -522,7 +522,7 @@ void SetLong3Property(Mem_AddressType start_address, uint_32 value)
 
  MemWrt(start_address + 2, low);
 }
-#line 155 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Config_File.c"
+#line 155 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Config_File.c"
 uint_16 GetIntProperty(Mem_AddressType start_address)
 {
  uint_8 high = MemRd(start_address);
@@ -533,7 +533,7 @@ uint_16 GetIntProperty(Mem_AddressType start_address)
 
  return value;
 }
-#line 172 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Config_File.c"
+#line 172 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Config_File.c"
 int_16 GetSignedIntProperty(Mem_AddressType start_address)
 {
  uint_8 low = MemRd(start_address);
@@ -542,7 +542,7 @@ int_16 GetSignedIntProperty(Mem_AddressType start_address)
 
  return CombineSignedHighLow(high,low);
 }
-#line 187 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Config_File.c"
+#line 187 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Config_File.c"
 int_32 GetSignedLongProperty(Mem_AddressType address)
 {
  int_8 max_high = MemRd(address);
@@ -555,7 +555,7 @@ int_32 GetSignedLongProperty(Mem_AddressType address)
 
  return CombineLongHighLow(max_high, middle_h, min_h, low);
 }
-#line 205 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Config_File.c"
+#line 205 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Config_File.c"
 uint_32 GetLongProperty(Mem_AddressType address)
 {
  uint_8 max_high = MemRd(address);
@@ -579,7 +579,7 @@ uint_32 GetLong3Property(Mem_AddressType address)
 
  return CombineLong3HighLow(high, middle, low);
 }
-#line 290 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Config_File.c"
+#line 290 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Config_File.c"
 Mem_AddressType SetFloatProperty(Mem_AddressType address,float property)
 {
  int_32 value = (int_32) (property * (float) 1000 );
@@ -619,7 +619,7 @@ void SetSignedLongProperty(Mem_AddressType start_address,int_32 value)
 
  MemWrt(start_address + 3, low);
 }
-#line 338 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Config_File.c"
+#line 338 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Config_File.c"
 void ConfigFileInit(Writer writer, Reader reader)
 {
  m_writer = writer;

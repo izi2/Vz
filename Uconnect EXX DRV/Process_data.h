@@ -5,8 +5,13 @@
 #ifndef UCONNECT_EXX_DRV_3_PROCESS_DATA_H
 #define UCONNECT_EXX_DRV_3_PROCESS_DATA_H
 
+
+#include "config_sensor.h"
+
 #define LENGTH_HEADERS_CMD  2
 #define LENGTH_DATA_CMD  40
+
+#define LENGTH_STATUS_DATA_SEND  300
 
 typedef enum
 {
@@ -17,7 +22,7 @@ typedef enum
 
 typedef enum
 {
-    P_POINTER_LEASER = 3,
+    P_POINTER_LEASER = 5,
     P_TRANSMITED_TO_GATWAY,
     P_SENSOR_BIST,
     P_RTC_UPDATE,
@@ -28,11 +33,14 @@ typedef enum
     P_NET_PORT,
     P_NET_IP,
     P_ID_SENSOR,
+    P_TRANSMITED_ROW_DATA,
+    P_STATUS,
     P_BYTES_FROM_SENS,
 
 
 }type_data;
 
 void parssData(char* buffer,int bufferLength);
+void BildStringWifi(char* name, char* pass, char* ip, char* port);
 
 #endif //UCONNECT_EXX_DRV_3_PROCESS_DATA_H

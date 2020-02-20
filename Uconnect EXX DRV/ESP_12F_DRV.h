@@ -1,6 +1,6 @@
 #define    WifiConnectionLimit       600   //*10 = sec
 #include "Types.h"
-
+int GetWifiRssi(void);
 void ESP_Testing_Func(void);
 char Init_ESP(void);
 char CheckWifiConnection(void);
@@ -15,5 +15,7 @@ char *PullDataFromIDP(int *length,char *Buff);
 char GetEspData(unsigned long TimeOut_uSec_Start);
 char CheckDataFromGateway(void);
 char ReConnectToServer(void);
+void RunAlgorithmAndBuiledTxParametersPacket(void);
+void AddRawDataToWifiBuffer(void);
 
 #define ESP_RX_Buffer_Length            600

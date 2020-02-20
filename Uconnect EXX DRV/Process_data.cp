@@ -1,45 +1,9 @@
-#line 1 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Process_data.c"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/process_data.h"
-
-
-
-
-
-
-
-
-
-
-typedef enum
-{
- H_TYPE_DATA,
- H_LENGTH_DATA
-}type_headers;
-
-
-typedef enum
-{
- P_POINTER_LEASER = 3,
- P_TRANSMITED_TO_GATWAY,
- P_SENSOR_BIST,
- P_RTC_UPDATE,
- P_ALGO_SELECTED,
- P_PARAMS,
- P_NET_NAME,
- P_NET_PASS,
- P_NET_PORT,
- P_NET_IP,
- P_ID_SENSOR,
- P_BYTES_FROM_SENS,
-
-
-}type_data;
-
-void parssData(char* buffer,int bufferLength);
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_sensor.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
+#line 1 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Process_data.c"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/process_data.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/config_sensor.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/limits.h"
-#line 71 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
+#line 71 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 typedef unsigned char uint_8;
 
 
@@ -55,7 +19,7 @@ typedef signed char int_8;
 typedef signed int int_16;
 
 typedef signed long int_32;
-#line 106 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
+#line 106 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 typedef uint_16 Mem_AddressType;
 
 typedef uint_32 TimestampType;
@@ -264,7 +228,7 @@ typedef struct Sampling
 
 typedef Sampling *(*GetGeneralInput)(void);
 typedef void (*ActiveMethod)(Switch);
-#line 21 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_sensor.h"
+#line 22 "c:/users/itziks/documents/vz/uconnect exx drv/config_sensor.h"
 typedef enum
 {
  C_CHAR,
@@ -298,9 +262,10 @@ typedef struct
  propertySensor networkPassword;
  propertySensor networkPort;
  propertySensor networkServerIp;
+ propertySensor transmitRowData;
 
 }ConfigSensor;
-#line 74 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_sensor.h"
+#line 76 "c:/users/itziks/documents/vz/uconnect exx drv/config_sensor.h"
 void initConfigSensor(ConfigSensor * confSensor);
 void saveDefultConfig(ConfigSensor * confSensor);
 void saveInEEpromPropertyConfig(propertySensor* propertySens, void* value);
@@ -309,9 +274,47 @@ void readFromMemProperty(propertySensor* propertySens,void* dest);
 char isFirstProgrammin();
 char setFirstProgmmanigToFalse();
 void initConfig();
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/bitset.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
-#line 39 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/bitset.h"
+void LoadUnitId(ConfigSensor* cS);
+void LoadAlgoSelected(ConfigSensor* cS);
+void LoadPointerLeaser(ConfigSensor* cS);
+void LoadParamsIn(ConfigSensor* cS);
+void LoadWifi(ConfigSensor* cS);
+void LoadTransmitedToGatway(ConfigSensor* cS);
+void readEEpromRawData(propertySensor *propertySens, char *dest,uint_8 index);
+#line 16 "c:/users/itziks/documents/vz/uconnect exx drv/process_data.h"
+typedef enum
+{
+ H_TYPE_DATA,
+ H_LENGTH_DATA
+}type_headers;
+
+
+typedef enum
+{
+ P_POINTER_LEASER = 5,
+ P_TRANSMITED_TO_GATWAY,
+ P_SENSOR_BIST,
+ P_RTC_UPDATE,
+ P_ALGO_SELECTED,
+ P_PARAMS,
+ P_NET_NAME,
+ P_NET_PASS,
+ P_NET_PORT,
+ P_NET_IP,
+ P_ID_SENSOR,
+ P_TRANSMITED_ROW_DATA,
+ P_STATUS,
+ P_BYTES_FROM_SENS,
+
+
+}type_data;
+
+void parssData(char* buffer,int bufferLength);
+void BildStringWifi(char* name, char* pass, char* ip, char* port);
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/config_sensor.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/bitset.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
+#line 39 "c:/users/itziks/documents/vz/uconnect exx drv/bitset.h"
 typedef struct IntToByte
 {
 
@@ -387,9 +390,9 @@ uint_32 CombineLong3HighLow(uint_8 high, uint_8 middle, uint_8 low);
 int_32 CombineSignedLongHighLow(int_8 max_high, int_8 middle_high, int_8 min_high, int_8 low);
 
 int_8 GetOnBitPosition(uint_32 bits, uint_8 size_bits);
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/pic_drv_uconnect.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
-#line 27 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/pic_drv_uconnect.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
+#line 27 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
 typedef struct
  {
  unsigned char ss ;
@@ -400,15 +403,15 @@ typedef struct
  unsigned char mo ;
  unsigned int yy ;
  } TimeStruct ;
-#line 41 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
+#line 41 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
 extern long Time_jd1970 ;
-#line 46 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
+#line 46 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
 long Time_dateToEpoch(TimeStruct *ts) ;
 void Time_epochToDate(long e, TimeStruct *ts) ;
 void TurnOnRTC_Timer0(void);
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
-#line 8 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
+#line 8 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
 typedef unsigned char (*Reader)(unsigned int Address);
 
 typedef void (*Writer)(unsigned int Address ,char DataByte);
@@ -453,9 +456,9 @@ Mem_AddressType SetLongProperty(Mem_AddressType address, uint_32 value);
 void SetLong3Property(Mem_AddressType address, uint_32 value);
 
 void SetSignedLongProperty(Mem_AddressType start_address, int_32 value);
-#line 68 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
+#line 68 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
 Mem_AddressType SetFloatProperty(Mem_AddressType address,float property);
-#line 3 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/pic_drv_uconnect.h"
+#line 3 "c:/users/itziks/documents/vz/uconnect exx drv/pic_drv_uconnect.h"
 void Pseudo_Uart1_Write_Byte(char din);
 void Pseudo_Uart1_Write_Text(unsigned char *p);
 void Pseudo_Uart1_Enable(char mode);
@@ -496,26 +499,46 @@ void CheckRxDataFromInterruptUart2(void);
 
 enum LED_MODE {LED_ON= 0,LED_OFF,LED_NOT,LED_RED,LED_GREEN};
 enum SPI1_TRANSFER_MODE {SPI1_TRANSFER_MODE_8BIT= 0,SPI1_TRANSFER_MODE_16BIT,SPI1_TRANSFER_MODE_32BIT};
-#line 13 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Process_data.c"
-extern int_16 volatile paramsDefult[];
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/esp_12f_drv.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
+#line 3 "c:/users/itziks/documents/vz/uconnect exx drv/esp_12f_drv.h"
+int GetWifiRssi(void);
+void ESP_Testing_Func(void);
+char Init_ESP(void);
+char CheckWifiConnection(void);
+char ConnectingToWifiNet(void);
+void SendAtCommandToEsp(char *buff);
+char WIFI_Send_One_Array(char *m_data, unsigned int len);
+char WIFI_Send_One_Array_Not_Wait_To_OK(char *m_data, unsigned int len);
+char ConnectToServer(void);
+char CheckGettingIP(void);
+void ESP_Testing_Vz_Demo(void);
+char *PullDataFromIDP(int *length,char *Buff);
+char GetEspData(unsigned long TimeOut_uSec_Start);
+char CheckDataFromGateway(void);
+char ReConnectToServer(void);
+void RunAlgorithmAndBuiledTxParametersPacket(void);
+void AddRawDataToWifiBuffer(void);
+#line 12 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Process_data.c"
 extern int_16 volatile ParamsIn[];
-extern int_16 volatile ParamsOut[];
-extern uint_8 volatile ID_SENSOR;
-extern uint_8 volatile ALGO_SELECTED;
-extern uint_8 volatile POINTER_LEASER;
+extern char volatile EndUnitID;
 
-uint_16 setHeaders(char* header, char* buffer, uint_16 index)
+void sendStatus();
+
+uint_16 setHeaders(char *header, char *buffer, uint_16 index)
 {
  header[H_TYPE_DATA] = (uint_8) buffer[index];
- header[H_LENGTH_DATA] = (uint_8) buffer[index+1];
+ header[H_LENGTH_DATA] = (uint_8) buffer[index + 1];
 
- return index +  2  ;
+
+
+ return index +  2 ;
 }
 
-uint_16 setData(char* datap, char* header, char* buffer, uint_16 index)
+uint_16 setData(char *datap, char *header, char *buffer, uint_16 index)
 {
  uint_16 i = 0;
- for(;i < header[H_LENGTH_DATA];i++)
+ for (; i < header[H_LENGTH_DATA]; i++)
  {
  datap[i] = buffer[index];
  index++;
@@ -524,60 +547,135 @@ uint_16 setData(char* datap, char* header, char* buffer, uint_16 index)
  return index;
 }
 
-void insertParamsToParamsIn(char* datap,uint_8 len)
+void insertParamsToParamsIn(char *datap, uint_8 len)
 {
  uint_8 i = 0;
  int_16 value;
- for(;i < len;i += 2)
+ for (; i < len; i += 2)
  {
- value = CombineSignedHighLow((uint_8) datap[i],(uint_8) datap[i+1]);
- if(value != -1)
+ value = CombineSignedHighLow((uint_8) datap[i], (uint_8) datap[i + 1]);
+
+ if (value != -1)
  {
- ParamsIn[i/2] = value;
+ ParamsIn[i / 2] = value;
  }
  }
 }
-void parssData(char* buffer,int bufferLength)
+
+char* AddHeaders(uint_8 type,propertySensor* proper, char* dataS,uint_8 index)
+{
+ uint_8 len = proper->endAddress - proper->address;
+ dataS[index++] = EndUnitID;
+ dataS[index++] = 0;
+ dataS[index++] = len;
+ dataS[index++] = type;
+
+ return index;
+
+}
+
+
+void parssData(char *buffer, int bufferLength)
 {
  uint_8 HEADERS[ 2 ];
  char DATA[ 40 ];
+ uint_8 changesInNet = 0;
  uint_16 i = 0;
- uint_8 t = 0;
  ConfigSensor cS;
  initConfigSensor(&cS);
-
- while(i < bufferLength)
+ while (i < bufferLength)
  {
- i = setHeaders(HEADERS,buffer,i);
- i = setData(DATA,HEADERS,buffer,i);
+ i = setHeaders(HEADERS, buffer, i);
+ i = setData(DATA, HEADERS, buffer, i);
+
+ PrintOut(PrintHandler, "\rlen %d, type %d", HEADERS[H_LENGTH_DATA], HEADERS[H_TYPE_DATA]);
  switch (HEADERS[H_TYPE_DATA])
  {
  case P_ID_SENSOR:
- ID_SENSOR = (uint_8) DATA[0];
- saveInEEpromPropertyConfig(&cS.idS,(uint_8)DATA[0]);
+ saveInEEpromPropertyConfig(&cS.idS, &DATA[0]);
+ LoadUnitId(&cS);
  break;
  case P_ALGO_SELECTED:
- ALGO_SELECTED = (uint_8) DATA[0];
- saveInEEpromPropertyConfig(&cS.algoSelected,(uint_8)DATA[0]);
+ saveInEEpromPropertyConfig(&cS.algoSelected, &DATA[0]);
+ LoadAlgoSelected(&cS) ;
  break;
+
+ case P_TRANSMITED_TO_GATWAY:
+ saveInEEpromPropertyConfig(&cS.transmitedToGatway, &DATA[0]);
+ LoadTransmitedToGatway(&cS);
+ break;
+ case P_POINTER_LEASER:
+ saveInEEpromPropertyConfig(&cS.pointerLeaser, &DATA[0]);
+ LoadPointerLeaser(&cS) ;
+ break;
+
  case P_NET_NAME:
- saveInEEpromPropertyConfig(&cS.networkName,(uint_8)DATA);
+ saveInEEpromPropertyConfig(&cS.networkName, DATA);
+ changesInNet = 1;
  break;
+
  case P_NET_PASS:
- saveInEEpromPropertyConfig(&cS.networkPassword,(uint_8)DATA);
+ saveInEEpromPropertyConfig(&cS.networkPassword, DATA);
+ changesInNet = 1;
  break;
  case P_NET_PORT:
- saveInEEpromPropertyConfig(&cS.networkPort,(uint_8)DATA);
+ saveInEEpromPropertyConfig(&cS.networkPort, DATA);
+ changesInNet = 1;
  break;
  case P_NET_IP:
- saveInEEpromPropertyConfig(&cS.networkServerIp,(uint_8)DATA);
+ saveInEEpromPropertyConfig(&cS.networkServerIp, DATA);
+ changesInNet = 1;
  break;
  case P_PARAMS:
- insertParamsToParamsIn(DATA,HEADERS[H_LENGTH_DATA]);
- saveInEEpromPropertyConfig(&cS.paramsIn,ParamsIn);
+ insertParamsToParamsIn(DATA, HEADERS[H_LENGTH_DATA]);
+ saveInEEpromPropertyConfig(&cS.paramsIn, ParamsIn);
+ break;
+ case P_STATUS:
+ sendStatus();
  break;
 
  }
+ if (changesInNet)
+ {
+ LoadWifi(&cS);
+ }
 
  }
+
+
+}
+
+void sendStatus()
+{
+ ConfigSensor cS;
+ char dataSend[ 300 ];
+ uint_8 index = dataSend;
+
+ readEEpromRawData(&cS.idS, dataSend,index);
+ index = AddHeaders(P_ID_SENSOR,&cS.idS,dataSend,index);
+
+ readEEpromRawData(&cS.pointerLeaser, dataSend,index);
+ index = AddHeaders(P_POINTER_LEASER,&cS.pointerLeaser,dataSend,index);
+
+ readEEpromRawData(&cS.transmitedToGatway, dataSend,index);
+ index = AddHeaders(P_TRANSMITED_TO_GATWAY,&cS.transmitedToGatway,dataSend,index);
+ readEEpromRawData(&cS.transmitRowData, dataSend,index);
+ index = AddHeaders(P_TRANSMITED_TO_GATWAY,&cS.transmitRowData,dataSend,index);
+ readEEpromRawData(&cS.paramsIn, dataSend,index);
+ index = AddHeaders(P_PARAMS,&cS.paramsIn,dataSend,index);
+ readEEpromRawData(&cS.networkName, dataSend,index);
+ index = AddHeaders(P_NET_NAME,&cS.networkName,dataSend,index);
+ readEEpromRawData(&cS.networkPassword, dataSend,index);
+ index = AddHeaders(P_NET_PASS,&cS.networkPassword,dataSend,index);
+
+ readEEpromRawData(&cS.networkPort, dataSend,index);
+ index = AddHeaders(P_NET_PORT,&cS.networkPort,dataSend,index);
+
+ readEEpromRawData(&cS.networkServerIp, dataSend,index);
+ index = AddHeaders(P_NET_IP,&cS.networkServerIp,dataSend,index);
+ PrintOut(PrintHandler, "\ri %d, ", index);
+ WIFI_Send_One_Array_Not_Wait_To_OK(dataSend,index);
+
+
+
 }

@@ -103,14 +103,54 @@ main
 						SPI1_Write
 		setFirstProgmmanigToFalse
 			MemWrt
-		readFromMemProperty
-			GetSignedIntProperty
-				MemRd
-				CombineSignedHighLow
-			GetProperty
-		PrintOut
-		conectionToServer
-			PrintOut
+		LoadALLSchem
+			LoadUnitId
+				readFromMemProperty
+					GetSignedIntProperty
+						MemRd
+						CombineSignedHighLow
+					GetProperty
+			LoadAlgoSelected
+				readFromMemProperty
+			LoadPointerLeaser
+				readFromMemProperty
+				Enable_VZ_Pointer
+					Read_Write_MCP23S17_IO
+			LoadParamsIn
+				readFromMemProperty
+			LoadWifi
+				readFromMemProperty
+				BildStringWifi
+					PrintOut
+					strcpy
+					strcat
+				ConnectingToWifiNet
+					PrintOut
+					SendAtCommandToEsp
+						UART1_Write
+					GetEspData
+						CheckDataFromGateway
+							strstr
+								strncmp
+								strlen
+								strchr
+							PullDataFromIDP
+								strstr
+								atoi
+									isdigit
+					strstr
+					GetWifiRssi
+						SendAtCommandToEsp
+						GetEspData
+						strstr
+						atoi
+					ConnectToServer
+						SendAtCommandToEsp
+						GetEspData
+						strstr
+					LED_Activation
+			LoadTransmitedToGatway
+				readFromMemProperty
 	Init_ESP
 		PrintOut
 		Read_Write_MCP23S17_IO
@@ -119,49 +159,96 @@ main
 		Pseudo_Uart1_Write_Text
 			Pseudo_Uart1_Write_Byte
 		SendAtCommandToEsp
-			UART1_Write
 		GetEspData
-			CheckDataFromGateway
-				strstr
-					strncmp
-					strlen
-					strchr
-				PullDataFromIDP
-					strstr
-					atoi
-						isdigit
 		strstr
 	ConnectingToWifiNet
-		PrintOut
-		SendAtCommandToEsp
-		GetEspData
-		strstr
-		ConnectToServer
-			SendAtCommandToEsp
-			GetEspData
-			strstr
-		LED_Activation
 	PrintOut
 	OpticDataCheckIfReady
 		VzSensor_SpiReadAddr
 			SPI1_Write
 			SPI1_Read
 	Read_Write_MCP23S17_IO
-	OpticDataGetFrame_VelocityOnly
-		SPI1_Write
-		SPI1_Read
+	RunAlgorithmAndBuiledTxParametersPacket
+		OpticDataGetCleanBuffer
+			SPI1_Write
+			SPI1_Read
+			OpticDataCheckIfReady
+		Vz_Algorithm_2
+			ResetAlgoParametrsOutBuffer
+			OpticDataGetFrame_VelocityOnly
+				SPI1_Write
+				SPI1_Read
+		Vz_Algorithm_3_4
+			ResetAlgoParametrsOutBuffer
+			OpticDataGetFrame_VelocityOnly
+			uError_Algo_3_4
+			abs
+			_Long2Float
+			_Sub_FP
+			_Mul_FP
+			_AddSub_FP
+			_Div_FP
+			_Float2Longint
+		Vz_Algorithm_5
+			ResetAlgoParametrsOutBuffer
+			OpticDataGetFrame_DistanceOnly
+				SPI1_Write
+				SPI1_Read
+			uError_Algo5
+			_Long2Float
+			_Sub_FP
+			_Mul_FP
+			_AddSub_FP
+			_Div_FP
+			_Float2Longint
+	AddRawDataToWifiBuffer
+		OpticDataGetFrame_AllData
+			SPI1_Write
+			SPI1_Read
+		SInt2Array
+	WIFI_Send_One_Array_Not_Wait_To_OK
+		SendAtCommandToEsp
+		GetEspData
+		sprintf
+			_doprntf
+				isdigit
+				scale
+					_Mul_FP
+				fround
+					_Mul_FP
+				_Compare_Le_Fp
+				_Mul_FP
+				_Compare_Ge_Fp
+				_Div_FP
+				_Float2Longword
+				_Long2Float
+				_Sub_FP
+				_AddSub_FP
+				_Modulus_32x32
+				_Divide_32x32
+				_Float2Longint
+		strstr
+		UART1_Write
 	OpticDataGetCleanBuffer
-		SPI1_Write
-		SPI1_Read
-		OpticDataCheckIfReady
 	parssData
 		initConfigSensor
 		setHeaders
 		setData
+		PrintOut
 		saveInEEpromPropertyConfig
+		LoadUnitId
+		LoadAlgoSelected
+		LoadTransmitedToGatway
+		LoadPointerLeaser
 		insertParamsToParamsIn
 			CombineSignedHighLow
-	UART2_Write
+		sendStatus
+			readEEpromRawData
+				GetProperty
+			AddHeaders
+			PrintOut
+			WIFI_Send_One_Array_Not_Wait_To_OK
+		LoadWifi
 	CheckWifiConnection
 		SendAtCommandToEsp
 		GetEspData
@@ -171,7 +258,6 @@ main
 		SendAtCommandToEsp
 		ConnectToServer
 		CheckWifiConnection
-		Init_ESP
 		ConnectingToWifiNet
 	CheckAndSwitchToBattery
 RTCC_Alarm

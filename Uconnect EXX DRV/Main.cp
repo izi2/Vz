@@ -1,7 +1,7 @@
-#line 1 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Main.c"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/pic_drv_uconnect.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
-#line 27 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
+#line 1 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Main.c"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/pic_drv_uconnect.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
+#line 27 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
 typedef struct
  {
  unsigned char ss ;
@@ -12,16 +12,16 @@ typedef struct
  unsigned char mo ;
  unsigned int yy ;
  } TimeStruct ;
-#line 41 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
+#line 41 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
 extern long Time_jd1970 ;
-#line 46 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
+#line 46 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
 long Time_dateToEpoch(TimeStruct *ts) ;
 void Time_epochToDate(long e, TimeStruct *ts) ;
 void TurnOnRTC_Timer0(void);
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/limits.h"
-#line 71 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
+#line 71 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 typedef unsigned char uint_8;
 
 
@@ -37,7 +37,7 @@ typedef signed char int_8;
 typedef signed int int_16;
 
 typedef signed long int_32;
-#line 106 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
+#line 106 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 typedef uint_16 Mem_AddressType;
 
 typedef uint_32 TimestampType;
@@ -246,7 +246,7 @@ typedef struct Sampling
 
 typedef Sampling *(*GetGeneralInput)(void);
 typedef void (*ActiveMethod)(Switch);
-#line 8 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
+#line 8 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
 typedef unsigned char (*Reader)(unsigned int Address);
 
 typedef void (*Writer)(unsigned int Address ,char DataByte);
@@ -291,9 +291,9 @@ Mem_AddressType SetLongProperty(Mem_AddressType address, uint_32 value);
 void SetLong3Property(Mem_AddressType address, uint_32 value);
 
 void SetSignedLongProperty(Mem_AddressType start_address, int_32 value);
-#line 68 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
+#line 68 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
 Mem_AddressType SetFloatProperty(Mem_AddressType address,float property);
-#line 3 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/pic_drv_uconnect.h"
+#line 3 "c:/users/itziks/documents/vz/uconnect exx drv/pic_drv_uconnect.h"
 void Pseudo_Uart1_Write_Byte(char din);
 void Pseudo_Uart1_Write_Text(unsigned char *p);
 void Pseudo_Uart1_Enable(char mode);
@@ -334,7 +334,7 @@ void CheckRxDataFromInterruptUart2(void);
 
 enum LED_MODE {LED_ON= 0,LED_OFF,LED_NOT,LED_RED,LED_GREEN};
 enum SPI1_TRANSFER_MODE {SPI1_TRANSFER_MODE_8BIT= 0,SPI1_TRANSFER_MODE_16BIT,SPI1_TRANSFER_MODE_32BIT};
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/vz_sensor.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/vz_sensor.h"
 char Init_VZ_Sensor(void);
 void VzSensor_ReadFWVer(void);
 char OpticDataOnSPI_ON(void);
@@ -350,7 +350,7 @@ void OpticDataGetCleanBuffer(void);
 
 
 enum VZ_Sensor_Names {Normal=0,Saw,Sinus};
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/debug_drv.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/debug_drv.h"
 void PrintRealTime(unsigned int TimeInSec);
 void Pseudo_Uart2_Write_Byte(char din);
 void Pseudo_Uart2_Write_Text(unsigned char *p);
@@ -359,7 +359,13 @@ int GetSampleFromUart(void);
 void InitUartForRxData(void);
 void Get60SamplesFromUart(void);
 void PrintOpticDataToUart(char mode);
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/vz_algorithm.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/vz_algorithm.h"
+
+
+
+
+
+
 
 
 
@@ -370,7 +376,11 @@ void Vz_Algorithm_5(void);
 void uError_Algo_3_4(char *ST,char *a,int *tC,int *dC,int *C0,int *C1,int *C2,int *U1Ipoint,int *U2Ipoint,int *DIpoint);
 void uError_Algo5(char *ST,int *dC,int *C0,int *C1,char ErorCode);
 void void Vz_Algoritem_by_algo_select();
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/sc16is740_drv.h"
+void ResetAlgoParametrsOutBuffer(void);
+
+
+enum Algo_Types_Names {Algo_2=2,Algo_3_4,Algo_5,No_Algo};
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/sc16is740_drv.h"
 void Init_SC16IS740(void);
 void Write_To_SC16IS740_Internal_Register(char Register_ADD,char Register_Data);
 char Read_From_SC16IS740_Internal_Register(char Register_ADD);
@@ -379,7 +389,7 @@ char SC16IS740_ReadBufferFromUart(char *buff);
 char CheckSC16IS740UartDataReady(unsigned int TimeOut,char *buff);
 void SPIPut_SC16IS740(char din);
 char SPIGet_SC16IS740(char din);
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/mcp23s17_drv.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/mcp23s17_drv.h"
 void SPIPut_MCP23S17(char din);
 char SPIGet_MCP23S17(char din);
 void Write_To_MCP23S17_Internal_Register(char Register_ADD,char Register_Data);
@@ -389,7 +399,7 @@ char Read_Write_MCP23S17_IO(char PinName,char mode);
 
 
 enum MCP23S17_IO_Names {EN_1_8V=0,CS_FLASH,RESET_ADP,USER_LED,HOLD_SRAM,WP_FLASH,RESET_VZ,EN_LASER,ESP_RTS,ESP_CTS,ESP_EN_PIN,ESP_RESET,ESP_FLASH};
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/sram_is62wvs5128gbll_drv.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/sram_is62wvs5128gbll_drv.h"
 void Init_SRAM(void);
 void SPIPut_SRAM(char din);
 char SPIGet_SRAM(char din);
@@ -398,9 +408,10 @@ void Write_Byte_To_SRAM_Memory(unsigned long Register_ADD,char Register_Data);
 char Read_Byte_From_SRAM_Memory(unsigned long Register_ADD);
 void Write_Sequential_Bytes_To_SRAM_Memory(unsigned long Register_ADD,char *TxBuffer,unsigned int BufferLength);
 void Read_Sequential_Bytes_From_SRAM_Memory(unsigned long Register_ADD,char *RxBuffer,unsigned int BufferLength);
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/esp_12f_drv.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
-#line 4 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/esp_12f_drv.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/esp_12f_drv.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
+#line 3 "c:/users/itziks/documents/vz/uconnect exx drv/esp_12f_drv.h"
+int GetWifiRssi(void);
 void ESP_Testing_Func(void);
 char Init_ESP(void);
 char CheckWifiConnection(void);
@@ -415,9 +426,11 @@ char *PullDataFromIDP(int *length,char *Buff);
 char GetEspData(unsigned long TimeOut_uSec_Start);
 char CheckDataFromGateway(void);
 char ReConnectToServer(void);
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_sensor.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
-#line 21 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_sensor.h"
+void RunAlgorithmAndBuiledTxParametersPacket(void);
+void AddRawDataToWifiBuffer(void);
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/config_sensor.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
+#line 22 "c:/users/itziks/documents/vz/uconnect exx drv/config_sensor.h"
 typedef enum
 {
  C_CHAR,
@@ -451,9 +464,10 @@ typedef struct
  propertySensor networkPassword;
  propertySensor networkPort;
  propertySensor networkServerIp;
+ propertySensor transmitRowData;
 
 }ConfigSensor;
-#line 74 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_sensor.h"
+#line 76 "c:/users/itziks/documents/vz/uconnect exx drv/config_sensor.h"
 void initConfigSensor(ConfigSensor * confSensor);
 void saveDefultConfig(ConfigSensor * confSensor);
 void saveInEEpromPropertyConfig(propertySensor* propertySens, void* value);
@@ -462,18 +476,17 @@ void readFromMemProperty(propertySensor* propertySens,void* dest);
 char isFirstProgrammin();
 char setFirstProgmmanigToFalse();
 void initConfig();
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/process_data.h"
-
-
-
-
-
-
-
-
-
-
+void LoadUnitId(ConfigSensor* cS);
+void LoadAlgoSelected(ConfigSensor* cS);
+void LoadPointerLeaser(ConfigSensor* cS);
+void LoadParamsIn(ConfigSensor* cS);
+void LoadWifi(ConfigSensor* cS);
+void LoadTransmitedToGatway(ConfigSensor* cS);
+void readEEpromRawData(propertySensor *propertySens, char *dest,uint_8 index);
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/process_data.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/config_sensor.h"
+#line 16 "c:/users/itziks/documents/vz/uconnect exx drv/process_data.h"
 typedef enum
 {
  H_TYPE_DATA,
@@ -483,7 +496,7 @@ typedef enum
 
 typedef enum
 {
- P_POINTER_LEASER = 3,
+ P_POINTER_LEASER = 5,
  P_TRANSMITED_TO_GATWAY,
  P_SENSOR_BIST,
  P_RTC_UPDATE,
@@ -494,13 +507,18 @@ typedef enum
  P_NET_PORT,
  P_NET_IP,
  P_ID_SENSOR,
+ P_TRANSMITED_ROW_DATA,
+ P_STATUS,
  P_BYTES_FROM_SENS,
 
 
 }type_data;
 
 void parssData(char* buffer,int bufferLength);
-#line 15 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Main.c"
+void BildStringWifi(char* name, char* pass, char* ip, char* port);
+#line 14 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Main.c"
+extern char volatile Wifi_TX_Buffer[];
+extern unsigned int volatile WifiBufferLength;
 extern char volatile UART2_RX_Interrupt_Buffer[];
 extern char volatile ESP_GateWay_Buffer[];
 extern int volatile Vz_Sensor_Velocity_Buffer_int[];
@@ -509,31 +527,29 @@ extern char volatile ESP_RX_Buffer[];
 extern char volatile Data_From_Gateway_Flag;
 extern unsigned int Gateway_Buffer_Length;
 void Init_uClick_VZ(void);
-void Enable_VZ_Pointer(char mode);
+
 char volatile VZ_ON_Flag;
 char volatile Wifi_Buffer[1000];
 char volatile wifi_state=0;
+char RawDataTX_Enable= 0 ;
+char PointerLeaser_Enable= 0 ;
+extern char CWJAP_String[];
+extern char CIPSTART_String[];
+extern char volatile AlgorithmTypeParametr;
+
 
 void main()
 {
  char LedCount=0,LedOut=0,OpticDataFlag;
  unsigned int WifiCounter=0,VZCounter=0,i,SamplingCounter=0,k;
- static unsigned int j;
- uint_8 firstProgramming =  1 ;
- ConfigSensor f;
- char hrt[30];
- int_16 defultParams[15];
- uint_8 gty;
- char loopi = 0;
 
  BoardInit();
   IFS0bits.U1RXIF =0; IEC0bits.U1RXIE =1;
  LED_Activation(LED_GREEN,LED_ON);
  Init_uClick_VZ();
+
  ConfigFileInit(ExtEeprom_WriteByte,ExtEeprom_ReadByte);
-
  initConfig();
-
 
 
 
@@ -547,7 +563,6 @@ void main()
  asm clrwdt;
 
 
- VZ_ON_Flag= 0 ;
  if(VZ_ON_Flag)
  {
  while((!(OpticDataFlag=OpticDataCheckIfReady()))&&(VZCounter++<15000)) {asm clrwdt;Delay_us(1);}
@@ -557,10 +572,16 @@ void main()
  if(LedCount++>=20){LedOut^=0xFF;LedCount=0;Read_Write_MCP23S17_IO(USER_LED,LedOut);}
 
 
- OpticDataGetFrame_VelocityOnly();
+ if((AlgorithmTypeParametr!=No_Algo)||((AlgorithmTypeParametr==No_Algo)&&(RawDataTX_Enable== 0 ))) RunAlgorithmAndBuiledTxParametersPacket();
+ if(RawDataTX_Enable== 1 ) AddRawDataToWifiBuffer();
 
 
 
+ if(WifiBufferLength)
+ {
+ WIFI_Send_One_Array_Not_Wait_To_OK(Wifi_TX_Buffer,WifiBufferLength);
+ WifiBufferLength=0;
+ }
 
  }
  else OpticDataGetCleanBuffer();
@@ -571,9 +592,9 @@ void main()
 
  if(Data_From_Gateway_Flag)
  {
- PrintOut(PrintHandler, "\rGateway Buffer-Length:%d\rData:",Gateway_Buffer_Length);
- parssData(ESP_GateWay_Buffer,Gateway_Buffer_Length);
- for(i=0;i<Gateway_Buffer_Length;i++) Uart2_Write(ESP_GateWay_Buffer[i]);
+
+
+ parssData(ESP_GateWay_Buffer, Gateway_Buffer_Length);
 
 
 
@@ -592,10 +613,10 @@ void main()
  }
 }
 
-void Enable_VZ_Pointer(char mode)
-{
- Read_Write_MCP23S17_IO(EN_LASER,mode);
-}
+
+
+
+
 
 void Init_uClick_VZ(void)
 {

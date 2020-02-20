@@ -1,7 +1,7 @@
-#line 1 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Vz_Algorithm.c"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/pic_drv_uconnect.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
-#line 27 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
+#line 1 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Vz_Algorithm.c"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/pic_drv_uconnect.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
+#line 27 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
 typedef struct
  {
  unsigned char ss ;
@@ -12,16 +12,16 @@ typedef struct
  unsigned char mo ;
  unsigned int yy ;
  } TimeStruct ;
-#line 41 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
+#line 41 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
 extern long Time_jd1970 ;
-#line 46 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/timelib.h"
+#line 46 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
 long Time_dateToEpoch(TimeStruct *ts) ;
 void Time_epochToDate(long e, TimeStruct *ts) ;
 void TurnOnRTC_Timer0(void);
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/limits.h"
-#line 71 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
+#line 71 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 typedef unsigned char uint_8;
 
 
@@ -37,7 +37,7 @@ typedef signed char int_8;
 typedef signed int int_16;
 
 typedef signed long int_32;
-#line 106 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
+#line 106 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 typedef uint_16 Mem_AddressType;
 
 typedef uint_32 TimestampType;
@@ -246,7 +246,7 @@ typedef struct Sampling
 
 typedef Sampling *(*GetGeneralInput)(void);
 typedef void (*ActiveMethod)(Switch);
-#line 8 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
+#line 8 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
 typedef unsigned char (*Reader)(unsigned int Address);
 
 typedef void (*Writer)(unsigned int Address ,char DataByte);
@@ -291,9 +291,9 @@ Mem_AddressType SetLongProperty(Mem_AddressType address, uint_32 value);
 void SetLong3Property(Mem_AddressType address, uint_32 value);
 
 void SetSignedLongProperty(Mem_AddressType start_address, int_32 value);
-#line 68 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_file.h"
+#line 68 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
 Mem_AddressType SetFloatProperty(Mem_AddressType address,float property);
-#line 3 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/pic_drv_uconnect.h"
+#line 3 "c:/users/itziks/documents/vz/uconnect exx drv/pic_drv_uconnect.h"
 void Pseudo_Uart1_Write_Byte(char din);
 void Pseudo_Uart1_Write_Text(unsigned char *p);
 void Pseudo_Uart1_Enable(char mode);
@@ -334,7 +334,7 @@ void CheckRxDataFromInterruptUart2(void);
 
 enum LED_MODE {LED_ON= 0,LED_OFF,LED_NOT,LED_RED,LED_GREEN};
 enum SPI1_TRANSFER_MODE {SPI1_TRANSFER_MODE_8BIT= 0,SPI1_TRANSFER_MODE_16BIT,SPI1_TRANSFER_MODE_32BIT};
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/vz_sensor.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/vz_sensor.h"
 char Init_VZ_Sensor(void);
 void VzSensor_ReadFWVer(void);
 char OpticDataOnSPI_ON(void);
@@ -350,7 +350,7 @@ void OpticDataGetCleanBuffer(void);
 
 
 enum VZ_Sensor_Names {Normal=0,Saw,Sinus};
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/debug_drv.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/debug_drv.h"
 void PrintRealTime(unsigned int TimeInSec);
 void Pseudo_Uart2_Write_Byte(char din);
 void Pseudo_Uart2_Write_Text(unsigned char *p);
@@ -359,7 +359,13 @@ int GetSampleFromUart(void);
 void InitUartForRxData(void);
 void Get60SamplesFromUart(void);
 void PrintOpticDataToUart(char mode);
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/vz_algorithm.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/vz_algorithm.h"
+
+
+
+
+
+
 
 
 
@@ -370,9 +376,13 @@ void Vz_Algorithm_5(void);
 void uError_Algo_3_4(char *ST,char *a,int *tC,int *dC,int *C0,int *C1,int *C2,int *U1Ipoint,int *U2Ipoint,int *DIpoint);
 void uError_Algo5(char *ST,int *dC,int *C0,int *C1,char ErorCode);
 void void Vz_Algoritem_by_algo_select();
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_sensor.h"
-#line 1 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/types.h"
-#line 21 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_sensor.h"
+void ResetAlgoParametrsOutBuffer(void);
+
+
+enum Algo_Types_Names {Algo_2=2,Algo_3_4,Algo_5,No_Algo};
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/config_sensor.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
+#line 22 "c:/users/itziks/documents/vz/uconnect exx drv/config_sensor.h"
 typedef enum
 {
  C_CHAR,
@@ -406,9 +416,10 @@ typedef struct
  propertySensor networkPassword;
  propertySensor networkPort;
  propertySensor networkServerIp;
+ propertySensor transmitRowData;
 
 }ConfigSensor;
-#line 74 "c:/users/itziks/documents/uconnect exx drv (3)/uconnect exx drv/config_sensor.h"
+#line 76 "c:/users/itziks/documents/vz/uconnect exx drv/config_sensor.h"
 void initConfigSensor(ConfigSensor * confSensor);
 void saveDefultConfig(ConfigSensor * confSensor);
 void saveInEEpromPropertyConfig(propertySensor* propertySens, void* value);
@@ -417,44 +428,36 @@ void readFromMemProperty(propertySensor* propertySens,void* dest);
 char isFirstProgrammin();
 char setFirstProgmmanigToFalse();
 void initConfig();
-#line 10 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Vz_Algorithm.c"
+void LoadUnitId(ConfigSensor* cS);
+void LoadAlgoSelected(ConfigSensor* cS);
+void LoadPointerLeaser(ConfigSensor* cS);
+void LoadParamsIn(ConfigSensor* cS);
+void LoadWifi(ConfigSensor* cS);
+void LoadTransmitedToGatway(ConfigSensor* cS);
+void readEEpromRawData(propertySensor *propertySens, char *dest,uint_8 index);
+#line 10 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Vz_Algorithm.c"
 extern int volatile Vz_Sensor_Velocity_Buffer_int[];
 extern int volatile Vz_Sensor_Distance_Buffer_int[];
 extern int_16 volatile ParamsIn[];
-extern uint_8 volatile ALGO_SELECTED;
+
+char volatile Algo_Parametrs_Out_Buffer[ 23 ];
+char AlgorithmTypeParametr=No_Algo;
 
 
-void Vz_Algoritem_by_algo_select()
-{
- switch (ALGO_SELECTED)
- {
- case Algorithm_2:
- Vz_Algorithm_2();
- break;
- case Algorithm_3_4:
- Vz_Algorithm_3_4();
- break;
- case Algorithm_5:
- Vz_Algorithm_5();
- break;
- }
-}
+
 void Vz_Algorithm_5(void)
 {
-
-
- char txt[100];
-#line 54 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Vz_Algorithm.c"
- int SPC=8000;
- int Yv_th=1700;
- int FilterLength=30;
- int FilterLengthShort=18;
- int SwitchN=0;
- int alpha=500;
- static int DToBelt=6400;
- int Error2_th=12;
- int Error2_N=5;
-
+#line 25 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Vz_Algorithm.c"
+ int SPC = ParamsIn[SPC5];
+ int Yv_th = ParamsIn[Yv_th5] ;
+ int FilterLength = ParamsIn[FilterLength5];
+ int FilterLengthShort = ParamsIn[FilterLengthShort5];
+ int SwitchN = ParamsIn[SwitchN5] ;
+ int alpha = ParamsIn[alpha5] ;
+ static int DToBelt = ParamsIn[DToBelt5] ;
+ int Error2_th = ParamsIn[Error2_th5] ;
+ int Error2_N = ParamsIn[Error2_N5] ;
+#line 52 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Vz_Algorithm.c"
  static int DeltaT=0;
  static int ChBHight=0;
 
@@ -475,7 +478,7 @@ void Vz_Algorithm_5(void)
  int SPCC;
  static int FilterBuffer[ 200 ]={0},PointerIndex=0;
  int Y,k,j,Yf,Yfs;
-
+ ResetAlgoParametrsOutBuffer();
  OpticDataGetFrame_DistanceOnly();
 
  SPCC=SPC/60;
@@ -546,10 +549,11 @@ void Vz_Algorithm_5(void)
  DXpointLast=dC-DXpoint;
  ChBHight=DToBelt-DIpoint;
  DToBelt=(int)((float)(((float)((10000.0-(float)alpha)*(float)DToBelt)+(float)((float)alpha*(float)UIpoint))/10000.0));
-
- sprintf(txt,"%d,%d,%d\n",DeltaT,ChBHight,DToBelt);
- Pseudo_Uart2_Write_Text(txt);
-
+#line 147 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Vz_Algorithm.c"
+ Algo_Parametrs_Out_Buffer[0]= 1 ;
+ Algo_Parametrs_Out_Buffer[1]=(DeltaT&0xFF00)>>8;Algo_Parametrs_Out_Buffer[2]=(DeltaT&0x00FF);
+ Algo_Parametrs_Out_Buffer[3]=(ChBHight&0xFF00)>>8;Algo_Parametrs_Out_Buffer[4]=(ChBHight&0x00FF);
+ Algo_Parametrs_Out_Buffer[9]=(DToBelt&0xFF00)>>8;Algo_Parametrs_Out_Buffer[10]=(DToBelt&0x00FF);
  dC=0;UIpoint=0;DIpoint=DToBelt;
 
  }
@@ -582,30 +586,25 @@ void Vz_Algorithm_5(void)
 
 void uError_Algo5(char *ST,int *dC,int *C0,int *C1,char ErorCode)
 {
-
- char txt[100];
-
-
- sprintf(txt,"uError:ST-%d;a-%d;Code-%d;\n",(int)ST,(int)a,(int)ErorCode);
- Pseudo_Uart2_Write_Text(txt);
-
+#line 190 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Vz_Algorithm.c"
+ Algo_Parametrs_Out_Buffer[0]= 1 ;
+ Algo_Parametrs_Out_Buffer[5]=0;Algo_Parametrs_Out_Buffer[6]=ST;
+ Algo_Parametrs_Out_Buffer[7]=0;Algo_Parametrs_Out_Buffer[8]=ErorCode;
  *ST=2;*dC=0;*C0=0;*C1=0;
 }
 
 void Vz_Algorithm_3_4(void)
 {
-
-
- char txt[100];
-#line 227 "C:/Users/itziks/Documents/Uconnect EXX DRV (3)/Uconnect EXX DRV/Vz_Algorithm.c"
- int SPC=8000;
- int Yv_thUp=3000;
- int Yv_thDn=-3000;
- int SwitchN=10;
- int MaxNBeforeSmPeak=400;
- int alpha=5000;
- int FilterLength=9;
- static int AveResultT=0;
+#line 204 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Vz_Algorithm.c"
+ int SPC = ParamsIn[SPC3_4];
+ int Yv_thUp = ParamsIn[Yv_thUp3_4];
+ int Yv_thDn = ParamsIn[Yv_thDn3_4] ;
+ int SwitchN = ParamsIn[SwitchN3_4] ;
+ int MaxNBeforeSmPeak = ParamsIn[MaxNBeforeSmPeak3_4] ;
+ int alpha = ParamsIn[alpha3_4] ;
+ int FilterLength = ParamsIn[FilterLength3_4] ;
+ static int AveResultT = ParamsIn[AveResultTIn3_4] ;
+#line 230 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Vz_Algorithm.c"
  int ResultT;
 
  char NoSmallPeak=0;
@@ -631,7 +630,7 @@ void Vz_Algorithm_3_4(void)
 
  int Y,j;
  char k,a,i;
-
+ ResetAlgoParametrsOutBuffer();
  OpticDataGetFrame_VelocityOnly();
 
  MaxNBeforeStop=SPC/10;
@@ -723,11 +722,10 @@ void Vz_Algorithm_3_4(void)
  tC++;
  if((a==1)&&(tC>MaxNBeforeSmPeak))
  {
-
- sprintf(txt,"NSP %d\n",(int)NoSmallPeak);
- Pseudo_Uart2_Write_Text(txt);
-
  NoSmallPeak=1;
+#line 352 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Vz_Algorithm.c"
+ Algo_Parametrs_Out_Buffer[0]= 1 ;
+ Algo_Parametrs_Out_Buffer[5]=0;Algo_Parametrs_Out_Buffer[6]=NoSmallPeak;
  ST=5;tC=0;C1=0;C2=0;
  }
  if(a==2)
@@ -816,10 +814,16 @@ void Vz_Algorithm_3_4(void)
 
  ResultT=dC-tC+U2Xpoint-DXpoint;
  AveResultT=(int)((float)(((float)((10000.0-(float)alpha)*(float)AveResultT)+(float)((float)alpha*(float)ResultT))/10000.0));
-
- sprintf(txt,"%d,%d,%d,%d,%d\n",ResultT,AveResultT,U1Ipoint,U2Ipoint,DIpoint);
- Pseudo_Uart2_Write_Text(txt);
-
+#line 446 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Vz_Algorithm.c"
+ Algo_Parametrs_Out_Buffer[0]= 1 ;
+ Algo_Parametrs_Out_Buffer[3]=(ResultT&0xFF00)>>8;Algo_Parametrs_Out_Buffer[4]=(ResultT&0x00FF);
+ Algo_Parametrs_Out_Buffer[1]=(AveResultT&0xFF00)>>8;Algo_Parametrs_Out_Buffer[2]=(AveResultT&0x00FF);
+ Algo_Parametrs_Out_Buffer[7]=(U1Ipoint&0xFF00)>>8;Algo_Parametrs_Out_Buffer[8]=(U1Ipoint&0x00FF);
+ Algo_Parametrs_Out_Buffer[9]=(U2Ipoint&0xFF00)>>8;Algo_Parametrs_Out_Buffer[10]=(U2Ipoint&0x00FF);
+ Algo_Parametrs_Out_Buffer[11]=(DIpoint&0xFF00)>>8;Algo_Parametrs_Out_Buffer[12]=(DIpoint&0x00FF);
+ Algo_Parametrs_Out_Buffer[13]=(AveU1Ipoint&0xFF00)>>8;Algo_Parametrs_Out_Buffer[15]=(AveU1Ipoint&0x00FF);
+ Algo_Parametrs_Out_Buffer[15]=(AveU2Ipoint&0xFF00)>>8;Algo_Parametrs_Out_Buffer[16]=(AveU2Ipoint&0x00FF);
+ Algo_Parametrs_Out_Buffer[17]=(AveDIpoint&0xFF00)>>8;Algo_Parametrs_Out_Buffer[18]=(AveDIpoint&0x00FF);
 
  U1Ipoint=0;DIpoint=0;U2Ipoint=0;ST=1;tC=0;C1=0;C2=0;
  }
@@ -837,31 +841,28 @@ void Vz_Algorithm_3_4(void)
 void uError_Algo_3_4(char *ST,char *a,int *tC,int *dC,int *C0,int *C1,int *C2,int *U1Ipoint,int *U2Ipoint,int *DIpoint)
 {
  char txt[50];
-
- sprintf(txt,"Error: ST-%d;a-%d\n",(int)ST,(int)a);
- Pseudo_Uart2_Write_Text(txt);
-
+#line 476 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Vz_Algorithm.c"
+ Algo_Parametrs_Out_Buffer[0]= 1 ;
+ Algo_Parametrs_Out_Buffer[19]=0; Algo_Parametrs_Out_Buffer[20]=ST;
+ Algo_Parametrs_Out_Buffer[21]=a;Algo_Parametrs_Out_Buffer[22]=a;
  *ST=0;*tC=0;*dC=0;*C0=0;*C1=0;*C2=0;*U1Ipoint=0;*U2Ipoint=0;*DIpoint=0;
 }
 
 void Vz_Algorithm_2(void)
 {
+#line 488 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Vz_Algorithm.c"
+ int SPC = ParamsIn[SPC2] ;
+ int Yv_th = ParamsIn[Yv_th2];
+ int minStartN = ParamsIn[minStartN2];
+ int minStopN = ParamsIn[minStopN2] ;
+ int minResult = ParamsIn[minResult2] ;
 
 
 
 
 
 
-
-
-
- char txt[100];
- int SPC=4000;
- int Yv_th=2000;
- int minStartN=10;
- int minStopN=10;
  int MaxNBeforeStop;
- int minResult=200;
  static int cCounter=0;
  static int upCounter=0;
  static int dnCounter=0;
@@ -871,7 +872,7 @@ void Vz_Algorithm_2(void)
  int Res;
  static unsigned int i=1;
  char k;
-
+ ResetAlgoParametrsOutBuffer();
  OpticDataGetFrame_VelocityOnly();
  MaxNBeforeStop=SPC/4;
  for(k=0;k<60;k++)
@@ -895,10 +896,9 @@ void Vz_Algorithm_2(void)
  if(Res>minResult)
  {
  Result=Res;
-
- sprintf(txt,"%d\n",Res);
- Pseudo_Uart2_Write_Text(txt);
-
+#line 537 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Vz_Algorithm.c"
+ Algo_Parametrs_Out_Buffer[0]= 1 ;
+ Algo_Parametrs_Out_Buffer[1]=(Result&0xFF00)>>8;Algo_Parametrs_Out_Buffer[2]=(Result&0x00FF);
  }
  cCounter=0;
  }
@@ -922,4 +922,12 @@ void Vz_Algorithm_2(void)
  break;
  }
  }
+}
+
+void ResetAlgoParametrsOutBuffer(void)
+{
+
+ char i;
+ Algo_Parametrs_Out_Buffer[0]= 0 ;
+ for(i=1;i< 23 ;i++) Algo_Parametrs_Out_Buffer[i]=0xFF;
 }

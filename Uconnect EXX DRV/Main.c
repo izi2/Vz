@@ -11,7 +11,8 @@
 #include "config_sensor.h"
 #include "Config_File.h"
 #include "Process_data.h"
-
+extern char volatile Wifi_TX_Buffer[];
+extern unsigned int volatile  WifiBufferLength;
 extern char volatile UART2_RX_Interrupt_Buffer[];
 extern char volatile ESP_GateWay_Buffer[];
 extern int volatile Vz_Sensor_Velocity_Buffer_int[];
@@ -20,93 +21,96 @@ extern char volatile ESP_RX_Buffer[];
 extern char volatile Data_From_Gateway_Flag;
 extern unsigned int  Gateway_Buffer_Length;
 void Init_uClick_VZ(void);
-void Enable_VZ_Pointer(char mode);
+//void Enable_VZ_Pointer(char mode);
 char volatile VZ_ON_Flag;
 char volatile Wifi_Buffer[1000];
 char volatile wifi_state=0;
+char RawDataTX_Enable=FALSE;
+char PointerLeaser_Enable=FALSE;
+extern char CWJAP_String[];
+extern char CIPSTART_String[];
+extern char volatile AlgorithmTypeParametr;
+
 //*****************************************************************************************************
 void main()
 {
    char LedCount=0,LedOut=0,OpticDataFlag;
    unsigned int WifiCounter=0,VZCounter=0,i,SamplingCounter=0,k;
-   static unsigned int j;
-   uint_8 firstProgramming = TRUE;
-   ConfigSensor f;
-   char hrt[30];
-   int_16 defultParams[15];
-   uint_8 gty;
-    char  loopi = 0;
    ////////////////////////////////////////////////////////////////////////////////////
    BoardInit();
    ESP_RX_Int_Flag=0;ESP_RX_Int_En=1;
    LED_Activation(LED_GREEN,LED_ON);
-    Init_uClick_VZ();
-    ConfigFileInit(ExtEeprom_WriteByte,ExtEeprom_ReadByte);
-//    firstProgramming = isFirstProgrammin();
-    initConfig();
+   Init_uClick_VZ();
     ////////////    First Time Programming  ////////
+   ConfigFileInit(ExtEeprom_WriteByte,ExtEeprom_ReadByte);
+   initConfig();
 
+   //if(!(VZ_ON_Flag=Init_VZ_Sensor())){Read_Write_MCP23S17_IO(USER_LED,OFF);}
+   //VzSensor_ReadFWVer();
 
-    //if(!(VZ_ON_Flag=Init_VZ_Sensor())){Read_Write_MCP23S17_IO(USER_LED,OFF);}
-    //VzSensor_ReadFWVer();
     if(!Init_ESP()) {LED_Activation(LED_GREEN,LED_OFF);LED_Activation(LED_RED,LED_ON);wifi_state=0;}
     else wifi_state=ConnectingToWifiNet();
 
    PrintOut(PrintHandler, "\r***** S T A R T - M a i n *******");
    while(TRUE)
    {
-      asm clrwdt;
-      /****************************************************************************************************************************************/
-      /// Getting Data From Sensor evrey 10msec
-      VZ_ON_Flag=FALSE;
-      if(VZ_ON_Flag)
-      {
-        while((!(OpticDataFlag=OpticDataCheckIfReady()))&&(VZCounter++<15000)) {asm clrwdt;Delay_us(1);}
-        if(OpticDataFlag)
-        {
-           SCL_Lat^=1;
-           if(LedCount++>=20){LedOut^=0xFF;LedCount=0;Read_Write_MCP23S17_IO(USER_LED,LedOut);} //run time 30uSec
-            /////////////////////////////////////////////////////////////////////
-            //running algo
-            OpticDataGetFrame_VelocityOnly(); //for example
-            //Vz_Algorithm_3_4(void);
-            //Vz_Algorithm_2(void)/Vz_Algorithm_3_4(void);Vz_Algorithm_5(void);
-            //Vz_Algoritem_by_algo_select()
-            /////////////////////////////////////////////////////////////////////
-        }
-        else OpticDataGetCleanBuffer();
-      }
-      else Delay_ms(10);
-      VZCounter=0;
-      /****************************************************************************************************************************************/
-      //checking receiving data from gateway
-      if(Data_From_Gateway_Flag)
-      {
-           PrintOut(PrintHandler, "\rGateway Buffer-Length:%d\rData:",Gateway_Buffer_Length);
-           parssData(ESP_GateWay_Buffer,Gateway_Buffer_Length);
-           for(i=0;i<Gateway_Buffer_Length;i++) Uart2_Write(ESP_GateWay_Buffer[i]);
+       asm clrwdt;
+       /****************************************************************************************************************************************/
+       /// Getting Data From Sensor evrey 10msec
+       if(VZ_ON_Flag)
+       {
+           while((!(OpticDataFlag=OpticDataCheckIfReady()))&&(VZCounter++<15000)) {asm clrwdt;Delay_us(1);}
+           if(OpticDataFlag)
+           {
+               SCL_Lat^=1;
+               if(LedCount++>=20){LedOut^=0xFF;LedCount=0;Read_Write_MCP23S17_IO(USER_LED,LedOut);} //run time 30uSec
+               /////////////////////////////////////////////////////////////////////
+               //running algo
+               if((AlgorithmTypeParametr!=No_Algo)||((AlgorithmTypeParametr==No_Algo)&&(RawDataTX_Enable==FALSE))) RunAlgorithmAndBuiledTxParametersPacket();
+               if(RawDataTX_Enable==TRUE) AddRawDataToWifiBuffer();
+
+
+
+               if(WifiBufferLength)
+               {
+                   WIFI_Send_One_Array_Not_Wait_To_OK(Wifi_TX_Buffer,WifiBufferLength);
+                   WifiBufferLength=0;
+               }
+               /////////////////////////////////////////////////////////////////////
+           }
+           else OpticDataGetCleanBuffer();
+       }
+       else Delay_ms(10);
+       VZCounter=0;
+       /****************************************************************************************************************************************/
+       //checking receiving data from gateway
+       if(Data_From_Gateway_Flag)
+       {
+//           PrintOut(PrintHandler, "\rGateway Buffer-Length:%d\rData:",Gateway_Buffer_Length);
+//          for(i=0;i<Gateway_Buffer_Length;i++) PrintOut(PrintHandler,"char %d",(uint_8)ESP_GateWay_Buffer[i]);
+           parssData(ESP_GateWay_Buffer, Gateway_Buffer_Length);
            /////////////////////////////////////
 
            /////////////////////////////////////
            Data_From_Gateway_Flag=FALSE;
-      }
-      /****************************************************************************************************************************************/
-      /// Checking WIFI Connection
-      if(WifiCounter++>WifiConnectionLimit)
-      {
-            WifiCounter=0;
-            if(CheckWifiConnection()==0) wifi_state= ReConnectToServer();
-      }
-      /****************************************************************************************************************************************/
-      //battery switching
-      CheckAndSwitchToBattery();
+       }
+       /****************************************************************************************************************************************/
+       /// Checking WIFI Connection
+       if(WifiCounter++>WifiConnectionLimit)
+       {
+           WifiCounter=0;
+           if(CheckWifiConnection()==0) wifi_state= ReConnectToServer();
+       }
+       /****************************************************************************************************************************************/
+       //battery switching
+       CheckAndSwitchToBattery();
    }
 }
 //******************************************************************
-void Enable_VZ_Pointer(char mode)
-{
-     Read_Write_MCP23S17_IO(EN_LASER,mode);
-}
+//void Enable_VZ_Pointer(char mode)
+//{
+//     Read_Write_MCP23S17_IO(EN_LASER,mode);
+//}
 //***********************************************************
 void Init_uClick_VZ(void)
 {

@@ -6,43 +6,31 @@
 //#include "Types.h"
 //#include "config_sensor.h"
 
-#define DEBUG_MODE
+//#define DEBUG_MODE
 extern int volatile Vz_Sensor_Velocity_Buffer_int[];
 extern int volatile Vz_Sensor_Distance_Buffer_int[];
 extern int_16 volatile ParamsIn[];
-extern uint_8 volatile ALGO_SELECTED;
+
+char volatile Algo_Parametrs_Out_Buffer[Algo_Parametrs_Out_Buffer_Length];
+char AlgorithmTypeParametr=No_Algo;
 //*****************************************************************************************************
 
-void Vz_Algoritem_by_algo_select()
-{
-    switch (ALGO_SELECTED)
-    {
-        case Algorithm_2:
-            Vz_Algorithm_2();
-            break;
-        case Algorithm_3_4:
-            Vz_Algorithm_3_4();
-            break;
-        case Algorithm_5:
-            Vz_Algorithm_5();
-            break;
-    }
-}
+
 void Vz_Algorithm_5(void)
 {
     ///  Run Time = 400uSEC
    #ifdef DEBUG_MODE
       char txt[100];
    #endif
-//   int SPC = ParamsIn[SPC5]
-//   int Yv_th = ParamsIn[Yv_th5]
-//   int FilterLength = ParamsIn[FilterLength5]
-//   int FilterLengthShort = ParamsIn[FilterLengthShort5]
-//   int SwitchN = ParamsIn[SwitchN5]
-//   int alpha = ParamsIn[alpha5]
-//   int DToBelt = ParamsIn[DToBelt5]
-//   int Error2_th = ParamsIn[Error2_th5]
-//   int Error2_N = ParamsIn[Error2_N5]
+   int SPC = ParamsIn[SPC5];
+   int Yv_th = ParamsIn[Yv_th5]               ;
+   int FilterLength = ParamsIn[FilterLength5];
+   int FilterLengthShort = ParamsIn[FilterLengthShort5];
+   int SwitchN = ParamsIn[SwitchN5]                     ;
+   int alpha = ParamsIn[alpha5]                          ;
+   static int DToBelt = ParamsIn[DToBelt5]                ;
+   int Error2_th = ParamsIn[Error2_th5]                    ;
+   int Error2_N = ParamsIn[Error2_N5]                       ;
     //uError_Algo5             //Parametr OUT  see function
 //    static int DeltaT=ParamsOut[DeltaT5];        //Parametr OUT
 //    static int ChBHight=ParamsOut[ChBHight5];      //Parametr OUT
@@ -51,7 +39,7 @@ void Vz_Algorithm_5(void)
 //    static int ErorCode=ParamsOut[ErorCode5];      //Parametr OUT
 
 
-    int SPC=8000;               //Parametr IN
+  /*int SPC=8000;               //Parametr IN
    int Yv_th=1700;             //Parametr IN
    int FilterLength=30;        //Parametr IN
    int FilterLengthShort=18;   //Parametr IN
@@ -59,7 +47,7 @@ void Vz_Algorithm_5(void)
    int alpha=500;              //Parametr IN
    static int DToBelt=6400;    //Parametr IN/OUT
    int Error2_th=12;           //Parametr IN
-   int Error2_N=5;             //Parametr IN
+   int Error2_N=5;             //Parametr IN*/
    // uError_Algo5             //Parametr OUT  see function
    static int DeltaT=0;        //Parametr OUT
    static int ChBHight=0;      //Parametr OUT
@@ -81,7 +69,7 @@ void Vz_Algorithm_5(void)
    int SPCC;
    static int FilterBuffer[Algo5_FilterBuffer_Length]={0},PointerIndex=0;
    int Y,k,j,Yf,Yfs;
-   
+   ResetAlgoParametrsOutBuffer();
    OpticDataGetFrame_DistanceOnly();
 
    SPCC=SPC/60;
@@ -156,6 +144,10 @@ void Vz_Algorithm_5(void)
                              sprintf(txt,"%d,%d,%d\n",DeltaT,ChBHight,DToBelt);
                              Pseudo_Uart2_Write_Text(txt);
                             #endif
+                            Algo_Parametrs_Out_Buffer[0]=TRUE;
+                            Algo_Parametrs_Out_Buffer[1]=(DeltaT&0xFF00)>>8;Algo_Parametrs_Out_Buffer[2]=(DeltaT&0x00FF);
+                            Algo_Parametrs_Out_Buffer[3]=(ChBHight&0xFF00)>>8;Algo_Parametrs_Out_Buffer[4]=(ChBHight&0x00FF);
+                            Algo_Parametrs_Out_Buffer[9]=(DToBelt&0xFF00)>>8;Algo_Parametrs_Out_Buffer[10]=(DToBelt&0x00FF);
                             dC=0;UIpoint=0;DIpoint=DToBelt;
                             ///////////////////////
                          }
@@ -195,6 +187,9 @@ void uError_Algo5(char *ST,int *dC,int *C0,int *C1,char ErorCode)
      sprintf(txt,"uError:ST-%d;a-%d;Code-%d;\n",(int)ST,(int)a,(int)ErorCode);
      Pseudo_Uart2_Write_Text(txt);
      #endif
+     Algo_Parametrs_Out_Buffer[0]=TRUE;
+     Algo_Parametrs_Out_Buffer[5]=0;Algo_Parametrs_Out_Buffer[6]=ST;
+     Algo_Parametrs_Out_Buffer[7]=0;Algo_Parametrs_Out_Buffer[8]=ErorCode;
      *ST=2;*dC=0;*C0=0;*C1=0;
 }
 //*****************************************************************************************************
@@ -206,14 +201,14 @@ void Vz_Algorithm_3_4(void) // Pressure detector  Vertical
    #endif
    ///  Run Time 600uSec-4mSec
 
-//    int SPC = ParamsIn[SPC3_4]
-//    int Yv_thUp = ParamsIn[Yv_thUp3_4]
-//    int Yv_thDn = ParamsIn[Yv_thDn3_4]
-//    int SwitchN = ParamsIn[SwitchN3_4]
-//    int MaxNBeforeSmPeak = ParamsIn[MaxNBeforeSmPeak3_4]
-//    int alpha = ParamsIn[alpha3_4]
-//    int FilterLength = ParamsIn[FilterLength3_4]
-//    int AveResultT = ParamsIn[AveResultTIn3_4]
+    int SPC = ParamsIn[SPC3_4];
+    int Yv_thUp = ParamsIn[Yv_thUp3_4];
+    int Yv_thDn = ParamsIn[Yv_thDn3_4] ;
+    int SwitchN = ParamsIn[SwitchN3_4]  ;
+    int MaxNBeforeSmPeak = ParamsIn[MaxNBeforeSmPeak3_4] ;
+    int alpha = ParamsIn[alpha3_4]                        ;
+    int FilterLength = ParamsIn[FilterLength3_4]           ;
+    static int AveResultT = ParamsIn[AveResultTIn3_4]       ;
 //    static int NoSmallPeak=ParamsOut[NoSmallPeak3_4];        //Parametr OUT
 //    static int U1Ipoint=ParamsOut[U1Ipoint3_4];      //Parametr OUT
 //    static int U2Ipoint=ParamsOut[U2Ipoint3_4];      //Parametr OUT
@@ -224,14 +219,14 @@ void Vz_Algorithm_3_4(void) // Pressure detector  Vertical
 //    static int ST=ParamsOut[ST3_4];      //Parametr OUT
 //    static int a=ParamsOut[a3_4];      //Parametr OUT
 
-   int SPC=8000;               //Parametr IN
+   /*int SPC=8000;               //Parametr IN
    int Yv_thUp=3000;           //Parametr IN
    int Yv_thDn=-3000;          //Parametr IN
    int SwitchN=10;             //Parametr IN
    int MaxNBeforeSmPeak=400;   //Parametr IN
    int alpha=5000;             //Parametr IN
    int FilterLength=9;         //Parametr IN
-   static int AveResultT=0;    //Parametr IN/OUT
+   static int AveResultT=0;    //Parametr IN/OUT*/
    int ResultT;                //Parametr OUT
    //uError_Algo_3_4           //Parametr OUT     //See Function
    char NoSmallPeak=0;         //Parametr OUT
@@ -257,7 +252,7 @@ void Vz_Algorithm_3_4(void) // Pressure detector  Vertical
    
    int Y,j;
    char k,a,i;
-
+   ResetAlgoParametrsOutBuffer();
    OpticDataGetFrame_VelocityOnly();
    
    MaxNBeforeStop=SPC/10;
@@ -349,11 +344,13 @@ void Vz_Algorithm_3_4(void) // Pressure detector  Vertical
                       tC++;
                       if((a==1)&&(tC>MaxNBeforeSmPeak))
                       {
+                          NoSmallPeak=1;
                           #ifdef DEBUG_MODE
                             sprintf(txt,"NSP %d\n",(int)NoSmallPeak);
                             Pseudo_Uart2_Write_Text(txt);
                           #endif
-                          NoSmallPeak=1;
+                          Algo_Parametrs_Out_Buffer[0]=TRUE;
+                          Algo_Parametrs_Out_Buffer[5]=0;Algo_Parametrs_Out_Buffer[6]=NoSmallPeak;
                           ST=5;tC=0;C1=0;C2=0;
                       }
                       if(a==2) 
@@ -446,6 +443,15 @@ void Vz_Algorithm_3_4(void) // Pressure detector  Vertical
                             sprintf(txt,"%d,%d,%d,%d,%d\n",ResultT,AveResultT,U1Ipoint,U2Ipoint,DIpoint);
                             Pseudo_Uart2_Write_Text(txt);
                           #endif
+                          Algo_Parametrs_Out_Buffer[0]=TRUE;
+                          Algo_Parametrs_Out_Buffer[3]=(ResultT&0xFF00)>>8;Algo_Parametrs_Out_Buffer[4]=(ResultT&0x00FF);
+                          Algo_Parametrs_Out_Buffer[1]=(AveResultT&0xFF00)>>8;Algo_Parametrs_Out_Buffer[2]=(AveResultT&0x00FF);
+                          Algo_Parametrs_Out_Buffer[7]=(U1Ipoint&0xFF00)>>8;Algo_Parametrs_Out_Buffer[8]=(U1Ipoint&0x00FF);
+                          Algo_Parametrs_Out_Buffer[9]=(U2Ipoint&0xFF00)>>8;Algo_Parametrs_Out_Buffer[10]=(U2Ipoint&0x00FF);
+                          Algo_Parametrs_Out_Buffer[11]=(DIpoint&0xFF00)>>8;Algo_Parametrs_Out_Buffer[12]=(DIpoint&0x00FF);
+                          Algo_Parametrs_Out_Buffer[13]=(AveU1Ipoint&0xFF00)>>8;Algo_Parametrs_Out_Buffer[15]=(AveU1Ipoint&0x00FF);
+                          Algo_Parametrs_Out_Buffer[15]=(AveU2Ipoint&0xFF00)>>8;Algo_Parametrs_Out_Buffer[16]=(AveU2Ipoint&0x00FF);
+                          Algo_Parametrs_Out_Buffer[17]=(AveDIpoint&0xFF00)>>8;Algo_Parametrs_Out_Buffer[18]=(AveDIpoint&0x00FF);
                           //////////////////////////
                           U1Ipoint=0;DIpoint=0;U2Ipoint=0;ST=1;tC=0;C1=0;C2=0;
                         }
@@ -467,27 +473,30 @@ void uError_Algo_3_4(char *ST,char *a,int *tC,int *dC,int *C0,int *C1,int *C2,in
      sprintf(txt,"Error: ST-%d;a-%d\n",(int)ST,(int)a);
      Pseudo_Uart2_Write_Text(txt);
      #endif
+     Algo_Parametrs_Out_Buffer[0]=TRUE;
+     Algo_Parametrs_Out_Buffer[19]=0; Algo_Parametrs_Out_Buffer[20]=ST;
+     Algo_Parametrs_Out_Buffer[21]=a;Algo_Parametrs_Out_Buffer[22]=a;
      *ST=0;*tC=0;*dC=0;*C0=0;*C1=0;*C2=0;*U1Ipoint=0;*U2Ipoint=0;*DIpoint=0;
 }
 //*****************************************************************************************************
 void Vz_Algorithm_2(void)//Motion detector
 {
    ///  Run Time 360uSec-1mSec
-
-    //    int SPC = ParamsIn[SPC2]
-//    int Yv_th = ParamsIn[Yv_th2]
-//    int minStartN = ParamsIn[minStartN2]
-//    int minStopN = ParamsIn[minStopN2]
-//    int minResult = ParamsIn[minResult2]
-//    int Result = ParamsIn[Result2]
-
+   #ifdef DEBUG_MODE
    char txt[100];
-   int SPC=4000;               //Parametr IN
-   int Yv_th=2000;             //Parametr IN
-   int minStartN=10;           //Parametr IN
-   int minStopN=10;            //Parametr IN
+   #endif
+    int SPC = ParamsIn[SPC2]  ;
+    int Yv_th = ParamsIn[Yv_th2];
+    int minStartN = ParamsIn[minStartN2];
+    int minStopN = ParamsIn[minStopN2]   ;
+    int minResult = ParamsIn[minResult2]  ;
+    //int Result = ParamsIn[Result2]
+//   int SPC=4000;               //Parametr IN
+//   int Yv_th=2000;             //Parametr IN
+//   int minStartN=10;           //Parametr IN
+//   int minStopN=10;            //Parametr IN
+//   int minResult=200;          //Parametr IN
    int MaxNBeforeStop;
-   int minResult=200;          //Parametr IN
    static int cCounter=0;
    static int upCounter=0;
    static int dnCounter=0;
@@ -497,7 +506,7 @@ void Vz_Algorithm_2(void)//Motion detector
    int Res;
    static unsigned int i=1;
    char k;
-
+   ResetAlgoParametrsOutBuffer();
    OpticDataGetFrame_VelocityOnly();
    MaxNBeforeStop=SPC/4;
    for(k=0;k<60;k++)
@@ -525,6 +534,8 @@ void Vz_Algorithm_2(void)//Motion detector
                                  sprintf(txt,"%d\n",Res);
                                  Pseudo_Uart2_Write_Text(txt);
                                  #endif
+                                 Algo_Parametrs_Out_Buffer[0]=TRUE;
+                                 Algo_Parametrs_Out_Buffer[1]=(Result&0xFF00)>>8;Algo_Parametrs_Out_Buffer[2]=(Result&0x00FF);
                              }//if(Res>minResult)
                              cCounter=0;
                           }//if(dnCounter>MaxNBeforeStop)
@@ -548,4 +559,12 @@ void Vz_Algorithm_2(void)//Motion detector
               break;
       }
    }//for(k=0;k<60;k++)
+}
+//*****************************************************************************************************
+void ResetAlgoParametrsOutBuffer(void)
+{
+   //run time 15usec
+   char i;
+   Algo_Parametrs_Out_Buffer[0]=FALSE;
+   for(i=1;i<Algo_Parametrs_Out_Buffer_Length;i++) Algo_Parametrs_Out_Buffer[i]=0xFF;
 }
