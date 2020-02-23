@@ -519,9 +519,37 @@ char CheckDataFromGateway(void);
 char ReConnectToServer(void);
 void RunAlgorithmAndBuiledTxParametersPacket(void);
 void AddRawDataToWifiBuffer(void);
-#line 12 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Process_data.c"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/vz_algorithm.h"
+
+
+
+
+
+
+
+
+
+
+void Vz_Algorithm_2(void);
+void Vz_Algorithm_3_4(void);
+void Vz_Algorithm_5(void);
+void uError_Algo_3_4(char *ST,char *a,int *tC,int *dC,int *C0,int *C1,int *C2,int *U1Ipoint,int *U2Ipoint,int *DIpoint);
+void uError_Algo5(char *ST,int *dC,int *C0,int *C1,char ErorCode);
+void void Vz_Algoritem_by_algo_select();
+void ResetAlgoParametrsOutBuffer(void);
+
+
+enum Algo_Types_Names {Algo_2=2,Algo_3_4,Algo_5,No_Algo};
+#line 13 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Process_data.c"
 extern int_16 volatile ParamsIn[];
 extern char volatile EndUnitID;
+
+extern char CWJAP_String[];
+extern char CIPSTART_String[];
+extern char volatile AlgorithmTypeParametr;
+extern char volatile PointerLeaser_Enable;
+extern char volatile RawDataTX_Enable;
+extern char volatile PlcDataTX_Enable;
 
 void sendStatus();
 
@@ -562,12 +590,12 @@ void insertParamsToParamsIn(char *datap, uint_8 len)
  }
 }
 
-char* AddHeaders(uint_8 type,propertySensor* proper, char* dataS,uint_8 index)
+char* AddHeaders(uint_8 type,uint_8 length, char* dataS,uint_8 index)
 {
- uint_8 len = proper->endAddress - proper->address;
+
  dataS[index++] = EndUnitID;
  dataS[index++] = 0;
- dataS[index++] = len;
+ dataS[index++] = length;
  dataS[index++] = type;
 
  return index;
@@ -604,6 +632,12 @@ void parssData(char *buffer, int bufferLength)
  saveInEEpromPropertyConfig(&cS.transmitedToGatway, &DATA[0]);
  LoadTransmitedToGatway(&cS);
  break;
+
+ case P_TRANSMITED_ROW_DATA:
+ saveInEEpromPropertyConfig(&cS.transmitRowData, &DATA[0]);
+ LoadTransmitedToGatway(&cS);
+ break;
+
  case P_POINTER_LEASER:
  saveInEEpromPropertyConfig(&cS.pointerLeaser, &DATA[0]);
  LoadPointerLeaser(&cS) ;
@@ -645,35 +679,72 @@ void parssData(char *buffer, int bufferLength)
 
 }
 
+uint_8 lenParams()
+{
+ switch (AlgorithmTypeParametr)
+ {
+ case Algorithm_2:
+ return algo2_params_in_size;
+
+ case Algorithm_3_4:
+ return algo_3_4_params_in_size;
+ case Algorithm_5:
+ return algo5_params_in_size;
+ }
+}
+
+uint_8 addStringData(propertySensor* propertyRead,char* dataSend,uint_8 index)
+{
+ char tempData[50];
+ uint_8 lenData = 0;
+ uint_8 i = 0;
+ readEEpromRawData(propertyRead, tempData,0);
+ lenData = strlen(tempData);
+ index = AddHeaders(P_NET_NAME,lenData,dataSend,index);
+
+ for(i=0;i<lenData;i++)
+ {
+ dataSend[index++] = tempData[i];
+ }
+
+ return index;
+}
+
 void sendStatus()
 {
  ConfigSensor cS;
+ uint_8 i = 0;
  char dataSend[ 300 ];
- uint_8 index = dataSend;
+ uint_8 index = 0;
+ char tempData[30];
+ uint_8 lenData = lenParams();
+ initConfigSensor(&cS);
 
- readEEpromRawData(&cS.idS, dataSend,index);
- index = AddHeaders(P_ID_SENSOR,&cS.idS,dataSend,index);
+ index = AddHeaders(P_ID_SENSOR,1,dataSend,index);
+ dataSend[index++] = EndUnitID;
 
- readEEpromRawData(&cS.pointerLeaser, dataSend,index);
- index = AddHeaders(P_POINTER_LEASER,&cS.pointerLeaser,dataSend,index);
+ index = AddHeaders(P_POINTER_LEASER,1,dataSend,index);
+ dataSend[index++] = PointerLeaser_Enable;
 
- readEEpromRawData(&cS.transmitedToGatway, dataSend,index);
- index = AddHeaders(P_TRANSMITED_TO_GATWAY,&cS.transmitedToGatway,dataSend,index);
- readEEpromRawData(&cS.transmitRowData, dataSend,index);
- index = AddHeaders(P_TRANSMITED_TO_GATWAY,&cS.transmitRowData,dataSend,index);
- readEEpromRawData(&cS.paramsIn, dataSend,index);
- index = AddHeaders(P_PARAMS,&cS.paramsIn,dataSend,index);
- readEEpromRawData(&cS.networkName, dataSend,index);
- index = AddHeaders(P_NET_NAME,&cS.networkName,dataSend,index);
- readEEpromRawData(&cS.networkPassword, dataSend,index);
- index = AddHeaders(P_NET_PASS,&cS.networkPassword,dataSend,index);
 
- readEEpromRawData(&cS.networkPort, dataSend,index);
- index = AddHeaders(P_NET_PORT,&cS.networkPort,dataSend,index);
+ index = AddHeaders(P_TRANSMITED_TO_GATWAY,1,dataSend,index);
+ dataSend[index++] = PlcDataTX_Enable;
 
- readEEpromRawData(&cS.networkServerIp, dataSend,index);
- index = AddHeaders(P_NET_IP,&cS.networkServerIp,dataSend,index);
- PrintOut(PrintHandler, "\ri %d, ", index);
+ index = AddHeaders(P_TRANSMITED_ROW_DATA,1,dataSend,index);
+ dataSend[index++] = RawDataTX_Enable;
+
+
+ index = AddHeaders(P_PARAMS,lenData*2,dataSend,index);
+ for(;i< lenData;i++)
+ {
+ index = Int2Array(ParamsIn[i], dataSend, index);
+ }
+
+ index = addStringData(&cS.networkName,dataSend,index);
+ index = addStringData(&cS.networkPassword,dataSend,index);
+ index = addStringData(&cS.networkPort,dataSend,index);
+ index = addStringData(&cS.networkServerIp,dataSend,index);
+
  WIFI_Send_One_Array_Not_Wait_To_OK(dataSend,index);
 
 

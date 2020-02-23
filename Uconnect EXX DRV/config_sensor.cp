@@ -429,6 +429,7 @@ extern char volatile EndUnitID;
 extern char volatile AlgorithmTypeParametr;
 extern char volatile PointerLeaser_Enable;
 extern char volatile RawDataTX_Enable;
+extern char volatile PlcDataTX_Enable;
 
 
 Mem_AddressType setAddressPropertyC(propertySensor *propertySens, Mem_AddressType address, uint_8 sizePerItem,
@@ -475,11 +476,14 @@ void readEEpromRawData(propertySensor *propertySens, char *dest,uint_8 index)
 {
  uint_8 i =0;
 
- for (i = propertySens->address; i < propertySens->endAddress;)
+ for (i = propertySens->address; i < propertySens->endAddress;i++)
  {
- dest[index] = GetProperty(i);
- ++index;
+
+ dest[index++] = GetProperty(i);
+
  }
+ PrintOut(PrintHandler, "\rdest %s, ", dest);
+
 
 }
 
@@ -499,17 +503,12 @@ void saveInEEpromPropertyConfig(propertySensor *propertySens, void *value)
 
 void saveDefultConfig(ConfigSensor *confSensor)
 {
- uint_8 id = 0;
- uint_8 algo = 0;
- uint_8 pointerLeaser = 1;
- uint_8 transmitRowData = 1;
- uint_8 transmitData = 1;
 
- saveInEEpromPropertyConfig(&confSensor->idS, &id);
- saveInEEpromPropertyConfig(&confSensor->algoSelected, &algo);
- saveInEEpromPropertyConfig(&confSensor->pointerLeaser, &pointerLeaser);
- saveInEEpromPropertyConfig(&confSensor->transmitRowData, &transmitRowData);
- saveInEEpromPropertyConfig(&confSensor->transmitedToGatway, &transmitData);
+ saveInEEpromPropertyConfig(&confSensor->idS, &EndUnitID);
+ saveInEEpromPropertyConfig(&confSensor->algoSelected, &AlgorithmTypeParametr);
+ saveInEEpromPropertyConfig(&confSensor->pointerLeaser, &PointerLeaser_Enable);
+ saveInEEpromPropertyConfig(&confSensor->transmitRowData, &RawDataTX_Enable);
+ saveInEEpromPropertyConfig(&confSensor->transmitedToGatway, &PlcDataTX_Enable);
  saveInEEpromPropertyConfig(&confSensor->paramsIn, paramsDefult);
  saveInEEpromPropertyConfig(&confSensor->networkName, "Ravtech-Public\0");
  saveInEEpromPropertyConfig(&confSensor->networkPassword, "@ravTech!\0");

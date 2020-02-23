@@ -248,6 +248,7 @@ addrawdatatowifibuffer
 addrerr
 addrerr
 addrerr_bit
+addstringdata
 admaddr
 admaddr
 admaddr
@@ -6791,6 +6792,7 @@ led_activation
 lendian
 lendian
 lendian_bit
+lenparams
 loadalgoselected
 loadallschem
 loadparamsin
@@ -7949,6 +7951,7 @@ perr
 perr
 perr
 perr_bit
+plcdatatx_enable
 plen
 plen0
 plen0

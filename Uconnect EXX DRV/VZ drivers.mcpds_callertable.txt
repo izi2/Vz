@@ -243,10 +243,16 @@ main
 		insertParamsToParamsIn
 			CombineSignedHighLow
 		sendStatus
-			readEEpromRawData
-				GetProperty
+			lenParams
+			initConfigSensor
 			AddHeaders
-			PrintOut
+			Int2Array
+			addStringData
+				readEEpromRawData
+					GetProperty
+					PrintOut
+				strlen
+				AddHeaders
 			WIFI_Send_One_Array_Not_Wait_To_OK
 		LoadWifi
 	CheckWifiConnection

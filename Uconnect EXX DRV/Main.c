@@ -26,6 +26,7 @@ char volatile VZ_ON_Flag;
 char volatile Wifi_Buffer[1000];
 char volatile wifi_state=0;
 char RawDataTX_Enable=FALSE;
+char PlcDataTX_Enable=TRUE;
 char PointerLeaser_Enable=FALSE;
 extern char CWJAP_String[];
 extern char CIPSTART_String[];
