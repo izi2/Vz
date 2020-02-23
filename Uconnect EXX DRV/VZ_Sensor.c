@@ -198,7 +198,7 @@ void VzSensor_SpiReadAddr(char target, unsigned int addr,char *RxBuffer,char RxB
     VZ_Sensor_CS=ON;
 }
 //******************************************************************
-char Init_VZ_Sensor(void)
+char Init_VZ_Sensor(uint_8 bist)
 {
      unsigned int i=0;
      char RtFlag;
@@ -209,7 +209,7 @@ char Init_VZ_Sensor(void)
      Read_Write_MCP23S17_IO(RESET_VZ,ON);
      Delay_ms(2000);
      //Vz_SetBist(Normal);
-     Vz_SetBist(Sinus);
+     Vz_SetBist(bist);
      while((i++<15)&&(!(RtFlag=OpticDataOnSPI_ON()))) {asm clrwdt;Delay_ms(100);}
      return RtFlag;
 }

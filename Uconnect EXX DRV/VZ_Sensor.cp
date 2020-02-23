@@ -1,40 +1,5 @@
 #line 1 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/VZ_Sensor.c"
 #line 1 "c:/users/itziks/documents/vz/uconnect exx drv/vz_sensor.h"
-char Init_VZ_Sensor(void);
-void VzSensor_ReadFWVer(void);
-char OpticDataOnSPI_ON(void);
-char OpticDataCheckIfReady(void);
-void OpticDataGetFrame_AllData(void);
-void Vz_SetBist(char mode);
-void OpticDataGetFrame_AllData(void);
-void OpticDataGetFrame_VelocityOnly(void);
-void OpticDataGetFrame_DistanceOnly(void);
-void VzSensor_SpiWriteAddr(char target, unsigned int addr,char *TxBuffer,char TxBufferLength);
-void VzSensor_SpiReadAddr(char target, unsigned int addr,char *RxBuffer,char RxBufferLength);
-void OpticDataGetCleanBuffer(void);
-
-
-enum VZ_Sensor_Names {Normal=0,Saw,Sinus};
-#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/pic_drv_uconnect.h"
-#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
-#line 27 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
-typedef struct
- {
- unsigned char ss ;
- unsigned char mn ;
- unsigned char hh ;
- unsigned char md ;
- unsigned char wd ;
- unsigned char mo ;
- unsigned int yy ;
- } TimeStruct ;
-#line 41 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
-extern long Time_jd1970 ;
-#line 46 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
-long Time_dateToEpoch(TimeStruct *ts) ;
-void Time_epochToDate(long e, TimeStruct *ts) ;
-void TurnOnRTC_Timer0(void);
-#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
 #line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/limits.h"
 #line 71 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
@@ -242,16 +207,11 @@ typedef enum
 
 }Algo5ParametersOut;
 
-typedef enum
-{
- Algorithm_2,
- Algorithm_3_4,
- Algorithm_5,
-
-}Algo_select;
 
 typedef enum
 {
+ BIST_0,
+ BIST_1,
  BIST_SINUS,
 
 }Sensor_BIST;
@@ -268,6 +228,43 @@ typedef struct Sampling
 
 typedef Sampling *(*GetGeneralInput)(void);
 typedef void (*ActiveMethod)(Switch);
+#line 3 "c:/users/itziks/documents/vz/uconnect exx drv/vz_sensor.h"
+char Init_VZ_Sensor(uint_8 bist);
+void VzSensor_ReadFWVer(void);
+char OpticDataOnSPI_ON(void);
+char OpticDataCheckIfReady(void);
+void OpticDataGetFrame_AllData(void);
+void Vz_SetBist(char mode);
+void OpticDataGetFrame_AllData(void);
+void OpticDataGetFrame_VelocityOnly(void);
+void OpticDataGetFrame_DistanceOnly(void);
+void VzSensor_SpiWriteAddr(char target, unsigned int addr,char *TxBuffer,char TxBufferLength);
+void VzSensor_SpiReadAddr(char target, unsigned int addr,char *RxBuffer,char RxBufferLength);
+void OpticDataGetCleanBuffer(void);
+
+
+enum VZ_Sensor_Names {Normal=0,Saw,Sinus};
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/pic_drv_uconnect.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
+#line 27 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
+typedef struct
+ {
+ unsigned char ss ;
+ unsigned char mn ;
+ unsigned char hh ;
+ unsigned char md ;
+ unsigned char wd ;
+ unsigned char mo ;
+ unsigned int yy ;
+ } TimeStruct ;
+#line 41 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
+extern long Time_jd1970 ;
+#line 46 "c:/users/itziks/documents/vz/uconnect exx drv/timelib.h"
+long Time_dateToEpoch(TimeStruct *ts) ;
+void Time_epochToDate(long e, TimeStruct *ts) ;
+void TurnOnRTC_Timer0(void);
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
 #line 8 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
 typedef unsigned char (*Reader)(unsigned int Address);
 
@@ -562,7 +559,7 @@ void VzSensor_SpiReadAddr(char target, unsigned int addr,char *RxBuffer,char RxB
   LATF.RF4 = 1 ;
 }
 
-char Init_VZ_Sensor(void)
+char Init_VZ_Sensor(uint_8 bist)
 {
  unsigned int i=0;
  char RtFlag;
@@ -573,7 +570,7 @@ char Init_VZ_Sensor(void)
  Read_Write_MCP23S17_IO(RESET_VZ, 1 );
  Delay_ms(2000);
 
- Vz_SetBist(Sinus);
+ Vz_SetBist(bist);
  while((i++<15)&&(!(RtFlag=OpticDataOnSPI_ON()))) {asm clrwdt;Delay_ms(100);}
  return RtFlag;
 }

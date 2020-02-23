@@ -7,6 +7,7 @@
 #include "PIC_DRV_Uconnect.h"
 #include "MCP23S17_DRV.h"
 #include "ESP_12F_DRV.h"
+#include "VZ_Sensor.h"
 
 int_16 paramsDefult[LENGTH_PARAMS_IN] = {4000, 2000, 10, 10, 200};
 int_16 ParamsIn[LENGTH_PARAMS_IN];
@@ -19,6 +20,11 @@ extern char volatile RawDataTX_Enable;
 extern char volatile PlcDataTX_Enable;
 extern char volatile SensorBist;
 
+char NET_NAME_DEFULT[30] =   "Ravtech-Public\0"            ;
+char NET_PASS_DEFULT[20] =  "@ravTech!\0"       ;
+char NET_PORT_DEFULT[6] =  "9875\0"  ;
+char NET_SERVER_IP_DEFULT[30] = "192.168.16.118\0"         ;
+
 
 Mem_AddressType setAddressPropertyC(propertySensor *propertySens, Mem_AddressType address, uint_8 sizePerItem,
                                     uint_8 endPropertyAddress)
@@ -30,7 +36,6 @@ Mem_AddressType setAddressPropertyC(propertySensor *propertySens, Mem_AddressTyp
     propertySens->endAddress = address + endAddress;
     return propertySens->endAddress;
 }
-
 
 void initConfigSensor(ConfigSensor *confSensor)
 {
@@ -99,10 +104,10 @@ void saveDefultConfig(ConfigSensor *confSensor)
     saveInEEpromPropertyConfig(&confSensor->transmitedToGatway, &PlcDataTX_Enable);
     saveInEEpromPropertyConfig(&confSensor->sensorBist, &SensorBist);
     saveInEEpromPropertyConfig(&confSensor->paramsIn, paramsDefult);
-    saveInEEpromPropertyConfig(&confSensor->networkName, "Ravtech-Public\0");
-    saveInEEpromPropertyConfig(&confSensor->networkPassword, "@ravTech!\0");
-    saveInEEpromPropertyConfig(&confSensor->networkPort, "9875\0");
-    saveInEEpromPropertyConfig(&confSensor->networkServerIp, "192.168.16.118\0");
+    saveInEEpromPropertyConfig(&confSensor->networkName, &NET_NAME_DEFULT);
+    saveInEEpromPropertyConfig(&confSensor->networkPassword, &NET_PASS_DEFULT);
+    saveInEEpromPropertyConfig(&confSensor->networkPort, &NET_PORT_DEFULT);
+    saveInEEpromPropertyConfig(&confSensor->networkServerIp,&NET_SERVER_IP_DEFULT );
 
 }
 
@@ -251,5 +256,6 @@ void LoadTransmitedToGatway(ConfigSensor *cS)
 void LoadSensorBist(ConfigSensor *cS)
 {
     readFromMemProperty(&cS->sensorBist, &SensorBist);
+    Init_VZ_Sensor(SensorBist);
     PrintOut(PrintHandler, "\rSensorBist %d",SensorBist);
 }

@@ -23,7 +23,7 @@ hint: 635	1164	Variable 'cTemp' has been eliminated by optimizer	PIC_DRV_Uconnec
 hint: 662	1164	Variable 'cTemp' has been eliminated by optimizer	PIC_DRV_Uconnect.c
 hint: 789	1164	Variable 'ADC_Sampling' has been eliminated by optimizer	PIC_DRV_Uconnect.c
 hint: 850	1164	Variable 'i' has been eliminated by optimizer	PIC_DRV_Uconnect.c
-diagnostics: 0	122	Compilation Started	vz_sensor.h
+diagnostics: 0	122	Compilation Started	types.h
 hint: 13	1163	Variable 'RxBuffer' has been declared, but not used	VZ_Sensor.c
 hint: 39	1163	Variable 'RxBuffer' has been declared, but not used	VZ_Sensor.c
 hint: 68	1163	Variable 'RxBuffer' has been declared, but not used	VZ_Sensor.c
@@ -95,28 +95,30 @@ hint: 292	1164	Variable 'value' has been eliminated by optimizer	Config_File.c
 hint: 306	1164	Variable 'property' has been eliminated by optimizer	Config_File.c
 hint: 313	1164	Variable 'max_high' has been eliminated by optimizer	Config_File.c
 diagnostics: 0	122	Compilation Started	types.h
-hint: 28	1354	argument may be out of range [sizePerItem]	config_sensor.c
-warning: 119	1503	Result is not defined in function: 'setFirstProgmmanigToFalse'	config_sensor.c
-diagnostics: 254	123	Compiled Successfully	config_sensor.c
-hint: 26	1164	Variable 'endAddress' has been eliminated by optimizer	config_sensor.c
-hint: 38	1164	Variable 'i' has been eliminated by optimizer	config_sensor.c
-hint: 183	1164	Variable 'firstProgramm' has been eliminated by optimizer	config_sensor.c
-hint: 222	1164	Variable 'i' has been eliminated by optimizer	config_sensor.c
+hint: 34	1354	argument may be out of range [sizePerItem]	config_sensor.c
+warning: 124	1503	Result is not defined in function: 'setFirstProgmmanigToFalse'	config_sensor.c
+diagnostics: 261	123	Compiled Successfully	config_sensor.c
+hint: 32	1164	Variable 'endAddress' has been eliminated by optimizer	config_sensor.c
+hint: 43	1164	Variable 'i' has been eliminated by optimizer	config_sensor.c
+hint: 189	1164	Variable 'firstProgramm' has been eliminated by optimizer	config_sensor.c
+hint: 228	1164	Variable 'i' has been eliminated by optimizer	config_sensor.c
 diagnostics: 0	122	Compilation Started	types.h
 warning: 72	1508	Implicit conversion of int to ptr	Process_data.c
-warning: 186	1506	Implicit conversion of pointer to int	Process_data.c
-warning: 206	1506	Implicit conversion of pointer to int	Process_data.c
+warning: 188	1506	Implicit conversion of pointer to int	Process_data.c
 warning: 209	1506	Implicit conversion of pointer to int	Process_data.c
-warning: 213	1506	Implicit conversion of pointer to int	Process_data.c
+warning: 212	1506	Implicit conversion of pointer to int	Process_data.c
 warning: 216	1506	Implicit conversion of pointer to int	Process_data.c
-warning: 220	1506	Implicit conversion of pointer to int	Process_data.c
-hint: 202	1163	Variable 'tempData' has been declared, but not used	Process_data.c
-diagnostics: 235	123	Compiled Successfully	Process_data.c
-diagnostics: 0	127	All files Compiled in 2094 ms	 
+warning: 219	1506	Implicit conversion of pointer to int	Process_data.c
+warning: 222	1506	Implicit conversion of pointer to int	Process_data.c
+warning: 225	1506	Implicit conversion of pointer to int	Process_data.c
+warning: 232	1506	Implicit conversion of pointer to int	Process_data.c
+hint: 205	1163	Variable 'tempData' has been declared, but not used	Process_data.c
+diagnostics: 248	123	Compiled Successfully	Process_data.c
+diagnostics: 0	127	All files Compiled in 2000 ms	 
 hint: 0	1144	Used RX (bytes): 32 (100%)   Free RX (bytes): 0 (0%)	Used RX (bytes): 32 (100%)   Free RX (bytes): 0 (0%)
-hint: 0	1144	Static RAM (bytes): 5873   Dynamic RAM (bytes): 24846	Static RAM (bytes): 5873   Dynamic RAM (bytes): 24846
-hint: 0	1144	Used ROM (bytes): 25774 (4%)  Free ROM (bytes): 678482 (96%)	Used ROM (bytes): 25774 (4%)  Free ROM (bytes): 678482 (96%)
+hint: 0	1144	Static RAM (bytes): 5910   Dynamic RAM (bytes): 24810	Static RAM (bytes): 5910   Dynamic RAM (bytes): 24810
+hint: 0	1144	Used ROM (bytes): 26363 (4%)  Free ROM (bytes): 677893 (96%)	Used ROM (bytes): 26363 (4%)  Free ROM (bytes): 677893 (96%)
 diagnostics: 0	125	Project Linked Successfully	VZ drivers.mcpds
-diagnostics: 0	128	Linked in 1078 ms	 
-diagnostics: 0	129	Project 'VZ drivers.mcpds' completed: 4047 ms	 
-diagnostics: 0	103	Finished successfully: 23 Feb 2020, 14:56:53	VZ drivers.mcpds
+diagnostics: 0	128	Linked in 1016 ms	 
+diagnostics: 0	129	Project 'VZ drivers.mcpds' completed: 3907 ms	 
+diagnostics: 0	103	Finished successfully: 23 Feb 2020, 18:24:27	VZ drivers.mcpds

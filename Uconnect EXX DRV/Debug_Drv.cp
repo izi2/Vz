@@ -226,16 +226,11 @@ typedef enum
 
 }Algo5ParametersOut;
 
-typedef enum
-{
- Algorithm_2,
- Algorithm_3_4,
- Algorithm_5,
-
-}Algo_select;
 
 typedef enum
 {
+ BIST_0,
+ BIST_1,
  BIST_SINUS,
 
 }Sensor_BIST;
@@ -341,7 +336,9 @@ void CheckRxDataFromInterruptUart2(void);
 enum LED_MODE {LED_ON= 0,LED_OFF,LED_NOT,LED_RED,LED_GREEN};
 enum SPI1_TRANSFER_MODE {SPI1_TRANSFER_MODE_8BIT= 0,SPI1_TRANSFER_MODE_16BIT,SPI1_TRANSFER_MODE_32BIT};
 #line 1 "c:/users/itziks/documents/vz/uconnect exx drv/vz_sensor.h"
-char Init_VZ_Sensor(void);
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
+#line 3 "c:/users/itziks/documents/vz/uconnect exx drv/vz_sensor.h"
+char Init_VZ_Sensor(uint_8 bist);
 void VzSensor_ReadFWVer(void);
 char OpticDataOnSPI_ON(void);
 char OpticDataCheckIfReady(void);

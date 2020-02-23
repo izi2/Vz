@@ -262,7 +262,7 @@ void RTCC_Alarm() iv IVT_ADDR_RTCCINTERRUPT
   Mikrobus_PowerOut_Enable(ON,0);
   SPI1_Init();
   SPI1_Initialize_MCP();
-  Init_VZ_Sensor();
+  Init_VZ_Sensor(Normal);
   VzSensor_ReadFWVer();
   //Vz_SetBist(Normal);
   Vz_SetBist(Sinus);

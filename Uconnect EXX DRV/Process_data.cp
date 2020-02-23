@@ -208,16 +208,11 @@ typedef enum
 
 }Algo5ParametersOut;
 
-typedef enum
-{
- Algorithm_2,
- Algorithm_3_4,
- Algorithm_5,
-
-}Algo_select;
 
 typedef enum
 {
+ BIST_0,
+ BIST_1,
  BIST_SINUS,
 
 }Sensor_BIST;
@@ -234,7 +229,7 @@ typedef struct Sampling
 
 typedef Sampling *(*GetGeneralInput)(void);
 typedef void (*ActiveMethod)(Switch);
-#line 22 "c:/users/itziks/documents/vz/uconnect exx drv/config_sensor.h"
+#line 25 "c:/users/itziks/documents/vz/uconnect exx drv/config_sensor.h"
 typedef enum
 {
  C_CHAR,
@@ -271,7 +266,7 @@ typedef struct
  propertySensor transmitRowData;
 
 }ConfigSensor;
-#line 76 "c:/users/itziks/documents/vz/uconnect exx drv/config_sensor.h"
+#line 79 "c:/users/itziks/documents/vz/uconnect exx drv/config_sensor.h"
 void initConfigSensor(ConfigSensor * confSensor);
 void saveDefultConfig(ConfigSensor * confSensor);
 void saveInEEpromPropertyConfig(propertySensor* propertySens, void* value);
@@ -298,7 +293,7 @@ typedef enum
 
 typedef enum
 {
- P_POINTER_LEASER = 5,
+ P_POINTER_LEASER = 6,
  P_TRANSMITED_TO_GATWAY,
  P_SENSOR_BIST,
  P_RTC_UPDATE,
@@ -705,24 +700,26 @@ uint_8 lenParams()
 {
  switch (AlgorithmTypeParametr)
  {
- case Algorithm_2:
+ case Algo_2:
  return algo2_params_in_size;
 
- case Algorithm_3_4:
+ case Algo_3_4:
  return algo_3_4_params_in_size;
- case Algorithm_5:
+ case Algo_5:
  return algo5_params_in_size;
+ case No_Algo:
+ return 0;
  }
 }
 
-uint_8 addStringData(propertySensor* propertyRead,char* dataSend,uint_8 index)
+uint_8 addStringData(propertySensor* propertyRead,uint_8 typeData, char* dataSend,uint_8 index)
 {
  char tempData[50];
  uint_8 lenData = 0;
  uint_8 i = 0;
  readEEpromRawData(propertyRead, tempData,0);
  lenData = strlen(tempData);
- index = AddHeaders(P_NET_NAME,lenData,dataSend,index);
+ index = AddHeaders(typeData,lenData,dataSend,index);
 
  for(i=0;i<lenData;i++)
  {
@@ -738,8 +735,9 @@ void sendStatus()
  uint_8 i = 0;
  char dataSend[ 300 ];
  uint_8 index = 0;
+ uint_8 lenData = 0;
  char tempData[30];
- uint_8 lenData = lenParams();
+
  initConfigSensor(&cS);
 
  index = AddHeaders(P_ID_SENSOR,1,dataSend,index);
@@ -755,17 +753,27 @@ void sendStatus()
  index = AddHeaders(P_TRANSMITED_ROW_DATA,1,dataSend,index);
  dataSend[index++] = RawDataTX_Enable;
 
+ index = AddHeaders(P_ALGO_SELECTED,1,dataSend,index);
+ dataSend[index++] = AlgorithmTypeParametr - 2;
 
+ index = AddHeaders(P_SENSOR_BIST,1,dataSend,index);
+ dataSend[index++] = SensorBist;
+
+
+ lenData = lenParams();
+ if(lenData)
+ {
  index = AddHeaders(P_PARAMS,lenData*2,dataSend,index);
  for(;i< lenData;i++)
  {
  index = Int2Array(ParamsIn[i], dataSend, index);
  }
+ }
 
- index = addStringData(&cS.networkName,dataSend,index);
- index = addStringData(&cS.networkPassword,dataSend,index);
- index = addStringData(&cS.networkPort,dataSend,index);
- index = addStringData(&cS.networkServerIp,dataSend,index);
+ index = addStringData(&cS.networkName,P_NET_NAME,dataSend,index);
+ index = addStringData(&cS.networkPassword,P_NET_PASS,dataSend,index);
+ index = addStringData(&cS.networkPort,P_NET_PORT,dataSend,index);
+ index = addStringData(&cS.networkServerIp,P_NET_IP,dataSend,index);
 
  WIFI_Send_One_Array_Not_Wait_To_OK(dataSend,index);
 

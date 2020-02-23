@@ -151,6 +151,21 @@ main
 					LED_Activation
 			LoadTransmitedToGatway
 				readFromMemProperty
+			LoadSensorBist
+				readFromMemProperty
+				Init_VZ_Sensor
+					PrintOut
+					Read_Write_MCP23S17_IO
+					Vz_SetBist
+						VzSensor_SpiWriteAddr
+							SPI1_Write
+					OpticDataOnSPI_ON
+						VzSensor_SpiWriteAddr
+						VzSensor_SpiReadAddr
+							SPI1_Write
+							SPI1_Read
+						PrintOut
+				PrintOut
 	Init_ESP
 		PrintOut
 		Read_Write_MCP23S17_IO
@@ -165,8 +180,6 @@ main
 	PrintOut
 	OpticDataCheckIfReady
 		VzSensor_SpiReadAddr
-			SPI1_Write
-			SPI1_Read
 	Read_Write_MCP23S17_IO
 	RunAlgorithmAndBuiledTxParametersPacket
 		OpticDataGetCleanBuffer
@@ -241,14 +254,12 @@ main
 		LoadTransmitedToGatway
 		LoadPointerLeaser
 		LoadSensorBist
-			readFromMemProperty
-			PrintOut
 		insertParamsToParamsIn
 			CombineSignedHighLow
 		sendStatus
-			lenParams
 			initConfigSensor
 			AddHeaders
+			lenParams
 			Int2Array
 			addStringData
 				readEEpromRawData

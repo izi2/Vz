@@ -22,7 +22,7 @@ typedef enum
 
 typedef enum
 {
-    P_POINTER_LEASER = 5,
+    P_POINTER_LEASER = 6,
     P_TRANSMITED_TO_GATWAY,
     P_SENSOR_BIST,
     P_RTC_UPDATE,

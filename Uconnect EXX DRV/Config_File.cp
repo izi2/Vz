@@ -207,16 +207,11 @@ typedef enum
 
 }Algo5ParametersOut;
 
-typedef enum
-{
- Algorithm_2,
- Algorithm_3_4,
- Algorithm_5,
-
-}Algo_select;
 
 typedef enum
 {
+ BIST_0,
+ BIST_1,
  BIST_SINUS,
 
 }Sensor_BIST;

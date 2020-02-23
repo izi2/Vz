@@ -252,16 +252,11 @@ typedef enum
 
 }Algo5ParametersOut;
 
-typedef enum
-{
- Algorithm_2,
- Algorithm_3_4,
- Algorithm_5,
-
-}Algo_select;
 
 typedef enum
 {
+ BIST_0,
+ BIST_1,
  BIST_SINUS,
 
 }Sensor_BIST;
@@ -485,7 +480,9 @@ int_32 CombineSignedLongHighLow(int_8 max_high, int_8 middle_high, int_8 min_hig
 
 int_8 GetOnBitPosition(uint_32 bits, uint_8 size_bits);
 #line 1 "c:/users/itziks/documents/vz/uconnect exx drv/vz_sensor.h"
-char Init_VZ_Sensor(void);
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
+#line 3 "c:/users/itziks/documents/vz/uconnect exx drv/vz_sensor.h"
+char Init_VZ_Sensor(uint_8 bist);
 void VzSensor_ReadFWVer(void);
 char OpticDataOnSPI_ON(void);
 char OpticDataCheckIfReady(void);

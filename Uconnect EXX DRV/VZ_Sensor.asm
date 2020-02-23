@@ -866,14 +866,14 @@ L_end_VzSensor_SpiReadAddr:
 _Init_VZ_Sensor:
 	LNK	#4
 
-;VZ_Sensor.c,201 :: 		char Init_VZ_Sensor(void)
+;VZ_Sensor.c,201 :: 		char Init_VZ_Sensor(uint_8 bist)
 ;VZ_Sensor.c,203 :: 		unsigned int i=0;
-	PUSH	W10
 	PUSH	W11
 	MOV	#0, W0
 	MOV	W0, [W14+2]
 ;VZ_Sensor.c,205 :: 		PrintOut(PrintHandler,"\rInit Vz Sensor...");
 	MOV	#lo_addr(?lstr_4_VZ_Sensor), W0
+	PUSH	W10
 	PUSH	W0
 	MOV	#lo_addr(_PrintHandler), W0
 	PUSH	W0
@@ -895,6 +895,7 @@ L_Init_VZ_Sensor72:
 	MOV.B	#1, W11
 	MOV.B	#6, W10
 	CALL	_Read_Write_MCP23S17_IO
+	POP	W10
 ;VZ_Sensor.c,210 :: 		Delay_ms(2000);
 	MOV	#163, W8
 	MOV	#49887, W7
@@ -905,8 +906,7 @@ L_Init_VZ_Sensor74:
 	BRA NZ	L_Init_VZ_Sensor74
 	NOP
 	NOP
-;VZ_Sensor.c,212 :: 		Vz_SetBist(Sinus);
-	MOV.B	#2, W10
+;VZ_Sensor.c,212 :: 		Vz_SetBist(bist);
 	CALL	_Vz_SetBist
 ;VZ_Sensor.c,213 :: 		while((i++<15)&&(!(RtFlag=OpticDataOnSPI_ON()))) {asm clrwdt;Delay_ms(100);}
 L_Init_VZ_Sensor76:
@@ -918,7 +918,9 @@ L_Init_VZ_Sensor76:
 	BRA LTU	L__Init_VZ_Sensor125
 	GOTO	L__Init_VZ_Sensor93
 L__Init_VZ_Sensor125:
+	PUSH	W10
 	CALL	_OpticDataOnSPI_ON
+	POP	W10
 	MOV.B	W0, [W14+0]
 	CP0.B	W0
 	BRA Z	L__Init_VZ_Sensor126
@@ -943,7 +945,6 @@ L__Init_VZ_Sensor92:
 ;VZ_Sensor.c,215 :: 		}
 L_end_Init_VZ_Sensor:
 	POP	W11
-	POP	W10
 	ULNK
 	RETURN
 ; end of _Init_VZ_Sensor

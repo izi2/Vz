@@ -207,16 +207,11 @@ typedef enum
 
 }Algo5ParametersOut;
 
-typedef enum
-{
- Algorithm_2,
- Algorithm_3_4,
- Algorithm_5,
-
-}Algo_select;
 
 typedef enum
 {
+ BIST_0,
+ BIST_1,
  BIST_SINUS,
 
 }Sensor_BIST;
@@ -233,7 +228,7 @@ typedef struct Sampling
 
 typedef Sampling *(*GetGeneralInput)(void);
 typedef void (*ActiveMethod)(Switch);
-#line 22 "c:/users/itziks/documents/vz/uconnect exx drv/config_sensor.h"
+#line 25 "c:/users/itziks/documents/vz/uconnect exx drv/config_sensor.h"
 typedef enum
 {
  C_CHAR,
@@ -270,7 +265,7 @@ typedef struct
  propertySensor transmitRowData;
 
 }ConfigSensor;
-#line 76 "c:/users/itziks/documents/vz/uconnect exx drv/config_sensor.h"
+#line 79 "c:/users/itziks/documents/vz/uconnect exx drv/config_sensor.h"
 void initConfigSensor(ConfigSensor * confSensor);
 void saveDefultConfig(ConfigSensor * confSensor);
 void saveInEEpromPropertyConfig(propertySensor* propertySens, void* value);
@@ -427,7 +422,25 @@ char CheckDataFromGateway(void);
 char ReConnectToServer(void);
 void RunAlgorithmAndBuiledTxParametersPacket(void);
 void AddRawDataToWifiBuffer(void);
-#line 11 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/config_sensor.c"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/vz_sensor.h"
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
+#line 3 "c:/users/itziks/documents/vz/uconnect exx drv/vz_sensor.h"
+char Init_VZ_Sensor(uint_8 bist);
+void VzSensor_ReadFWVer(void);
+char OpticDataOnSPI_ON(void);
+char OpticDataCheckIfReady(void);
+void OpticDataGetFrame_AllData(void);
+void Vz_SetBist(char mode);
+void OpticDataGetFrame_AllData(void);
+void OpticDataGetFrame_VelocityOnly(void);
+void OpticDataGetFrame_DistanceOnly(void);
+void VzSensor_SpiWriteAddr(char target, unsigned int addr,char *TxBuffer,char TxBufferLength);
+void VzSensor_SpiReadAddr(char target, unsigned int addr,char *RxBuffer,char RxBufferLength);
+void OpticDataGetCleanBuffer(void);
+
+
+enum VZ_Sensor_Names {Normal=0,Saw,Sinus};
+#line 12 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/config_sensor.c"
 int_16 paramsDefult[ 15 ] = {4000, 2000, 10, 10, 200};
 int_16 ParamsIn[ 15 ];
 extern char CWJAP_String[];
@@ -438,6 +451,11 @@ extern char volatile PointerLeaser_Enable;
 extern char volatile RawDataTX_Enable;
 extern char volatile PlcDataTX_Enable;
 extern char volatile SensorBist;
+
+char NET_NAME_DEFULT[30] = "Ravtech-Public\0" ;
+char NET_PASS_DEFULT[20] = "@ravTech!\0" ;
+char NET_PORT_DEFULT[6] = "9875\0" ;
+char NET_SERVER_IP_DEFULT[30] = "192.168.16.118\0" ;
 
 
 Mem_AddressType setAddressPropertyC(propertySensor *propertySens, Mem_AddressType address, uint_8 sizePerItem,
@@ -450,7 +468,6 @@ Mem_AddressType setAddressPropertyC(propertySensor *propertySens, Mem_AddressTyp
  propertySens->endAddress = address + endAddress;
  return propertySens->endAddress;
 }
-
 
 void initConfigSensor(ConfigSensor *confSensor)
 {
@@ -519,10 +536,10 @@ void saveDefultConfig(ConfigSensor *confSensor)
  saveInEEpromPropertyConfig(&confSensor->transmitedToGatway, &PlcDataTX_Enable);
  saveInEEpromPropertyConfig(&confSensor->sensorBist, &SensorBist);
  saveInEEpromPropertyConfig(&confSensor->paramsIn, paramsDefult);
- saveInEEpromPropertyConfig(&confSensor->networkName, "Ravtech-Public\0");
- saveInEEpromPropertyConfig(&confSensor->networkPassword, "@ravTech!\0");
- saveInEEpromPropertyConfig(&confSensor->networkPort, "9875\0");
- saveInEEpromPropertyConfig(&confSensor->networkServerIp, "192.168.16.118\0");
+ saveInEEpromPropertyConfig(&confSensor->networkName, &NET_NAME_DEFULT);
+ saveInEEpromPropertyConfig(&confSensor->networkPassword, &NET_PASS_DEFULT);
+ saveInEEpromPropertyConfig(&confSensor->networkPort, &NET_PORT_DEFULT);
+ saveInEEpromPropertyConfig(&confSensor->networkServerIp,&NET_SERVER_IP_DEFULT );
 
 }
 
@@ -595,6 +612,7 @@ void LoadALLSchem(ConfigSensor *cS)
  LoadParamsIn(cs);
  LoadWifi(cs);
  LoadTransmitedToGatway(cs);
+ LoadSensorBist(cS);
 
 }
 
@@ -670,5 +688,6 @@ void LoadTransmitedToGatway(ConfigSensor *cS)
 void LoadSensorBist(ConfigSensor *cS)
 {
  readFromMemProperty(&cS->sensorBist, &SensorBist);
+ Init_VZ_Sensor(SensorBist);
  PrintOut(PrintHandler, "\rSensorBist %d",SensorBist);
 }

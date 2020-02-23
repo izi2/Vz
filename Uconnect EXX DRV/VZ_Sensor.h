@@ -1,4 +1,6 @@
-char Init_VZ_Sensor(void);
+#include "Types.h"
+
+char Init_VZ_Sensor(uint_8 bist);
 void VzSensor_ReadFWVer(void);
 char  OpticDataOnSPI_ON(void);
 char OpticDataCheckIfReady(void);
@@ -24,10 +26,10 @@ enum VZ_Sensor_Names {Normal=0,Saw,Sinus};
 //------------------------------------------------
 // SPI
 //------------------------------------------------
-#define VZ_SPI_WRITE        0x1A // – write message
-#define VZ_SPI_READ     0x1B // – read message
+#define VZ_SPI_WRITE        0x1A // ï¿½ write message
+#define VZ_SPI_READ     0x1B // ï¿½ read message
 
-#define VZ_SPI_TARGET_INTERNAL        0x01 // – Internal chip register.
-#define VZ_SPI_TARGET_PARAMETER        0x02 // – FW parameter.
-#define VZ_SPI_TARGET_COMMAND         0x03 // –  FW command.
+#define VZ_SPI_TARGET_INTERNAL        0x01 // ï¿½ Internal chip register.
+#define VZ_SPI_TARGET_PARAMETER        0x02 // ï¿½ FW parameter.
+#define VZ_SPI_TARGET_COMMAND         0x03 // ï¿½  FW command.
 #define SPI_CHUNK        32

@@ -31,9 +31,9 @@ L_setData0:
 	MOV.B	[W0], W0
 	ZE	W0, W0
 	CP	W2, W0
-	BRA LTU	L__setData38
+	BRA LTU	L__setData41
 	GOTO	L_setData1
-L__setData38:
+L__setData41:
 ;Process_data.c,42 :: 		datap[i] = buffer[index];
 	ADD	W10, W2, W1
 	ADD	W12, W13, W0
@@ -69,9 +69,9 @@ _insertParamsToParamsIn:
 L_insertParamsToParamsIn3:
 ; i start address is: 6 (W3)
 	CP.B	W3, W11
-	BRA LTU	L__insertParamsToParamsIn40
+	BRA LTU	L__insertParamsToParamsIn43
 	GOTO	L_insertParamsToParamsIn4
-L__insertParamsToParamsIn40:
+L__insertParamsToParamsIn43:
 ;Process_data.c,55 :: 		value = CombineSignedHighLow((uint_8) datap[i], (uint_8) datap[i + 1]);
 	ZE	W3, W0
 	INC	W0
@@ -90,9 +90,9 @@ L__insertParamsToParamsIn40:
 ;Process_data.c,57 :: 		if (value != -1)
 	MOV	#65535, W1
 	CP	W0, W1
-	BRA NZ	L__insertParamsToParamsIn41
+	BRA NZ	L__insertParamsToParamsIn44
 	GOTO	L_insertParamsToParamsIn6
-L__insertParamsToParamsIn41:
+L__insertParamsToParamsIn44:
 ;Process_data.c,59 :: 		ParamsIn[i / 2] = value;
 	ZE	W3, W0
 	MOV	#2, W2
@@ -179,9 +179,9 @@ L_parssData7:
 	MOV	#110, W0
 	ADD	W14, W0, W0
 	CP	W11, [W0]
-	BRA GTU	L__parssData44
+	BRA GTU	L__parssData47
 	GOTO	L_parssData8
-L__parssData44:
+L__parssData47:
 ;Process_data.c,87 :: 		i = setHeaders(HEADERS, buffer, i);
 	ADD	W14, #0, W0
 	PUSH.D	W10
@@ -444,78 +444,78 @@ L_parssData23:
 L_parssData9:
 	MOV	[W14+114], W1
 	MOV.B	[W1], W0
-	CP.B	W0, #15
-	BRA NZ	L__parssData45
-	GOTO	L_parssData11
-L__parssData45:
-	MOV.B	[W1], W0
-	CP.B	W0, #9
-	BRA NZ	L__parssData46
-	GOTO	L_parssData12
-L__parssData46:
-	MOV.B	[W1], W0
-	CP.B	W0, #6
-	BRA NZ	L__parssData47
-	GOTO	L_parssData13
-L__parssData47:
-	MOV.B	[W1], W0
 	CP.B	W0, #16
 	BRA NZ	L__parssData48
-	GOTO	L_parssData14
+	GOTO	L_parssData11
 L__parssData48:
 	MOV.B	[W1], W0
-	CP.B	W0, #5
+	CP.B	W0, #10
 	BRA NZ	L__parssData49
-	GOTO	L_parssData15
+	GOTO	L_parssData12
 L__parssData49:
 	MOV.B	[W1], W0
 	CP.B	W0, #7
 	BRA NZ	L__parssData50
-	GOTO	L_parssData16
+	GOTO	L_parssData13
 L__parssData50:
 	MOV.B	[W1], W0
-	CP.B	W0, #11
+	CP.B	W0, #17
 	BRA NZ	L__parssData51
-	GOTO	L_parssData17
+	GOTO	L_parssData14
 L__parssData51:
 	MOV.B	[W1], W0
-	CP.B	W0, #12
+	CP.B	W0, #6
 	BRA NZ	L__parssData52
-	GOTO	L_parssData18
+	GOTO	L_parssData15
 L__parssData52:
 	MOV.B	[W1], W0
-	CP.B	W0, #13
+	CP.B	W0, #8
 	BRA NZ	L__parssData53
-	GOTO	L_parssData19
+	GOTO	L_parssData16
 L__parssData53:
 	MOV.B	[W1], W0
-	CP.B	W0, #14
+	CP.B	W0, #12
 	BRA NZ	L__parssData54
-	GOTO	L_parssData20
+	GOTO	L_parssData17
 L__parssData54:
 	MOV.B	[W1], W0
-	CP.B	W0, #10
+	CP.B	W0, #13
 	BRA NZ	L__parssData55
-	GOTO	L_parssData21
+	GOTO	L_parssData18
 L__parssData55:
 	MOV.B	[W1], W0
-	CP.B	W0, #17
+	CP.B	W0, #14
 	BRA NZ	L__parssData56
-	GOTO	L_parssData22
+	GOTO	L_parssData19
 L__parssData56:
 	MOV.B	[W1], W0
-	CP.B	W0, #19
+	CP.B	W0, #15
 	BRA NZ	L__parssData57
-	GOTO	L_parssData23
+	GOTO	L_parssData20
 L__parssData57:
+	MOV.B	[W1], W0
+	CP.B	W0, #11
+	BRA NZ	L__parssData58
+	GOTO	L_parssData21
+L__parssData58:
+	MOV.B	[W1], W0
+	CP.B	W0, #18
+	BRA NZ	L__parssData59
+	GOTO	L_parssData22
+L__parssData59:
+	MOV.B	[W1], W0
+	CP.B	W0, #20
+	BRA NZ	L__parssData60
+	GOTO	L_parssData23
+L__parssData60:
 L_parssData10:
 ;Process_data.c,155 :: 		if (changesInNet)
 	MOV	#108, W0
 	ADD	W14, W0, W0
 	CP0.B	[W0]
-	BRA NZ	L__parssData58
+	BRA NZ	L__parssData61
 	GOTO	L_parssData24
-L__parssData58:
+L__parssData61:
 ;Process_data.c,157 :: 		LoadWifi(&cS);
 	MOV	#42, W0
 	ADD	W14, W0, W0
@@ -541,42 +541,53 @@ _lenParams:
 ;Process_data.c,165 :: 		uint_8 lenParams()
 ;Process_data.c,167 :: 		switch (AlgorithmTypeParametr)
 	GOTO	L_lenParams25
-;Process_data.c,169 :: 		case Algorithm_2:
+;Process_data.c,169 :: 		case Algo_2:
 L_lenParams27:
 ;Process_data.c,170 :: 		return algo2_params_in_size;
 	MOV.B	#5, W0
 	GOTO	L_end_lenParams
-;Process_data.c,172 :: 		case Algorithm_3_4:
+;Process_data.c,172 :: 		case Algo_3_4:
 L_lenParams28:
 ;Process_data.c,173 :: 		return  algo_3_4_params_in_size;
 	MOV.B	#8, W0
 	GOTO	L_end_lenParams
-;Process_data.c,174 :: 		case Algorithm_5:
+;Process_data.c,174 :: 		case Algo_5:
 L_lenParams29:
 ;Process_data.c,175 :: 		return algo5_params_in_size;
 	MOV.B	#9, W0
 	GOTO	L_end_lenParams
-;Process_data.c,176 :: 		}
+;Process_data.c,176 :: 		case No_Algo:
+L_lenParams30:
+;Process_data.c,177 :: 		return 0;
+	CLR	W0
+	GOTO	L_end_lenParams
+;Process_data.c,178 :: 		}
 L_lenParams25:
 	MOV	#lo_addr(_AlgorithmTypeParametr), W0
 	MOV.B	[W0], W0
-	CP.B	W0, #0
-	BRA NZ	L__lenParams60
-	GOTO	L_lenParams27
-L__lenParams60:
-	MOV	#lo_addr(_AlgorithmTypeParametr), W0
-	MOV.B	[W0], W0
-	CP.B	W0, #1
-	BRA NZ	L__lenParams61
-	GOTO	L_lenParams28
-L__lenParams61:
-	MOV	#lo_addr(_AlgorithmTypeParametr), W0
-	MOV.B	[W0], W0
 	CP.B	W0, #2
-	BRA NZ	L__lenParams62
+	BRA NZ	L__lenParams63
+	GOTO	L_lenParams27
+L__lenParams63:
+	MOV	#lo_addr(_AlgorithmTypeParametr), W0
+	MOV.B	[W0], W0
+	CP.B	W0, #3
+	BRA NZ	L__lenParams64
+	GOTO	L_lenParams28
+L__lenParams64:
+	MOV	#lo_addr(_AlgorithmTypeParametr), W0
+	MOV.B	[W0], W0
+	CP.B	W0, #4
+	BRA NZ	L__lenParams65
 	GOTO	L_lenParams29
-L__lenParams62:
-;Process_data.c,177 :: 		}
+L__lenParams65:
+	MOV	#lo_addr(_AlgorithmTypeParametr), W0
+	MOV.B	[W0], W0
+	CP.B	W0, #5
+	BRA NZ	L__lenParams66
+	GOTO	L_lenParams30
+L__lenParams66:
+;Process_data.c,179 :: 		}
 L_end_lenParams:
 	RETURN
 ; end of _lenParams
@@ -584,72 +595,68 @@ L_end_lenParams:
 _addStringData:
 	LNK	#50
 
-;Process_data.c,179 :: 		uint_8 addStringData(propertySensor* propertyRead,char* dataSend,uint_8 index)
-;Process_data.c,182 :: 		uint_8 lenData = 0;
+;Process_data.c,181 :: 		uint_8 addStringData(propertySensor* propertyRead,uint_8 typeData, char* dataSend,uint_8 index)
+;Process_data.c,184 :: 		uint_8 lenData = 0;
 	PUSH	W10
-	PUSH	W13
-;Process_data.c,183 :: 		uint_8 i = 0;
-;Process_data.c,184 :: 		readEEpromRawData(propertyRead, tempData,0);
+	PUSH	W11
+;Process_data.c,185 :: 		uint_8 i = 0;
+;Process_data.c,186 :: 		readEEpromRawData(propertyRead, tempData,0);
 	ADD	W14, #0, W0
-	PUSH	W12
+	PUSH.D	W12
 	PUSH	W11
 	CLR	W12
 	MOV	W0, W11
 	CALL	_readEEpromRawData
 	POP	W11
-	POP	W12
-;Process_data.c,185 :: 		lenData = strlen(tempData);
+	POP.D	W12
+;Process_data.c,187 :: 		lenData = strlen(tempData);
 	ADD	W14, #0, W0
 	MOV	W0, W10
 	CALL	_strlen
 ; lenData start address is: 6 (W3)
 	MOV.B	W0, W3
-;Process_data.c,186 :: 		index = AddHeaders(P_NET_NAME,lenData,dataSend,index);
-	PUSH	W12
-	PUSH	W11
-	MOV.B	W12, W13
-	MOV	W11, W12
+;Process_data.c,188 :: 		index = AddHeaders(typeData,lenData,dataSend,index);
+	PUSH	W13
+	MOV.B	W11, W10
 	MOV.B	W0, W11
-	MOV.B	#11, W10
 	CALL	_AddHeaders
-	POP	W11
-	POP	W12
-	MOV.B	W0, W12
-;Process_data.c,188 :: 		for(i=0;i<lenData;i++)
+	POP	W13
+	MOV.B	W0, W13
+;Process_data.c,190 :: 		for(i=0;i<lenData;i++)
 ; i start address is: 8 (W4)
 	CLR	W4
 ; lenData end address is: 6 (W3)
 ; i end address is: 8 (W4)
-L_addStringData30:
+L_addStringData31:
 ; i start address is: 8 (W4)
 ; lenData start address is: 6 (W3)
 	CP.B	W4, W3
-	BRA LTU	L__addStringData64
-	GOTO	L_addStringData31
-L__addStringData64:
-;Process_data.c,190 :: 		dataSend[index++] = tempData[i];
-	ZE	W12, W0
-	ADD	W11, W0, W2
+	BRA LTU	L__addStringData68
+	GOTO	L_addStringData32
+L__addStringData68:
+;Process_data.c,192 :: 		dataSend[index++] = tempData[i];
+	ZE	W13, W0
+	ADD	W12, W0, W2
 	ADD	W14, #0, W1
 	ZE	W4, W0
 	ADD	W1, W0, W0
 	MOV.B	[W0], [W2]
-	ADD.B	W12, #1, W0
-	MOV.B	W0, W12
-;Process_data.c,188 :: 		for(i=0;i<lenData;i++)
+	ADD.B	W13, #1, W0
+	MOV.B	W0, W13
+;Process_data.c,190 :: 		for(i=0;i<lenData;i++)
 	INC.B	W4
-;Process_data.c,191 :: 		}
+;Process_data.c,193 :: 		}
 ; lenData end address is: 6 (W3)
 ; i end address is: 8 (W4)
-	GOTO	L_addStringData30
-L_addStringData31:
-;Process_data.c,193 :: 		return index;
-	MOV.B	W12, W0
-;Process_data.c,194 :: 		}
-;Process_data.c,193 :: 		return index;
-;Process_data.c,194 :: 		}
+	GOTO	L_addStringData31
+L_addStringData32:
+;Process_data.c,195 :: 		return index;
+	MOV.B	W13, W0
+;Process_data.c,196 :: 		}
+;Process_data.c,195 :: 		return index;
+;Process_data.c,196 :: 		}
 L_end_addStringData:
-	POP	W13
+	POP	W11
 	POP	W10
 	ULNK
 	RETURN
@@ -658,127 +665,171 @@ L_end_addStringData:
 _sendStatus:
 	LNK	#366
 
-;Process_data.c,196 :: 		void sendStatus()
-;Process_data.c,199 :: 		uint_8 i = 0;
+;Process_data.c,198 :: 		void sendStatus()
+;Process_data.c,201 :: 		uint_8 i = 0;
 	PUSH	W10
 	PUSH	W11
 	PUSH	W12
 	PUSH	W13
-; i start address is: 8 (W4)
-	CLR	W4
-;Process_data.c,201 :: 		uint_8 index = 0;
+; i start address is: 6 (W3)
+	CLR	W3
+;Process_data.c,203 :: 		uint_8 index = 0;
 ; index start address is: 2 (W1)
 	CLR	W1
-;Process_data.c,203 :: 		uint_8 lenData = lenParams();
-	CALL	_lenParams
-; lenData start address is: 6 (W3)
-	MOV.B	W0, W3
-;Process_data.c,204 :: 		initConfigSensor(&cS);
+;Process_data.c,204 :: 		uint_8 lenData = 0;
+;Process_data.c,207 :: 		initConfigSensor(&cS);
 	ADD	W14, #0, W0
-	PUSH	W3
 	PUSH	W1
-	PUSH	W4
+	PUSH	W3
 	MOV	W0, W10
 	CALL	_initConfigSensor
-	POP	W4
-	POP	W1
 	POP	W3
-;Process_data.c,206 :: 		index = AddHeaders(P_ID_SENSOR,1,dataSend,index);
+	POP	W1
+;Process_data.c,209 :: 		index = AddHeaders(P_ID_SENSOR,1,dataSend,index);
 	MOV	#66, W0
 	ADD	W14, W0, W0
 	MOV.B	W1, W13
 ; index end address is: 2 (W1)
 	MOV	W0, W12
 	MOV.B	#1, W11
-	MOV.B	#15, W10
+	MOV.B	#16, W10
 	CALL	_AddHeaders
-; index start address is: 10 (W5)
-	MOV.B	W0, W5
-;Process_data.c,207 :: 		dataSend[index++] = EndUnitID;
+; index start address is: 8 (W4)
+	MOV.B	W0, W4
+;Process_data.c,210 :: 		dataSend[index++] = EndUnitID;
 	MOV	#66, W2
 	ADD	W14, W2, W2
 	ZE	W0, W0
 	ADD	W2, W0, W1
 	MOV	#lo_addr(_EndUnitID), W0
 	MOV.B	[W0], [W1]
-	ADD.B	W5, #1, W0
-; index end address is: 10 (W5)
-;Process_data.c,209 :: 		index = AddHeaders(P_POINTER_LEASER,1,dataSend,index);
+	ADD.B	W4, #1, W0
+; index end address is: 8 (W4)
+;Process_data.c,212 :: 		index = AddHeaders(P_POINTER_LEASER,1,dataSend,index);
 	MOV.B	W0, W13
 	MOV	W2, W12
 	MOV.B	#1, W11
-	MOV.B	#5, W10
+	MOV.B	#6, W10
 	CALL	_AddHeaders
-; index start address is: 10 (W5)
-	MOV.B	W0, W5
-;Process_data.c,210 :: 		dataSend[index++] = PointerLeaser_Enable;
+; index start address is: 8 (W4)
+	MOV.B	W0, W4
+;Process_data.c,213 :: 		dataSend[index++] = PointerLeaser_Enable;
 	MOV	#66, W2
 	ADD	W14, W2, W2
 	ZE	W0, W0
 	ADD	W2, W0, W1
 	MOV	#lo_addr(_PointerLeaser_Enable), W0
 	MOV.B	[W0], [W1]
-	ADD.B	W5, #1, W0
-; index end address is: 10 (W5)
-;Process_data.c,213 :: 		index = AddHeaders(P_TRANSMITED_TO_GATWAY,1,dataSend,index);
+	ADD.B	W4, #1, W0
+; index end address is: 8 (W4)
+;Process_data.c,216 :: 		index = AddHeaders(P_TRANSMITED_TO_GATWAY,1,dataSend,index);
 	MOV.B	W0, W13
 	MOV	W2, W12
 	MOV.B	#1, W11
-	MOV.B	#6, W10
+	MOV.B	#7, W10
 	CALL	_AddHeaders
-; index start address is: 10 (W5)
-	MOV.B	W0, W5
-;Process_data.c,214 :: 		dataSend[index++] = PlcDataTX_Enable;
+; index start address is: 8 (W4)
+	MOV.B	W0, W4
+;Process_data.c,217 :: 		dataSend[index++] = PlcDataTX_Enable;
 	MOV	#66, W2
 	ADD	W14, W2, W2
 	ZE	W0, W0
 	ADD	W2, W0, W1
 	MOV	#lo_addr(_PlcDataTX_Enable), W0
 	MOV.B	[W0], [W1]
-	ADD.B	W5, #1, W0
-; index end address is: 10 (W5)
-;Process_data.c,216 :: 		index = AddHeaders(P_TRANSMITED_ROW_DATA,1,dataSend,index);
+	ADD.B	W4, #1, W0
+; index end address is: 8 (W4)
+;Process_data.c,219 :: 		index = AddHeaders(P_TRANSMITED_ROW_DATA,1,dataSend,index);
 	MOV.B	W0, W13
 	MOV	W2, W12
 	MOV.B	#1, W11
-	MOV.B	#16, W10
+	MOV.B	#17, W10
 	CALL	_AddHeaders
-; index start address is: 10 (W5)
-	MOV.B	W0, W5
-;Process_data.c,217 :: 		dataSend[index++] = RawDataTX_Enable;
+; index start address is: 8 (W4)
+	MOV.B	W0, W4
+;Process_data.c,220 :: 		dataSend[index++] = RawDataTX_Enable;
 	MOV	#66, W2
 	ADD	W14, W2, W2
 	ZE	W0, W0
 	ADD	W2, W0, W1
 	MOV	#lo_addr(_RawDataTX_Enable), W0
 	MOV.B	[W0], [W1]
-	ADD.B	W5, #1, W1
-; index end address is: 10 (W5)
-;Process_data.c,220 :: 		index = AddHeaders(P_PARAMS,lenData*2,dataSend,index);
-	ZE	W3, W0
-	SL	W0, #1, W0
-	MOV.B	W1, W13
+	ADD.B	W4, #1, W0
+; index end address is: 8 (W4)
+;Process_data.c,222 :: 		index = AddHeaders(P_ALGO_SELECTED,1,dataSend,index);
+	MOV.B	W0, W13
 	MOV	W2, W12
-	MOV.B	W0, W11
+	MOV.B	#1, W11
 	MOV.B	#10, W10
 	CALL	_AddHeaders
-; index start address is: 2 (W1)
-	MOV.B	W0, W1
-; i end address is: 8 (W4)
-; index end address is: 2 (W1)
-; lenData end address is: 6 (W3)
-	MOV.B	W4, W5
-	MOV.B	W1, W4
-;Process_data.c,221 :: 		for(;i< lenData;i++)
-L_sendStatus33:
+; index start address is: 8 (W4)
+	MOV.B	W0, W4
+;Process_data.c,223 :: 		dataSend[index++] = AlgorithmTypeParametr - 2;
+	MOV	#66, W2
+	ADD	W14, W2, W2
+	ZE	W0, W0
+	ADD	W2, W0, W1
+	MOV	#lo_addr(_AlgorithmTypeParametr), W0
+	ZE	[W0], W0
+	DEC2	W0
+	MOV.B	W0, [W1]
+	ADD.B	W4, #1, W0
+; index end address is: 8 (W4)
+;Process_data.c,225 :: 		index = AddHeaders(P_SENSOR_BIST,1,dataSend,index);
+	MOV.B	W0, W13
+	MOV	W2, W12
+	MOV.B	#1, W11
+	MOV.B	#8, W10
+	CALL	_AddHeaders
+; index start address is: 4 (W2)
+	MOV.B	W0, W2
+;Process_data.c,226 :: 		dataSend[index++] = SensorBist;
+	MOV	#66, W1
+	ADD	W14, W1, W1
+	ZE	W0, W0
+	ADD	W1, W0, W1
+	MOV	#lo_addr(_SensorBist), W0
+	MOV.B	[W0], [W1]
+; index start address is: 8 (W4)
+	ADD.B	W2, #1, W4
+; index end address is: 4 (W2)
+;Process_data.c,229 :: 		lenData = lenParams();
+	CALL	_lenParams
+; lenData start address is: 4 (W2)
+	MOV.B	W0, W2
+;Process_data.c,230 :: 		if(lenData)
+	CP0.B	W0
+	BRA NZ	L__sendStatus70
+	GOTO	L__sendStatus38
+L__sendStatus70:
+;Process_data.c,232 :: 		index = AddHeaders(P_PARAMS,lenData*2,dataSend,index);
+	MOV	#66, W1
+	ADD	W14, W1, W1
+	ZE	W2, W0
+	SL	W0, #1, W0
+	MOV.B	W4, W13
+; index end address is: 8 (W4)
+	MOV	W1, W12
+	MOV.B	W0, W11
+	MOV.B	#11, W10
+	CALL	_AddHeaders
+; index start address is: 8 (W4)
+	MOV.B	W0, W4
+; i end address is: 6 (W3)
+; lenData end address is: 4 (W2)
+; index end address is: 8 (W4)
+	MOV.B	W3, W5
+	MOV.B	W2, W3
+;Process_data.c,233 :: 		for(;i< lenData;i++)
+L_sendStatus35:
 ; index start address is: 8 (W4)
 ; lenData start address is: 6 (W3)
 ; i start address is: 10 (W5)
 	CP.B	W5, W3
-	BRA LTU	L__sendStatus66
-	GOTO	L_sendStatus34
-L__sendStatus66:
-;Process_data.c,223 :: 		index =  Int2Array(ParamsIn[i], dataSend,  index);
+	BRA LTU	L__sendStatus71
+	GOTO	L_sendStatus36
+L__sendStatus71:
+;Process_data.c,235 :: 		index =  Int2Array(ParamsIn[i], dataSend,  index);
 	MOV	#66, W2
 	ADD	W14, W2, W2
 	ZE	W5, W0
@@ -798,57 +849,71 @@ L__sendStatus66:
 	POP	W5
 ; index start address is: 8 (W4)
 	MOV.B	W0, W4
-;Process_data.c,221 :: 		for(;i< lenData;i++)
+;Process_data.c,233 :: 		for(;i< lenData;i++)
 	INC.B	W5
-;Process_data.c,224 :: 		}
+;Process_data.c,236 :: 		}
 ; lenData end address is: 6 (W3)
 ; i end address is: 10 (W5)
-	GOTO	L_sendStatus33
+	GOTO	L_sendStatus35
+L_sendStatus36:
+;Process_data.c,237 :: 		}
+	MOV.B	W4, W2
+	GOTO	L_sendStatus34
+; index end address is: 8 (W4)
+L__sendStatus38:
+;Process_data.c,230 :: 		if(lenData)
+	MOV.B	W4, W2
+;Process_data.c,237 :: 		}
 L_sendStatus34:
-;Process_data.c,226 :: 		index = addStringData(&cS.networkName,dataSend,index);
+;Process_data.c,239 :: 		index = addStringData(&cS.networkName,P_NET_NAME,dataSend,index);
+; index start address is: 4 (W2)
 	MOV	#66, W1
 	ADD	W14, W1, W1
 	MOV	#36, W0
 	ADD	W14, W0, W0
-	MOV.B	W4, W12
-; index end address is: 8 (W4)
-	MOV	W1, W11
+	MOV.B	W2, W13
+; index end address is: 4 (W2)
+	MOV	W1, W12
+	MOV.B	#12, W11
 	MOV	W0, W10
 	CALL	_addStringData
-;Process_data.c,227 :: 		index = addStringData(&cS.networkPassword,dataSend,index);
+;Process_data.c,240 :: 		index = addStringData(&cS.networkPassword,P_NET_PASS,dataSend,index);
 	MOV	#66, W2
 	ADD	W14, W2, W2
 	MOV	#42, W1
 	ADD	W14, W1, W1
-	MOV.B	W0, W12
-	MOV	W2, W11
+	MOV.B	W0, W13
+	MOV	W2, W12
+	MOV.B	#13, W11
 	MOV	W1, W10
 	CALL	_addStringData
-;Process_data.c,228 :: 		index = addStringData(&cS.networkPort,dataSend,index);
+;Process_data.c,241 :: 		index = addStringData(&cS.networkPort,P_NET_PORT,dataSend,index);
 	MOV	#66, W2
 	ADD	W14, W2, W2
 	MOV	#48, W1
 	ADD	W14, W1, W1
-	MOV.B	W0, W12
-	MOV	W2, W11
+	MOV.B	W0, W13
+	MOV	W2, W12
+	MOV.B	#14, W11
 	MOV	W1, W10
 	CALL	_addStringData
-;Process_data.c,229 :: 		index = addStringData(&cS.networkServerIp,dataSend,index);
+;Process_data.c,242 :: 		index = addStringData(&cS.networkServerIp,P_NET_IP,dataSend,index);
 	MOV	#66, W2
 	ADD	W14, W2, W2
 	MOV	#54, W1
 	ADD	W14, W1, W1
-	MOV.B	W0, W12
-	MOV	W2, W11
+	MOV.B	W0, W13
+	MOV	W2, W12
+	MOV.B	#15, W11
 	MOV	W1, W10
 	CALL	_addStringData
-;Process_data.c,231 :: 		WIFI_Send_One_Array_Not_Wait_To_OK(dataSend,index);
+;Process_data.c,244 :: 		WIFI_Send_One_Array_Not_Wait_To_OK(dataSend,index);
 	MOV	#66, W1
 	ADD	W14, W1, W1
 	ZE	W0, W11
 	MOV	W1, W10
 	CALL	_WIFI_Send_One_Array_Not_Wait_To_OK
-;Process_data.c,235 :: 		}
+;Process_data.c,248 :: 		}
 L_end_sendStatus:
 	POP	W13
 	POP	W12

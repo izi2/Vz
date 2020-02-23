@@ -7098,6 +7098,10 @@ mthten_bit
 n
 n
 n_bit
+net_name_defult
+net_pass_defult
+net_port_defult
+net_server_ip_defult
 nosc
 nosc0
 nosc0
