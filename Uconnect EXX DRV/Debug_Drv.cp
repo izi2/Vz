@@ -234,6 +234,12 @@ typedef enum
 
 }Algo_select;
 
+typedef enum
+{
+ BIST_SINUS,
+
+}Sensor_BIST;
+
 
 
 

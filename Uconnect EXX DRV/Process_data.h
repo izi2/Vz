@@ -36,6 +36,7 @@ typedef enum
     P_TRANSMITED_ROW_DATA,
     P_STATUS,
     P_BYTES_FROM_SENS,
+    P_GET_RAW_DATA,
 
 
 }type_data;

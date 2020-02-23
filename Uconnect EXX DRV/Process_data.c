@@ -19,6 +19,8 @@ extern char volatile AlgorithmTypeParametr;
 extern char volatile PointerLeaser_Enable;
 extern char volatile RawDataTX_Enable;
 extern char volatile PlcDataTX_Enable;
+extern char volatile SensorBist;
+extern char volatile SendMeRawData;
 
 void sendStatus();
 
@@ -112,10 +114,17 @@ void parssData(char *buffer, int bufferLength)
                 LoadPointerLeaser(&cS)  ;
                 break;
 
+
+            case P_SENSOR_BIST:
+                saveInEEpromPropertyConfig(&cS.sensorBist, &DATA[0]);
+                LoadSensorBist(&cS);
+                break;
+
             case P_NET_NAME:
                 saveInEEpromPropertyConfig(&cS.networkName, DATA);
                 changesInNet = 1;
                 break;
+
 
             case P_NET_PASS:
                 saveInEEpromPropertyConfig(&cS.networkPassword, DATA);
@@ -135,6 +144,11 @@ void parssData(char *buffer, int bufferLength)
                 break;
             case P_STATUS:
                 sendStatus();
+                break;
+
+            case P_GET_RAW_DATA:
+                SendMeRawData = DATA[0];
+                PrintOut(PrintHandler, "\rSendMeRawData %d",SendMeRawData);
                 break;
 
         }

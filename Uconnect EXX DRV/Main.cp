@@ -234,6 +234,12 @@ typedef enum
 
 }Algo_select;
 
+typedef enum
+{
+ BIST_SINUS,
+
+}Sensor_BIST;
+
 
 
 
@@ -482,6 +488,7 @@ void LoadPointerLeaser(ConfigSensor* cS);
 void LoadParamsIn(ConfigSensor* cS);
 void LoadWifi(ConfigSensor* cS);
 void LoadTransmitedToGatway(ConfigSensor* cS);
+void LoadSensorBist(ConfigSensor* cS);
 void readEEpromRawData(propertySensor *propertySens, char *dest,uint_8 index);
 #line 1 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
 #line 1 "c:/users/itziks/documents/vz/uconnect exx drv/process_data.h"
@@ -510,6 +517,7 @@ typedef enum
  P_TRANSMITED_ROW_DATA,
  P_STATUS,
  P_BYTES_FROM_SENS,
+ P_GET_RAW_DATA,
 
 
 }type_data;
@@ -529,11 +537,13 @@ extern unsigned int Gateway_Buffer_Length;
 void Init_uClick_VZ(void);
 
 char volatile VZ_ON_Flag;
+char volatile SendMeRawData;
 char volatile Wifi_Buffer[1000];
 char volatile wifi_state=0;
 char RawDataTX_Enable= 0 ;
 char PlcDataTX_Enable= 1 ;
 char PointerLeaser_Enable= 0 ;
+char SensorBist=BIST_SINUS;
 extern char CWJAP_String[];
 extern char CIPSTART_String[];
 extern char volatile AlgorithmTypeParametr;

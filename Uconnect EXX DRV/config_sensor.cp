@@ -215,6 +215,12 @@ typedef enum
 
 }Algo_select;
 
+typedef enum
+{
+ BIST_SINUS,
+
+}Sensor_BIST;
+
 
 
 
@@ -279,6 +285,7 @@ void LoadPointerLeaser(ConfigSensor* cS);
 void LoadParamsIn(ConfigSensor* cS);
 void LoadWifi(ConfigSensor* cS);
 void LoadTransmitedToGatway(ConfigSensor* cS);
+void LoadSensorBist(ConfigSensor* cS);
 void readEEpromRawData(propertySensor *propertySens, char *dest,uint_8 index);
 #line 1 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
 #line 1 "c:/users/itziks/documents/vz/uconnect exx drv/types.h"
@@ -430,6 +437,7 @@ extern char volatile AlgorithmTypeParametr;
 extern char volatile PointerLeaser_Enable;
 extern char volatile RawDataTX_Enable;
 extern char volatile PlcDataTX_Enable;
+extern char volatile SensorBist;
 
 
 Mem_AddressType setAddressPropertyC(propertySensor *propertySens, Mem_AddressType address, uint_8 sizePerItem,
@@ -509,6 +517,7 @@ void saveDefultConfig(ConfigSensor *confSensor)
  saveInEEpromPropertyConfig(&confSensor->pointerLeaser, &PointerLeaser_Enable);
  saveInEEpromPropertyConfig(&confSensor->transmitRowData, &RawDataTX_Enable);
  saveInEEpromPropertyConfig(&confSensor->transmitedToGatway, &PlcDataTX_Enable);
+ saveInEEpromPropertyConfig(&confSensor->sensorBist, &SensorBist);
  saveInEEpromPropertyConfig(&confSensor->paramsIn, paramsDefult);
  saveInEEpromPropertyConfig(&confSensor->networkName, "Ravtech-Public\0");
  saveInEEpromPropertyConfig(&confSensor->networkPassword, "@ravTech!\0");
@@ -655,5 +664,11 @@ void LoadWifi(ConfigSensor *cS)
 
 void LoadTransmitedToGatway(ConfigSensor *cS)
 {
- readFromMemProperty(&cS->transmitedToGatway, &RawDataTX_Enable);
+ readFromMemProperty(&cS->transmitedToGatway, &PlcDataTX_Enable);
+}
+
+void LoadSensorBist(ConfigSensor *cS)
+{
+ readFromMemProperty(&cS->sensorBist, &SensorBist);
+ PrintOut(PrintHandler, "\rSensorBist %d",SensorBist);
 }

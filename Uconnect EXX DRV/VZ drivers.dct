@@ -6797,6 +6797,7 @@ loadalgoselected
 loadallschem
 loadparamsin
 loadpointerleaser
+loadsensorbist
 loadtransmitedtogatway
 loadunitid
 loadwifi
@@ -9096,7 +9097,9 @@ sen
 sen_bit
 sendatcommand
 sendatcommandtoesp
+sendmerawdata
 sendstatus
+sensorbist
 set_rtcc_alarm_in_second
 set_rtcc_alarm_time
 set_rtcc_time

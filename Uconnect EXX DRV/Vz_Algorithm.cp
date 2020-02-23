@@ -234,6 +234,12 @@ typedef enum
 
 }Algo_select;
 
+typedef enum
+{
+ BIST_SINUS,
+
+}Sensor_BIST;
+
 
 
 
@@ -434,6 +440,7 @@ void LoadPointerLeaser(ConfigSensor* cS);
 void LoadParamsIn(ConfigSensor* cS);
 void LoadWifi(ConfigSensor* cS);
 void LoadTransmitedToGatway(ConfigSensor* cS);
+void LoadSensorBist(ConfigSensor* cS);
 void readEEpromRawData(propertySensor *propertySens, char *dest,uint_8 index);
 #line 10 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/Vz_Algorithm.c"
 extern int volatile Vz_Sensor_Velocity_Buffer_int[];

@@ -240,6 +240,9 @@ main
 		LoadAlgoSelected
 		LoadTransmitedToGatway
 		LoadPointerLeaser
+		LoadSensorBist
+			readFromMemProperty
+			PrintOut
 		insertParamsToParamsIn
 			CombineSignedHighLow
 		sendStatus

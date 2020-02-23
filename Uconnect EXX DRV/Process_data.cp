@@ -216,6 +216,12 @@ typedef enum
 
 }Algo_select;
 
+typedef enum
+{
+ BIST_SINUS,
+
+}Sensor_BIST;
+
 
 
 
@@ -280,6 +286,7 @@ void LoadPointerLeaser(ConfigSensor* cS);
 void LoadParamsIn(ConfigSensor* cS);
 void LoadWifi(ConfigSensor* cS);
 void LoadTransmitedToGatway(ConfigSensor* cS);
+void LoadSensorBist(ConfigSensor* cS);
 void readEEpromRawData(propertySensor *propertySens, char *dest,uint_8 index);
 #line 16 "c:/users/itziks/documents/vz/uconnect exx drv/process_data.h"
 typedef enum
@@ -305,6 +312,7 @@ typedef enum
  P_TRANSMITED_ROW_DATA,
  P_STATUS,
  P_BYTES_FROM_SENS,
+ P_GET_RAW_DATA,
 
 
 }type_data;
@@ -550,6 +558,8 @@ extern char volatile AlgorithmTypeParametr;
 extern char volatile PointerLeaser_Enable;
 extern char volatile RawDataTX_Enable;
 extern char volatile PlcDataTX_Enable;
+extern char volatile SensorBist;
+extern char volatile SendMeRawData;
 
 void sendStatus();
 
@@ -643,10 +653,17 @@ void parssData(char *buffer, int bufferLength)
  LoadPointerLeaser(&cS) ;
  break;
 
+
+ case P_SENSOR_BIST:
+ saveInEEpromPropertyConfig(&cS.sensorBist, &DATA[0]);
+ LoadSensorBist(&cS);
+ break;
+
  case P_NET_NAME:
  saveInEEpromPropertyConfig(&cS.networkName, DATA);
  changesInNet = 1;
  break;
+
 
  case P_NET_PASS:
  saveInEEpromPropertyConfig(&cS.networkPassword, DATA);
@@ -666,6 +683,11 @@ void parssData(char *buffer, int bufferLength)
  break;
  case P_STATUS:
  sendStatus();
+ break;
+
+ case P_GET_RAW_DATA:
+ SendMeRawData = DATA[0];
+ PrintOut(PrintHandler, "\rSendMeRawData %d",SendMeRawData);
  break;
 
  }

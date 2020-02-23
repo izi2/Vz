@@ -17,6 +17,7 @@ extern char volatile AlgorithmTypeParametr;
 extern char volatile PointerLeaser_Enable;
 extern char volatile RawDataTX_Enable;
 extern char volatile PlcDataTX_Enable;
+extern char volatile SensorBist;
 
 
 Mem_AddressType setAddressPropertyC(propertySensor *propertySens, Mem_AddressType address, uint_8 sizePerItem,
@@ -96,6 +97,7 @@ void saveDefultConfig(ConfigSensor *confSensor)
     saveInEEpromPropertyConfig(&confSensor->pointerLeaser, &PointerLeaser_Enable);
     saveInEEpromPropertyConfig(&confSensor->transmitRowData, &RawDataTX_Enable);
     saveInEEpromPropertyConfig(&confSensor->transmitedToGatway, &PlcDataTX_Enable);
+    saveInEEpromPropertyConfig(&confSensor->sensorBist, &SensorBist);
     saveInEEpromPropertyConfig(&confSensor->paramsIn, paramsDefult);
     saveInEEpromPropertyConfig(&confSensor->networkName, "Ravtech-Public\0");
     saveInEEpromPropertyConfig(&confSensor->networkPassword, "@ravTech!\0");
@@ -173,6 +175,7 @@ void LoadALLSchem(ConfigSensor *cS)
     LoadParamsIn(cs);
     LoadWifi(cs);
     LoadTransmitedToGatway(cs);
+    LoadSensorBist(cS);
 
 }
 
@@ -242,5 +245,11 @@ void LoadWifi(ConfigSensor *cS)
 
 void LoadTransmitedToGatway(ConfigSensor *cS)
 {
-    readFromMemProperty(&cS->transmitedToGatway, &RawDataTX_Enable);
+    readFromMemProperty(&cS->transmitedToGatway, &PlcDataTX_Enable);
+}
+
+void LoadSensorBist(ConfigSensor *cS)
+{
+    readFromMemProperty(&cS->sensorBist, &SensorBist);
+    PrintOut(PrintHandler, "\rSensorBist %d",SensorBist);
 }
