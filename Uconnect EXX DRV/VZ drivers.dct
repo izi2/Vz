@@ -4155,6 +4155,7 @@ get60samplesfromuart
 getaddressproperty
 getbatteryvoltage
 getdayofweekstring
+getdefultparams
 geteepromcontrol
 getespdata
 getfloatproperty
@@ -6798,6 +6799,7 @@ loadallschem
 loadparamsin
 loadpointerleaser
 loadsensorbist
+loadtransmitedrawdatatogatway
 loadtransmitedtogatway
 loadunitid
 loadwifi
@@ -7899,7 +7901,9 @@ p2activ
 p2activ_bit
 padcon
 padconbits
-paramsdefult
+paramsalgo2defult
+paramsalgo3_4defult
+paramsalgo5defult
 paramsin
 parssdata
 pch
@@ -8460,7 +8464,6 @@ read_from_sc16is740_internal_register
 read_sequential_bytes_from_sram_memory
 read_shd_pin
 read_write_mcp23s17_io
-readeepromrawdata
 readfrommemproperty
 reconnecttoserver
 refocon1

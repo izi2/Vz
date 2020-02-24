@@ -280,6 +280,8 @@ void LoadPointerLeaser(ConfigSensor* cS);
 void LoadParamsIn(ConfigSensor* cS);
 void LoadWifi(ConfigSensor* cS);
 void LoadTransmitedToGatway(ConfigSensor* cS);
+void LoadTransmitedRawDataToGatway(ConfigSensor* cS);
+int_16 * getDefultParams();
 void LoadSensorBist(ConfigSensor* cS);
 void readEEpromRawData(propertySensor *propertySens, char *dest,uint_8 index);
 #line 1 "c:/users/itziks/documents/vz/uconnect exx drv/config_file.h"
@@ -440,8 +442,31 @@ void OpticDataGetCleanBuffer(void);
 
 
 enum VZ_Sensor_Names {Normal=0,Saw,Sinus};
-#line 12 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/config_sensor.c"
-int_16 paramsDefult[ 15 ] = {4000, 2000, 10, 10, 200};
+#line 1 "c:/users/itziks/documents/vz/uconnect exx drv/vz_algorithm.h"
+
+
+
+
+
+
+
+
+
+
+void Vz_Algorithm_2(void);
+void Vz_Algorithm_3_4(void);
+void Vz_Algorithm_5(void);
+void uError_Algo_3_4(char *ST,char *a,int *tC,int *dC,int *C0,int *C1,int *C2,int *U1Ipoint,int *U2Ipoint,int *DIpoint);
+void uError_Algo5(char *ST,int *dC,int *C0,int *C1,char ErorCode);
+void void Vz_Algoritem_by_algo_select();
+void ResetAlgoParametrsOutBuffer(void);
+
+
+enum Algo_Types_Names {Algo_2=2,Algo_3_4,Algo_5,No_Algo};
+#line 13 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/config_sensor.c"
+int_16 paramsAlgo2Defult[ 15 ] = {4000, 2000, 10, 10, 200};
+int_16 paramsAlgo3_4Defult[ 15 ] = {8000, 3000, 3000, 10,400,5000,9,0};
+int_16 paramsAlgo5Defult[ 15 ] = {8000, 1700, 30, 18,0,500,6400,12,5};
 int_16 ParamsIn[ 15 ];
 extern char CWJAP_String[];
 extern char CIPSTART_String[];
@@ -452,10 +477,12 @@ extern char volatile RawDataTX_Enable;
 extern char volatile PlcDataTX_Enable;
 extern char volatile SensorBist;
 
-char NET_NAME_DEFULT[30] = "Ravtech-Public\0" ;
-char NET_PASS_DEFULT[20] = "@ravTech!\0" ;
-char NET_PORT_DEFULT[6] = "9875\0" ;
-char NET_SERVER_IP_DEFULT[30] = "192.168.16.118\0" ;
+char NET_NAME_DEFULT[30] = "RavTech\0";
+char NET_PASS_DEFULT[20] = "@ravTech92!\0";
+char NET_PORT_DEFULT[6] = "9875\0";
+char NET_SERVER_IP_DEFULT[30] = "192.168.17.112\0";
+
+
 
 
 Mem_AddressType setAddressPropertyC(propertySensor *propertySens, Mem_AddressType address, uint_8 sizePerItem,
@@ -496,23 +523,7 @@ void initConfigSensor(ConfigSensor *confSensor)
  i = setAddressPropertyC(&confSensor->networkServerIp, i, C_UCHAR,  20 );
 
 }
-
-void readEEpromRawData(propertySensor *propertySens, char *dest,uint_8 index)
-{
- uint_8 i =0;
-
- for (i = propertySens->address; i < propertySens->endAddress;i++)
- {
-
- dest[index++] = GetProperty(i);
-
- }
- PrintOut(PrintHandler, "\rdest %s, ", dest);
-
-
-}
-
-
+#line 89 "C:/Users/itziks/Documents/Vz/Uconnect EXX DRV/config_sensor.c"
 void saveInEEpromPropertyConfig(propertySensor *propertySens, void *value)
 {
  Mem_AddressType i;
@@ -528,21 +539,20 @@ void saveInEEpromPropertyConfig(propertySensor *propertySens, void *value)
 
 void saveDefultConfig(ConfigSensor *confSensor)
 {
-
+ int_16 defultParams = getDefultParams();
  saveInEEpromPropertyConfig(&confSensor->idS, &EndUnitID);
  saveInEEpromPropertyConfig(&confSensor->algoSelected, &AlgorithmTypeParametr);
  saveInEEpromPropertyConfig(&confSensor->pointerLeaser, &PointerLeaser_Enable);
  saveInEEpromPropertyConfig(&confSensor->transmitRowData, &RawDataTX_Enable);
  saveInEEpromPropertyConfig(&confSensor->transmitedToGatway, &PlcDataTX_Enable);
  saveInEEpromPropertyConfig(&confSensor->sensorBist, &SensorBist);
- saveInEEpromPropertyConfig(&confSensor->paramsIn, paramsDefult);
+ saveInEEpromPropertyConfig(&confSensor->paramsIn,defultParams );
  saveInEEpromPropertyConfig(&confSensor->networkName, &NET_NAME_DEFULT);
  saveInEEpromPropertyConfig(&confSensor->networkPassword, &NET_PASS_DEFULT);
  saveInEEpromPropertyConfig(&confSensor->networkPort, &NET_PORT_DEFULT);
- saveInEEpromPropertyConfig(&confSensor->networkServerIp,&NET_SERVER_IP_DEFULT );
+ saveInEEpromPropertyConfig(&confSensor->networkServerIp, &NET_SERVER_IP_DEFULT);
 
 }
-
 
 
 char isFirstProgrammin()
@@ -626,7 +636,7 @@ void initConfig()
 
 
  firstProgramm = isFirstProgrammin();
- firstProgramm = 1;
+
 
  if (firstProgramm)
  {
@@ -643,6 +653,22 @@ void LoadUnitId(ConfigSensor *cS)
  readFromMemProperty(&cS->idS, &EndUnitID);
 }
 
+int_16 * getDefultParams()
+{
+ int_16 * defultParams = &paramsAlgo2Defult;
+ switch (AlgorithmTypeParametr)
+ {
+ case Algo_2:
+ return paramsAlgo2Defult;
+ case Algo_3_4:
+ return paramsAlgo3_4Defult;
+ case Algo_5:
+ return paramsAlgo5Defult;
+ default:
+ return defultParams;
+ }
+}
+
 void LoadAlgoSelected(ConfigSensor *cS)
 {
  readFromMemProperty(&cS->algoSelected, &AlgorithmTypeParametr);
@@ -657,7 +683,6 @@ void LoadPointerLeaser(ConfigSensor *cS)
 
 void LoadParamsIn(ConfigSensor *cS)
 {
- uint_8 i = 0;
  readFromMemProperty(&cS->paramsIn, &ParamsIn);
 }
 
@@ -668,10 +693,10 @@ void LoadWifi(ConfigSensor *cS)
  char port_net[ 8 ];
  char server_ip_net[ 20 ];
 
- readFromMemProperty(&cS->networkName, &name_net);
- readFromMemProperty(&cS->networkPassword, &password_net);
- readFromMemProperty(&cS->networkPort, &port_net);
- readFromMemProperty(&cS->networkServerIp, &server_ip_net);
+ readFromMemProperty(&cS->networkName, name_net);
+ readFromMemProperty(&cS->networkPassword, password_net);
+ readFromMemProperty(&cS->networkPort, port_net);
+ readFromMemProperty(&cS->networkServerIp, server_ip_net);
  BildStringWifi(name_net, password_net, server_ip_net, port_net);
  ConnectingToWifiNet();
 
@@ -679,15 +704,19 @@ void LoadWifi(ConfigSensor *cS)
 }
 
 
-
 void LoadTransmitedToGatway(ConfigSensor *cS)
 {
  readFromMemProperty(&cS->transmitedToGatway, &PlcDataTX_Enable);
+}
+
+void LoadTransmitedRawDataToGatway(ConfigSensor *cS)
+{
+ readFromMemProperty(&cS->transmitedToGatway, &RawDataTX_Enable);
 }
 
 void LoadSensorBist(ConfigSensor *cS)
 {
  readFromMemProperty(&cS->sensorBist, &SensorBist);
  Init_VZ_Sensor(SensorBist);
- PrintOut(PrintHandler, "\rSensorBist %d",SensorBist);
+ PrintOut(PrintHandler, "\rSensorBist %d", SensorBist);
 }

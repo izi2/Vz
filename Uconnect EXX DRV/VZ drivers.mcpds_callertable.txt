@@ -96,6 +96,7 @@ main
 					I2C3_Read
 						I2C3_Is_Finished
 		saveDefultConfig
+			getDefultParams
 			saveInEEpromPropertyConfig
 				MemWrt
 					ExtEeprom_WriteByte
@@ -251,7 +252,11 @@ main
 		saveInEEpromPropertyConfig
 		LoadUnitId
 		LoadAlgoSelected
+		getDefultParams
+		LoadParamsIn
 		LoadTransmitedToGatway
+		LoadTransmitedRawDataToGatway
+			readFromMemProperty
 		LoadPointerLeaser
 		LoadSensorBist
 		insertParamsToParamsIn
@@ -262,9 +267,7 @@ main
 			lenParams
 			Int2Array
 			addStringData
-				readEEpromRawData
-					GetProperty
-					PrintOut
+				readFromMemProperty
 				strlen
 				AddHeaders
 			WIFI_Send_One_Array_Not_Wait_To_OK

@@ -12,7 +12,6 @@
 
 extern int_16 volatile ParamsIn[];
 extern char volatile EndUnitID;
-//int_16 ParamsIn[LENGTH_PARAMS_IN];
 extern char CWJAP_String[];
 extern char CIPSTART_String[];
 extern char volatile AlgorithmTypeParametr;
@@ -79,6 +78,7 @@ void parssData(char *buffer, int bufferLength)
     uint_8 HEADERS[LENGTH_HEADERS_CMD];
     char DATA[LENGTH_DATA_CMD];
     uint_8 changesInNet = 0;
+    uint_8 oldAlgoSelected = AlgorithmTypeParametr;
     uint_16 i = 0;
     ConfigSensor cS;
     initConfigSensor(&cS);
@@ -95,8 +95,13 @@ void parssData(char *buffer, int bufferLength)
                 LoadUnitId(&cS);
                 break;
             case P_ALGO_SELECTED:
-                saveInEEpromPropertyConfig(&cS.algoSelected, &DATA[0]);
-                LoadAlgoSelected(&cS) ;
+                if(oldAlgoSelected != DATA[0])
+                {
+                    saveInEEpromPropertyConfig(&cS.algoSelected, &DATA[0]);
+                    LoadAlgoSelected(&cS) ;
+                    saveInEEpromPropertyConfig(&cS.paramsIn,getDefultParams());
+                    LoadParamsIn(&cS);
+                }
                 break;
 
             case P_TRANSMITED_TO_GATWAY:
@@ -106,15 +111,13 @@ void parssData(char *buffer, int bufferLength)
 
             case P_TRANSMITED_ROW_DATA:
                 saveInEEpromPropertyConfig(&cS.transmitRowData, &DATA[0]);
-                LoadTransmitedToGatway(&cS);
+                LoadTransmitedRawDataToGatway(&cS);
                 break;
 
             case P_POINTER_LEASER:
                 saveInEEpromPropertyConfig(&cS.pointerLeaser, &DATA[0]);
                 LoadPointerLeaser(&cS)  ;
                 break;
-
-
             case P_SENSOR_BIST:
                 saveInEEpromPropertyConfig(&cS.sensorBist, &DATA[0]);
                 LoadSensorBist(&cS);
@@ -124,8 +127,6 @@ void parssData(char *buffer, int bufferLength)
                 saveInEEpromPropertyConfig(&cS.networkName, DATA);
                 changesInNet = 1;
                 break;
-
-
             case P_NET_PASS:
                 saveInEEpromPropertyConfig(&cS.networkPassword, DATA);
                 changesInNet = 1;
@@ -183,7 +184,7 @@ uint_8 addStringData(propertySensor* propertyRead,uint_8 typeData, char* dataSen
     char tempData[50];
     uint_8 lenData = 0;
     uint_8 i = 0;
-    readEEpromRawData(propertyRead, tempData,0);
+    readFromMemProperty(propertyRead, tempData);
     lenData = strlen(tempData);
     index = AddHeaders(typeData,lenData,dataSend,index);
 
